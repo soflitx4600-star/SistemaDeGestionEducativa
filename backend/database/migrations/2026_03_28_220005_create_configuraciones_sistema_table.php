@@ -1,0 +1,34 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('configuraciones_sistema', function (Blueprint $table) {
+            $table->id();
+            $table->string('clave', 100)->unique();
+            $table->string('valor', 255);
+            $table->text('descripcion')->nullable();
+            $table->timestamps();
+        });
+
+        // Valor inicial del límite de previas configurable
+        DB::table('configuraciones_sistema')->insert([
+            'clave'       => 'max_previas_permitidas',
+            'valor'       => '2',
+            'descripcion' => 'Cantidad máxima de materias previas que un alumno puede tener para ser promovido al año siguiente.',
+            'created_at'  => now(),
+            'updated_at'  => now(),
+        ]);
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('configuraciones_sistema');
+    }
+};
