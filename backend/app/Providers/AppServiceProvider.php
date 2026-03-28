@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-
+use BezhanSalleh\LanguageSwitch\LanguageSwitch;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -19,6 +19,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+           LanguageSwitch::configureUsing(function (LanguageSwitch $switch) {
+            $switch
+                ->displayLocale('es')
+                ->circular()
+                ->locales(['es', 'en']); // also accepts a closure
+        });
     }
 }

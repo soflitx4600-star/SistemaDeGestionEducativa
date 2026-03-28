@@ -18,7 +18,9 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-
+use Caresome\FilamentAuthDesigner\AuthDesignerPlugin;
+use Caresome\FilamentAuthDesigner\Data\AuthPageConfig;
+use Caresome\FilamentAuthDesigner\Enums\MediaPosition;
 class AdministracionPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
@@ -29,7 +31,7 @@ class AdministracionPanelProvider extends PanelProvider
             ->path('administracion')
             ->login()
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::hex('#184158'),
             ])
             ->brandLogo(asset('logo_olga_aredez.jpeg'))
             ->brandLogoHeight('5rem')
@@ -56,6 +58,36 @@ class AdministracionPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+            ])
+            ->plugins([
+                AuthDesignerPlugin::make()
+                    ->login(
+                        fn(AuthPageConfig $config) => $config
+                            ->media(asset('logo_olga_2.jpeg'))
+                            ->mediaPosition(MediaPosition::Left)
+                            ->mediaSize('50%')
+
+
+                    ),
+
+           
             ]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }
