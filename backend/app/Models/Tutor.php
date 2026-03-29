@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Tutor extends Model
 {
+    protected $table = 'tutores';
+
     protected $fillable = [
         'nombre',
         'apellido',

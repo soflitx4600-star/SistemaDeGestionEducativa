@@ -20,7 +20,8 @@ class PlanDeEstudioResource extends Resource
 {
     protected static ?string $model = PlanDeEstudio::class;
     protected static string|\UnitEnum|null $navigationGroup = 'Gestión de Materias';
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentText;
+    protected static ?string $navigationLabel = 'Planes de Estudio';
 
     protected static ?string $recordTitleAttribute = 'nombre';
 

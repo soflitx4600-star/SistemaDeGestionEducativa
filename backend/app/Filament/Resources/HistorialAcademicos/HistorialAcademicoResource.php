@@ -18,7 +18,8 @@ class HistorialAcademicoResource extends Resource
 {
     protected static ?string $model = HistorialAcademico::class;
     protected static string|\UnitEnum|null $navigationGroup = 'Gestión Académica';
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedClipboardDocumentList;
+    protected static ?string $navigationLabel = 'Historial Académico';
 
     public static function form(Schema $schema): Schema
     {

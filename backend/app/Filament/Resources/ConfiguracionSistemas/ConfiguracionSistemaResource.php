@@ -18,7 +18,8 @@ class ConfiguracionSistemaResource extends Resource
 {
     protected static ?string $model = ConfiguracionSistema::class;
     protected static string|\UnitEnum|null $navigationGroup = 'Configuración del Sistema';
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCog6Tooth;
+    protected static ?string $navigationLabel = 'Configuración';
 
     public static function form(Schema $schema): Schema
     {

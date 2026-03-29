@@ -18,7 +18,8 @@ class MateriaResource extends Resource
 {
     protected static ?string $model = Materia::class;
     protected static string|\UnitEnum|null $navigationGroup = 'Gestión de Materias';
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBookOpen;
+    protected static ?string $navigationLabel = 'Materias';
 
     protected static ?string $recordTitleAttribute = 'nombre';
 

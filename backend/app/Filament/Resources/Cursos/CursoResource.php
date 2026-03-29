@@ -18,7 +18,8 @@ class CursoResource extends Resource
 {
     protected static ?string $model = Curso::class;
     protected static string|\UnitEnum|null $navigationGroup = 'Gestión Académica';
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBuildingLibrary;
+    protected static ?string $navigationLabel = 'Cursos';
 
     protected static ?string $recordTitleAttribute = 'anio';
 

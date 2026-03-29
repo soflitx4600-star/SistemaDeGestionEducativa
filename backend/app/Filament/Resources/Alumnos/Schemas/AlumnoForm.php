@@ -4,8 +4,10 @@ namespace App\Filament\Resources\Alumnos\Schemas;
 
 use App\Enums\EstadoAlumno;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
 class AlumnoForm
@@ -14,30 +16,72 @@ class AlumnoForm
     {
         return $schema
             ->components([
-                Select::make('user_id')
-                    ->relationship('user', 'name'),
-                TextInput::make('nombre')
-                    ->required(),
-                TextInput::make('apellido')
-                    ->required(),
-                TextInput::make('dni')
-                    ->required(),
-                TextInput::make('cuil'),
-                DatePicker::make('fecha_nacimiento')
-                    ->required(),
-                TextInput::make('genero')
-                    ->required(),
-                TextInput::make('domicilio')
-                    ->required(),
-                TextInput::make('telefono')
-                    ->tel(),
-                TextInput::make('email')
-                    ->label('Email address')
-                    ->email(),
-                Select::make('estado')
-                    ->options(EstadoAlumno::class)
-                    ->default('preinscripto')
-                    ->required(),
+                Section::make('Foto del alumno')
+                    ->schema([
+                        FileUpload::make('foto')
+                            ->label('Foto')
+                            ->image()
+                            ->imageEditor()
+                            ->circleCropper()
+                            ->disk('public')
+                            ->directory('fotos/alumnos')
+                            ->visibility('public')
+                            ->maxSize(2048)
+                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                            ->columnSpanFull(),
+                    ]),
+
+                Section::make('Datos personales')
+                    ->schema([
+                        TextInput::make('nombre')
+                            ->required()
+                            ->maxLength(100),
+                        TextInput::make('apellido')
+                            ->required()
+                            ->maxLength(100),
+                        TextInput::make('dni')
+                            ->required()
+                            ->unique(ignoreRecord: true)
+                            ->maxLength(15),
+                        TextInput::make('cuil')
+                            ->unique(ignoreRecord: true)
+                            ->maxLength(20),
+                        DatePicker::make('fecha_nacimiento')
+                            ->required()
+                            ->label('Fecha de nacimiento'),
+                        Select::make('genero')
+                            ->options([
+                                'masculino' => 'Masculino',
+                                'femenino'  => 'Femenino',
+                                'otro'      => 'Otro',
+                            ])
+                            ->required(),
+                        TextInput::make('domicilio')
+                            ->required()
+                            ->maxLength(255)
+                            ->columnSpanFull(),
+                        TextInput::make('telefono')
+                            ->tel()
+                            ->maxLength(20),
+                        TextInput::make('email')
+                            ->email()
+                            ->unique(ignoreRecord: true)
+                            ->maxLength(150),
+                    ])
+                    ->columns(2),
+
+                Section::make('Estado y acceso')
+                    ->schema([
+                        Select::make('estado')
+                            ->options(EstadoAlumno::class)
+                            ->default('preinscripto')
+                            ->required(),
+                        Select::make('user_id')
+                            ->relationship('user', 'name')
+                            ->searchable()
+                            ->label('Usuario del sistema'),
+                    ])
+                    ->columns(2),
             ]);
     }
 }

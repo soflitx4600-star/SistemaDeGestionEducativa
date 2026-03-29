@@ -18,7 +18,8 @@ class DocenteResource extends Resource
 {
     protected static ?string $model = Docente::class;
     protected static string|\UnitEnum|null $navigationGroup = 'Personal';
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedAcademicCap;
+    protected static ?string $navigationLabel = 'Docentes';
 
     protected static ?string $recordTitleAttribute = 'nombre';
 

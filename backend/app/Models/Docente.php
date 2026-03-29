@@ -17,6 +17,7 @@ class Docente extends Model
         'telefono',
         'email',
         'especialidad',
+        'foto',
     ];
 
     public function user(): BelongsTo

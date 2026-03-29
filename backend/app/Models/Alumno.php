@@ -23,6 +23,7 @@ class Alumno extends Model
         'domicilio',
         'telefono',
         'email',
+        'foto',
         'estado',
     ];
 
