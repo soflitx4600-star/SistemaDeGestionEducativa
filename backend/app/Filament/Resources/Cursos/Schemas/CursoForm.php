@@ -13,28 +13,20 @@ class CursoForm
         return $schema
             ->components([
                 Select::make('plan_de_estudio_id')
-                    ->relationship('planDeEstudio', 'nombre')
-                    ->searchable()
+                    ->relationship('planDeEstudio', 'id')
+                    ->required(),
+                TextInput::make('anio')
                     ->required()
-                    ->label('Plan de estudio'),
-                Select::make('anio')
-                    ->options([1=>'1°',2=>'2°',3=>'3°',4=>'4°',5=>'5°',6=>'6°'])
-                    ->required()
-                    ->label('Año'),
-                Select::make('division')
-                    ->options(['A'=>'A','B'=>'B','C'=>'C','D'=>'D','E'=>'E'])
-                    ->required()
-                    ->label('División'),
+                    ->numeric(),
+                TextInput::make('division')
+                    ->required(),
                 TextInput::make('ciclo_lectivo')
                     ->required()
-                    ->numeric()
-                    ->minValue(2000)
-                    ->maxValue(2100)
-                    ->label('Ciclo lectivo'),
+                    ->numeric(),
                 TextInput::make('cupo_maximo')
+                    ->required()
                     ->numeric()
-                    ->default(30)
-                    ->label('Cupo máximo'),
+                    ->default(30),
             ]);
     }
 }

@@ -13,7 +13,7 @@ class HistorialAcademico extends Model
     protected $fillable = [
         'alumno_id',
         'materia_id',
-        'inscripcion_id',
+        'curso_id',
         'ciclo_lectivo',
         'estado',
         'nota_cursada',
@@ -40,9 +40,9 @@ class HistorialAcademico extends Model
         return $this->belongsTo(Materia::class);
     }
 
-    public function inscripcion(): BelongsTo
+    public function curso(): BelongsTo
     {
-        return $this->belongsTo(Inscripcion::class);
+        return $this->belongsTo(Curso::class);
     }
 
     // ─── Scopes ──────────────────────────────────────────────────────────────

@@ -13,31 +13,20 @@ class DocenteForm
         return $schema
             ->components([
                 Select::make('user_id')
-                    ->relationship('user', 'name')
-                    ->searchable()
-                    ->label('Usuario del sistema'),
+                    ->relationship('user', 'name'),
                 TextInput::make('nombre')
-                    ->required()
-                    ->maxLength(100),
+                    ->required(),
                 TextInput::make('apellido')
-                    ->required()
-                    ->maxLength(100),
+                    ->required(),
                 TextInput::make('dni')
-                    ->required()
-                    ->unique(ignoreRecord: true)
-                    ->maxLength(15),
-                TextInput::make('cuil')
-                    ->unique(ignoreRecord: true)
-                    ->maxLength(20),
+                    ->required(),
+                TextInput::make('cuil'),
                 TextInput::make('telefono')
-                    ->tel()
-                    ->maxLength(20),
+                    ->tel(),
                 TextInput::make('email')
-                    ->email()
-                    ->unique(ignoreRecord: true)
-                    ->maxLength(150),
-                TextInput::make('especialidad')
-                    ->maxLength(150),
+                    ->label('Email address')
+                    ->email(),
+                TextInput::make('especialidad'),
             ]);
     }
 }

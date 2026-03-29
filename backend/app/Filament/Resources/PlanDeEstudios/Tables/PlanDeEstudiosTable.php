@@ -1,31 +1,30 @@
 <?php
 
-namespace App\Filament\Resources\Materias\Tables;
+namespace App\Filament\Resources\PlanDeEstudios\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class MateriasTable
+class PlanDeEstudiosTable
 {
     public static function configure(Table $table): Table
     {
         return $table
             ->columns([
-                TextColumn::make('planDeEstudio.id')
-                    ->searchable(),
                 TextColumn::make('nombre')
                     ->searchable(),
-                TextColumn::make('ciclo')
+                TextColumn::make('resolucion_numero')
                     ->searchable(),
-                TextColumn::make('anio_cursado')
+                TextColumn::make('ciclo_lectivo_vigencia')
                     ->numeric()
                     ->sortable(),
-                TextColumn::make('horas_semanales')
-                    ->numeric()
-                    ->sortable(),
+                IconColumn::make('is_active')
+                    ->boolean(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -39,6 +38,7 @@ class MateriasTable
                 //
             ])
             ->recordActions([
+                ViewAction::make(),
                 EditAction::make(),
             ])
             ->toolbarActions([

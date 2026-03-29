@@ -4,7 +4,6 @@ namespace App\Filament\Resources\Docentes\Pages;
 
 use App\Filament\Resources\Docentes\DocenteResource;
 use Filament\Actions\DeleteAction;
-use Filament\Actions\ViewAction;
 use Filament\Resources\Pages\EditRecord;
 
 class EditDocente extends EditRecord
@@ -13,6 +12,8 @@ class EditDocente extends EditRecord
 
     protected function getHeaderActions(): array
     {
-        return [ViewAction::make(), DeleteAction::make()];
+        return [
+            DeleteAction::make(),
+        ];
     }
 }

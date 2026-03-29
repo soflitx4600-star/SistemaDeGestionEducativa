@@ -13,25 +13,18 @@ class MateriaForm
         return $schema
             ->components([
                 Select::make('plan_de_estudio_id')
-                    ->relationship('planDeEstudio', 'nombre')
-                    ->searchable()
-                    ->required()
-                    ->label('Plan de estudio'),
+                    ->relationship('planDeEstudio', 'id')
+                    ->required(),
                 TextInput::make('nombre')
-                    ->required()
-                    ->maxLength(150),
-                Select::make('ciclo')
-                    ->options(['comun' => 'Ciclo Básico', 'orientado' => 'Ciclo Orientado'])
+                    ->required(),
+                TextInput::make('ciclo')
                     ->required()
                     ->default('comun'),
-                Select::make('anio_cursado')
-                    ->options([1=>'1°',2=>'2°',3=>'3°',4=>'4°',5=>'5°',6=>'6°'])
+                TextInput::make('anio_cursado')
                     ->required()
-                    ->label('Año de cursado'),
+                    ->numeric(),
                 TextInput::make('horas_semanales')
-                    ->numeric()
-                    ->minValue(1)
-                    ->label('Horas semanales'),
+                    ->numeric(),
             ]);
     }
 }

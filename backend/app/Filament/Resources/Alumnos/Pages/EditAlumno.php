@@ -4,7 +4,6 @@ namespace App\Filament\Resources\Alumnos\Pages;
 
 use App\Filament\Resources\Alumnos\AlumnoResource;
 use Filament\Actions\DeleteAction;
-use Filament\Actions\ViewAction;
 use Filament\Resources\Pages\EditRecord;
 
 class EditAlumno extends EditRecord
@@ -14,7 +13,6 @@ class EditAlumno extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            ViewAction::make(),
             DeleteAction::make(),
         ];
     }

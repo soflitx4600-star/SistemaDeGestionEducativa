@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Materias\Tables;
+namespace App\Filament\Resources\ConfiguracionSistemas\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -8,24 +8,16 @@ use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class MateriasTable
+class ConfiguracionSistemasTable
 {
     public static function configure(Table $table): Table
     {
         return $table
             ->columns([
-                TextColumn::make('planDeEstudio.id')
+                TextColumn::make('clave')
                     ->searchable(),
-                TextColumn::make('nombre')
+                TextColumn::make('valor')
                     ->searchable(),
-                TextColumn::make('ciclo')
-                    ->searchable(),
-                TextColumn::make('anio_cursado')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('horas_semanales')
-                    ->numeric()
-                    ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

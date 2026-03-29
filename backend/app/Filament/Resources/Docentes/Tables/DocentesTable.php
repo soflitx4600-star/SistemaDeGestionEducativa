@@ -5,9 +5,7 @@ namespace App\Filament\Resources\Docentes\Tables;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
 class DocentesTable
@@ -16,27 +14,42 @@ class DocentesTable
     {
         return $table
             ->columns([
-                TextColumn::make('apellido')->searchable()->sortable(),
-                TextColumn::make('nombre')->searchable()->sortable(),
-                TextColumn::make('dni')->searchable(),
-                TextColumn::make('telefono')->searchable()->toggleable(),
-                TextColumn::make('email')->searchable()->toggleable(),
-                TextColumn::make('especialidad')->searchable()->toggleable(),
-                TextColumn::make('materias_count')
-                    ->label('Materias')
-                    ->counts('materias')
-                    ->sortable(),
+                TextColumn::make('user.name')
+                    ->searchable(),
+                TextColumn::make('nombre')
+                    ->searchable(),
+                TextColumn::make('apellido')
+                    ->searchable(),
+                TextColumn::make('dni')
+                    ->searchable(),
+                TextColumn::make('cuil')
+                    ->searchable(),
+                TextColumn::make('telefono')
+                    ->searchable(),
+                TextColumn::make('email')
+                    ->label('Email address')
+                    ->searchable(),
+                TextColumn::make('especialidad')
+                    ->searchable(),
+                TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
-            ->filters([])
+            ->filters([
+                //
+            ])
             ->recordActions([
-                ViewAction::make(),
                 EditAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),
-            ])
-            ->defaultSort('apellido');
+            ]);
     }
 }
