@@ -15,20 +15,24 @@ RUN apt-get update && apt-get install -y \
     libicu-dev \
     libfreetype6-dev \
     libjpeg62-turbo-dev \
+    libwebp-dev \
     && rm -rf /var/lib/apt/lists/* \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
     && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip gmp intl
 
-# 2. INSTALAR NODE.JS (Versión 20)
+# 2. INSTALAR NODE.JS (Versión 20) + NPM
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
-    && apt-get install -y nodejs
+    && apt-get install -y nodejs \
+    && node --version \
+    && npm --version
 
+    
 # 3. INSTALAR COMPOSER
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # 4. CONFIGURAR NGINX
 RUN rm -f /etc/nginx/sites-enabled/default
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY docker/nginx.conf /etc/nginx/nginx.conf
 # Creamos carpeta para ini si no existe y copiamos
 RUN mkdir -p /usr/local/etc/php/conf.d/
 COPY docker/uploads.ini /usr/local/etc/php/conf.d/uploads.ini
@@ -62,6 +66,6 @@ RUN chmod -R 775 storage bootstrap/cache
 
 # 11. ENTRYPOINT
 EXPOSE 80
-COPY entrypoint.sh /entrypoint.sh
+COPY docker/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
