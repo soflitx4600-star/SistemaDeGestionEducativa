@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Materia extends Model
@@ -32,6 +33,13 @@ class Materia extends Model
     public function historialAcademico(): HasMany
     {
         return $this->hasMany(HistorialAcademico::class);
+    }
+
+    public function docentes(): BelongsToMany
+    {
+        return $this->belongsToMany(Docente::class, 'docente_materia')
+            ->withPivot(['ciclo_lectivo', 'es_titular'])
+            ->withTimestamps();
     }
 
     public function scopeDelAnio($query, int $anio)
