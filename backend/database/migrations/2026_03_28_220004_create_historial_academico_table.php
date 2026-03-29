@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('alumno_id')->constrained('alumnos')->cascadeOnDelete();
             $table->foreignId('materia_id')->constrained('materias')->cascadeOnDelete();
-            $table->foreignId('inscripcion_id')->constrained('inscripciones')->cascadeOnDelete();
+            $table->foreignId('curso_id')->constrained('cursos')->cascadeOnDelete();
             $table->year('ciclo_lectivo');
             $table->enum('estado', ['cursando', 'aprobada', 'desaprobada', 'previa', 'libre'])->default('cursando');
             $table->decimal('nota_cursada', 4, 2)->nullable();

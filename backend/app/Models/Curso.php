@@ -29,14 +29,14 @@ class Curso extends Model
         return $this->belongsTo(PlanDeEstudio::class);
     }
 
-    public function inscripciones(): HasMany
+    public function historialAcademico(): HasMany
     {
-        return $this->hasMany(Inscripcion::class);
+        return $this->hasMany(HistorialAcademico::class);
     }
 
-    public function getAlumnosActivosCountAttribute(): int
+    public function getAlumnosCountAttribute(): int
     {
-        return $this->inscripciones()->where('estado', 'activo')->count();
+        return $this->historialAcademico()->distinct('alumno_id')->count('alumno_id');
     }
 
     public function getTituloAttribute(): string

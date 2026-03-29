@@ -5,9 +5,73 @@ namespace App\Services;
 use App\Enums\EstadoHistorial;
 use App\Models\Alumno;
 use App\Models\ConfiguracionSistema;
-use App\Models\Curso;
 use App\Models\HistorialAcademico;
-use App\Models\Inscripcion;
+
+class PromocionService
+{
+    /**
+     * Verifica si un alumno puede ser promovido al año siguiente.
+     *
+     * Cuenta las materias con estado "previa" correspondientes al año de cursado
+     * actual y lo compara contra el límite configurable desde el panel.
+     */
+    public function puedePromocionar(Alumno $alumno, int $anioCursadoActual): bool
+    {
+        $maxPrevias = (int) ConfiguracionSistema::obtener('max_previas_permitidas', 2);
+
+        $cantidadPrevias = $this->contarPrevias($alumno, $anioCursadoActual);
+
+        return $cantidadPrevias <= $maxPrevias;
+    }
+
+    /**
+     * Retorna la cantidad actual de previas del alumno para un año de cursado específico.
+     */
+    public function contarPrevias(Alumno $alumno, int $anioCursadoActual): int
+    {
+        return HistorialAcademico::where('alumno_id', $alumno->id)
+            ->previas()
+            ->delAnio($anioCursadoActual)
+            ->count();
+    }
+
+    /**
+     * Retorna las previas pendientes del alumno con el detalle de cada materia.
+     *
+     * Si se pasa $anioCursadoActual, filtra solo las previas de ese año.
+     */
+    public function obtenerPrevias(Alumno $alumno, ?int $anioCursadoActual = null)
+    {
+        $query = HistorialAcademico::where('alumno_id', $alumno->id)
+            ->previas()
+            ->with('materia');
+
+        if ($anioCursadoActual !== null) {
+            $query->delAnio($anioCursadoActual);
+        }
+
+        return $query->get();
+    }
+
+    /**
+     * Retorna un resumen del estado de promoción del alumno para un año dado.
+     *
+     * @return array{puede_promocionar: bool, previas_actuales: int, max_permitidas: int, detalle: \Illuminate\Database\Eloquent\Collection}
+     */
+    public function resumenPromocion(Alumno $alumno, int $anioCursadoActual): array
+    {
+        $maxPrevias     = (int) ConfiguracionSistema::obtener('max_previas_permitidas', 2);
+        $previas        = $this->obtenerPrevias($alumno, $anioCursadoActual);
+
+        return [
+            'puede_promocionar' => $previas->count() <= $maxPrevias,
+            'previas_actuales'  => $previas->count(),
+            'max_permitidas'    => $maxPrevias,
+            'detalle'           => $previas,
+        ];
+    }
+}
+
 
 class PromocionService
 {

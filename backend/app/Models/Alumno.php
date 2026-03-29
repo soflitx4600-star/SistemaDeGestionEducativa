@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Alumno extends Model
 {
@@ -48,11 +49,6 @@ class Alumno extends Model
         return $this->belongsToMany(Tutor::class, 'alumno_tutor')
             ->withPivot('es_responsable_principal')
             ->withTimestamps();
-    }
-
-    public function inscripciones(): HasMany
-    {
-        return $this->hasMany(Inscripcion::class);
     }
 
     public function historialAcademico(): HasMany
