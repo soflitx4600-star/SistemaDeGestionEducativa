@@ -59,7 +59,7 @@ RUN php artisan livewire:publish --assets
 # 9. COMPILAR FRONTEND
 RUN npm run build
 
-# 10. PERMISOS
+# 10. PERMISOS INICIALES
 RUN mkdir -p storage/framework/sessions storage/framework/views storage/framework/cache storage/logs bootstrap/cache
 RUN chown -R www-data:www-data storage bootstrap/cache
 RUN chmod -R 775 storage bootstrap/cache

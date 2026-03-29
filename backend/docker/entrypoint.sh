@@ -3,6 +3,11 @@
 # set -x: Imprimir cada comando en el log antes de ejecutarlo.
 set -ex
 
+echo "--- Creando directorios necesarios ---"
+mkdir -p storage/framework/sessions storage/framework/views storage/framework/cache storage/logs bootstrap/cache
+chown -R www-data:www-data storage bootstrap/cache
+chmod -R 775 storage bootstrap/cache
+
 echo "--- Ejecutando migraciones de base de datos ---"
 php artisan migrate --force
 
