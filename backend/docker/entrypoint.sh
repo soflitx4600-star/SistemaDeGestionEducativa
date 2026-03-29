@@ -5,8 +5,9 @@ set -ex
 
 echo "--- Creando directorios necesarios ---"
 mkdir -p storage/framework/sessions storage/framework/views storage/framework/cache storage/logs bootstrap/cache
-chown -R www-data:www-data storage bootstrap/cache
+chown -R www-data:www-data storage bootstrap/cache public
 chmod -R 775 storage bootstrap/cache
+chmod -R 755 public
 
 echo "--- Ejecutando migraciones de base de datos ---"
 php artisan migrate --force
@@ -14,10 +15,17 @@ php artisan migrate --force
 echo "--- Creando enlace simbólico de storage ---"
 php artisan storage:link || true
 
+echo "--- Publicando assets de Filament ---"
+php artisan filament:assets || true
+
 echo "--- Limpiando y optimizando caché ---"
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
+
+echo "--- Re-ajustando permisos post-cache ---"
+chown -R www-data:www-data storage bootstrap/cache
+chmod -R 775 storage bootstrap/cache
 
 echo "--- Iniciando PHP-FPM en modo daemon ---"
 php-fpm -D
