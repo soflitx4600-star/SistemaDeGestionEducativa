@@ -54,10 +54,7 @@ RUN npm install
 # 8. COPIAR APP
 COPY . .
 
-# 9. COMPILAR FRONTEND (Vite) - ejecutar antes que artisan commands
-RUN npm run build
-
-# 10. PERMISOS INICIALES (importantes antes de PHP operations)
+# 9. PERMISOS INICIALES (importantes antes de PHP operations)
 RUN mkdir -p storage/framework/sessions storage/framework/views storage/framework/cache storage/logs bootstrap/cache
 RUN chown -R www-data:www-data storage bootstrap/cache public
 RUN chmod -R 775 storage bootstrap/cache

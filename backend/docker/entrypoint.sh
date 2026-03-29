@@ -15,8 +15,16 @@ php artisan migrate --force
 echo "--- Creando enlace simbólico de storage ---"
 php artisan storage:link || true
 
-echo "--- Publicando assets de Filament ---"
+echo "--- Publicando assets de Filament y Livewire ---"
 php artisan filament:assets || true
+php artisan livewire:publish --assets || true
+
+echo "--- Compilando assets frontend con Vite ---"
+npm run build || true
+
+echo "--- Ajustando permisos del directorio public tras compilación ---"
+chown -R www-data:www-data public
+chmod -R 755 public
 
 echo "--- Limpiando y optimizando caché ---"
 php artisan config:cache
