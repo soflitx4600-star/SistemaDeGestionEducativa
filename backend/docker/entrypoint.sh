@@ -7,7 +7,8 @@ echo "--- Creando directorios necesarios ---"
 mkdir -p storage/framework/sessions storage/framework/views storage/framework/cache storage/logs bootstrap/cache
 chown -R www-data:www-data storage bootstrap/cache public
 chmod -R 775 storage bootstrap/cache
-chmod -R 755 public
+find public -type d -exec chmod 755 {} \;
+find public -type f -exec chmod 644 {} \;
 
 echo "--- Ejecutando migraciones de base de datos ---"
 php artisan migrate --force
@@ -24,7 +25,8 @@ npm run build || true
 
 echo "--- Ajustando permisos del directorio public tras compilación ---"
 chown -R www-data:www-data public
-chmod -R 755 public
+find public -type d -exec chmod 755 {} \;
+find public -type f -exec chmod 644 {} \;
 
 echo "--- Limpiando y optimizando caché ---"
 php artisan config:cache
