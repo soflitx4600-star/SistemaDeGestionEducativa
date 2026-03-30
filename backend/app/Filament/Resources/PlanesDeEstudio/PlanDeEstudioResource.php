@@ -24,7 +24,7 @@ class PlanDeEstudioResource extends Resource
 
     protected static ?string $navigationLabel = 'Planes de Estudio';
 
-    protected static string|\UnitEnum|null $navigationGroup = 'Académico';
+    protected static string|\UnitEnum|null $navigationGroup = null;
 
     protected static ?string $recordTitleAttribute = 'nombre';
 

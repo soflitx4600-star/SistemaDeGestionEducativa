@@ -17,7 +17,11 @@ class MateriaForm
                     ->required(),
                 TextInput::make('nombre')
                     ->required(),
-                TextInput::make('ciclo')
+                Select::make('ciclo')
+                    ->options([
+                        'comun' => 'Ciclo Básico',
+                        'orientado' => 'Ciclo Orientado',
+                    ])
                     ->required()
                     ->default('comun'),
                 TextInput::make('anio_cursado')

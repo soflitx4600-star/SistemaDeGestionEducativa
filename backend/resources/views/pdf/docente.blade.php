@@ -4,144 +4,201 @@
     <meta charset="UTF-8">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: DejaVu Sans, sans-serif; font-size: 12px; color: #1a1a1a; }
 
+        body {
+            font-family: DejaVu Sans, sans-serif;
+            font-size: 11px;
+            color: #000;
+        }
+
+        .container {
+            padding: 25px;
+        }
+
+        /* HEADER */
         .header {
             display: table;
             width: 100%;
-            border-bottom: 3px solid #184158;
-            padding-bottom: 12px;
-            margin-bottom: 20px;
-        }
-        .header-logo { display: table-cell; width: 80px; vertical-align: middle; }
-        .header-logo img { width: 70px; height: auto; }
-        .header-info { display: table-cell; vertical-align: middle; padding-left: 12px; }
-        .header-info h1 { font-size: 15px; color: #184158; font-weight: bold; }
-        .header-info p { font-size: 10px; color: #555; margin-top: 2px; }
-        .header-fecha { display: table-cell; vertical-align: middle; text-align: right; font-size: 10px; color: #777; }
-
-        .titulo-seccion {
-            background-color: #184158;
-            color: white;
-            padding: 5px 10px;
-            font-size: 11px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            margin-top: 16px;
+            border-bottom: 2px solid #000;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
         }
 
-        .grid { display: table; width: 100%; }
-        .fila { display: table-row; }
-        .celda {
+        .logo {
             display: table-cell;
-            width: 50%;
-            padding: 5px 8px;
-            border-bottom: 1px solid #e5e7eb;
+            width: 80px;
+            vertical-align: middle;
+        }
+
+        .logo img {
+            width: 70px;
+        }
+
+        .titulo {
+            display: table-cell;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .titulo h1 {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .titulo p {
+            font-size: 10px;
+        }
+
+        .fecha {
+            display: table-cell;
+            text-align: right;
+            font-size: 10px;
+            vertical-align: middle;
+        }
+
+        /* SECCIONES */
+        .seccion {
+            margin-top: 15px;
+        }
+
+        .seccion-titulo {
+            font-weight: bold;
+            border-bottom: 1px solid #000;
+            margin-bottom: 5px;
+            padding-bottom: 2px;
+        }
+
+        /* TABLA */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        td {
+            border: 1px solid #000;
+            padding: 6px;
             vertical-align: top;
         }
-        .celda:nth-child(odd) { background-color: #f9fafb; }
-        .label { font-size: 9px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; }
-        .valor { font-size: 12px; color: #111827; margin-top: 2px; font-weight: 500; }
 
-        .materias-table { width: 100%; border-collapse: collapse; margin-top: 6px; }
-        .materias-table th {
-            background: #184158; color: white;
-            padding: 5px 8px; font-size: 10px; text-align: left;
+        /* FOTO (ARREGLADA) */
+        .foto-container {
+            width: 100px;
+            height: 120px;
+            border: 1px solid #000;
+            text-align: center;
+            vertical-align: middle;
         }
-        .materias-table td { padding: 5px 8px; font-size: 11px; border-bottom: 1px solid #e5e7eb; }
-        .materias-table tr:nth-child(even) td { background: #f9fafb; }
 
-        .badge {
-            display: inline-block;
-            padding: 2px 8px;
-            border-radius: 10px;
+        .foto-container img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .sin-foto {
             font-size: 10px;
-            font-weight: bold;
+            line-height: 120px;
         }
-        .badge-titular   { background: #d1fae5; color: #065f46; }
-        .badge-suplente  { background: #fef3c7; color: #92400e; }
+
+        /* TABLA HISTORIAL */
+        th {
+            border: 1px solid #000;
+            padding: 5px;
+            font-size: 10px;
+            background: #eee;
+        }
 
         .footer {
             margin-top: 30px;
-            border-top: 1px solid #e5e7eb;
-            padding-top: 8px;
-            font-size: 9px;
-            color: #9ca3af;
             text-align: center;
+            font-size: 9px;
         }
     </style>
 </head>
 <body>
+<div class="container">
 
-    {{-- ENCABEZADO --}}
+    <!-- HEADER -->
     <div class="header">
-        <div class="header-logo">
+        <div class="logo">
             <img src="{{ public_path('logo_olga_aredez.jpeg') }}">
         </div>
-        <div class="header-info">
-            <h1>Escuela Secundaria Bachiller</h1>
-            <p>Ficha del Docente — Sistema de Gestión Educativa</p>
+
+        <div class="titulo">
+            <h1>ESCUELA SECUNDARIA OLGA ARÉDEZ</h1>
+            <p>FICHA DEL DOCENTE</p>
         </div>
-        <div class="header-fecha">
-            Generado el {{ now()->format('d/m/Y H:i') }}
+
+        <div class="fecha">
+            {{ now()->format('d/m/Y') }}
         </div>
     </div>
 
-    {{-- DATOS PERSONALES --}}
-    <div class="titulo-seccion">DATOS PERSONALES</div>
-    <div class="grid">
-        <div class="fila">
-            <div class="celda">
-                <div class="label">Apellido y Nombre</div>
-                <div class="valor">{{ $docente->apellido }}, {{ $docente->nombre }}</div>
-            </div>
-            <div class="celda" style="text-align:center; vertical-align:middle;">
-                @if($docente->foto)
-                    <img src="{{ storage_path('app/public/' . $docente->foto) }}" style="width:80px;height:80px;border-radius:50%;object-fit:cover;border:2px solid #184158;">
-                @else
-                    <div style="width:80px;height:80px;border-radius:50%;background:#184158;color:white;font-size:28px;line-height:80px;text-align:center;display:inline-block;">
-                        {{ strtoupper(substr($docente->nombre, 0, 1)) }}
-                    </div>
-                @endif
-            </div>
-        </div>
-        <div class="fila">
-            <div class="celda">
-                <div class="label">Especialidad</div>
-                <div class="valor">{{ $docente->especialidad ?? '—' }}</div>
-            </div>
-            <div class="celda">
-                <div class="label">DNI</div>
-                <div class="valor">{{ $docente->dni }}</div>
-            </div>
-        </div>
-        <div class="fila">
-            <div class="celda">
-                <div class="label">Teléfono</div>
-                <div class="valor">{{ $docente->telefono ?? '—' }}</div>
-            </div>
-            <div class="celda">
-                <div class="label">Email</div>
-                <div class="valor">{{ $docente->email ?? '—' }}</div>
-            </div>
-        </div>
-        <div class="fila">
-            <div class="celda">
-                <div class="label">Usuario del sistema</div>
-                <div class="valor">{{ $docente->user?->name ?? '—' }}</div>
-            </div>
-            <div class="celda">
-                <div class="label">Fecha de registro</div>
-                <div class="valor">{{ $docente->created_at->format('d/m/Y') }}</div>
-            </div>
-        </div>
+    <!-- DATOS PERSONALES -->
+    <div class="seccion">
+        <div class="seccion-titulo">DATOS PERSONALES</div>
+
+        <table>
+            <tr>
+                <td>
+                    <strong>Apellido y Nombre</strong><br>
+                    {{ $docente->apellido }}, {{ $docente->nombre }}
+                </td>
+
+                <td>
+                    <strong>DNI</strong><br>
+                    {{ $docente->dni }}
+                </td>
+
+                <td rowspan="4" class="foto-container">
+                    @if($docente->foto)
+                        <img src="{{ storage_path('app/public/' . $docente->foto) }}">
+                    @else
+                        <div class="sin-foto">SIN FOTO</div>
+                    @endif
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <strong>Especialidad</strong><br>
+                    {{ $docente->especialidad ?? '—' }}
+                </td>
+
+                <td>
+                    <strong>Email</strong><br>
+                    {{ $docente->email ?? '—' }}
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <strong>Teléfono</strong><br>
+                    {{ $docente->telefono ?? '—' }}
+                </td>
+
+                <td>
+                    <strong>Usuario del sistema</strong><br>
+                    {{ $docente->user?->name ?? '—' }}
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <strong>Fecha de registro</strong><br>
+                    {{ $docente->created_at->format('d/m/Y') }}
+                </td>
+
+                <td colspan="2"></td>
+            </tr>
+        </table>
     </div>
 
-    {{-- MATERIAS A CARGO --}}
-    <div class="titulo-seccion">MATERIAS A CARGO</div>
+    <!-- MATERIAS A CARGO -->
     @if($docente->materias->isNotEmpty())
-    <table class="materias-table">
-        <thead>
+    <div class="seccion">
+        <div class="seccion-titulo">MATERIAS A CARGO</div>
+
+        <table>
             <tr>
                 <th>Materia</th>
                 <th>Año</th>
@@ -150,8 +207,7 @@
                 <th>Hs/sem</th>
                 <th>Rol</th>
             </tr>
-        </thead>
-        <tbody>
+
             @foreach($docente->materias->sortBy([['pivot.ciclo_lectivo','desc'],['anio_cursado','asc']]) as $materia)
             <tr>
                 <td>{{ $materia->nombre }}</td>
@@ -159,22 +215,22 @@
                 <td>{{ $materia->ciclo === 'comun' ? 'Básico' : 'Orientado' }}</td>
                 <td>{{ $materia->pivot->ciclo_lectivo }}</td>
                 <td>{{ $materia->horas_semanales ?? '—' }}</td>
-                <td>
-                    <span class="badge {{ $materia->pivot->es_titular ? 'badge-titular' : 'badge-suplente' }}">
-                        {{ $materia->pivot->es_titular ? 'Titular' : 'Suplente' }}
-                    </span>
-                </td>
+                <td>{{ $materia->pivot->es_titular ? 'Titular' : 'Suplente' }}</td>
             </tr>
             @endforeach
-        </tbody>
-    </table>
+        </table>
+    </div>
     @else
-    <p style="padding: 8px; color: #6b7280; font-size: 11px;">Sin materias asignadas.</p>
+    <div class="seccion">
+        <div class="seccion-titulo">MATERIAS A CARGO</div>
+        <p style="padding: 8px; color: #666; font-size: 10px;">Sin materias asignadas.</p>
+    </div>
     @endif
 
     <div class="footer">
-        Documento generado automáticamente por el Sistema de Gestión Educativa &bull; {{ config('app.name') }}
+        Documento oficial generado por el Sistema de Gestión Educativa
     </div>
 
+</div>
 </body>
 </html>

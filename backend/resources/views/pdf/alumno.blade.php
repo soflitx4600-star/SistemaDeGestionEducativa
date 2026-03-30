@@ -4,206 +4,236 @@
     <meta charset="UTF-8">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: DejaVu Sans, sans-serif; font-size: 12px; color: #1a1a1a; }
 
+        body {
+            font-family: DejaVu Sans, sans-serif;
+            font-size: 11px;
+            color: #000;
+        }
+
+        .container {
+            padding: 25px;
+        }
+
+        /* HEADER */
         .header {
             display: table;
             width: 100%;
-            border-bottom: 3px solid #184158;
-            padding-bottom: 12px;
-            margin-bottom: 20px;
+            border-bottom: 2px solid #000;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
         }
-        .header-logo { display: table-cell; width: 80px; vertical-align: middle; }
-        .header-logo img { width: 70px; height: auto; }
-        .header-info { display: table-cell; vertical-align: middle; padding-left: 12px; }
-        .header-info h1 { font-size: 15px; color: #184158; font-weight: bold; }
-        .header-info p { font-size: 10px; color: #555; margin-top: 2px; }
-        .header-fecha { display: table-cell; vertical-align: middle; text-align: right; font-size: 10px; color: #777; }
 
-        .foto-alumno {
+        .logo {
             display: table-cell;
             width: 80px;
             vertical-align: middle;
-            text-align: center;
-        }
-        .foto-alumno img {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid #184158;
-        }
-        .foto-alumno .sin-foto {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            background: #184158;
-            color: white;
-            font-size: 24px;
-            line-height: 70px;
-            text-align: center;
-            display: inline-block;
         }
 
-        .titulo-seccion {
-            background-color: #184158;
-            color: white;
-            padding: 5px 10px;
-            font-size: 11px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            margin-top: 16px;
+        .logo img {
+            width: 70px;
         }
 
-        .grid { display: table; width: 100%; }
-        .fila { display: table-row; }
-        .celda {
+        .titulo {
             display: table-cell;
-            width: 50%;
-            padding: 5px 8px;
-            border-bottom: 1px solid #e5e7eb;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .titulo h1 {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .titulo p {
+            font-size: 10px;
+        }
+
+        .fecha {
+            display: table-cell;
+            text-align: right;
+            font-size: 10px;
+            vertical-align: middle;
+        }
+
+        /* SECCIONES */
+        .seccion {
+            margin-top: 15px;
+        }
+
+        .seccion-titulo {
+            font-weight: bold;
+            border-bottom: 1px solid #000;
+            margin-bottom: 5px;
+            padding-bottom: 2px;
+        }
+
+        /* TABLA */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        td {
+            border: 1px solid #000;
+            padding: 6px;
             vertical-align: top;
         }
-        .celda:nth-child(odd) { background-color: #f9fafb; }
-        .label { font-size: 9px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; }
-        .valor { font-size: 12px; color: #111827; margin-top: 2px; font-weight: 500; }
 
-        .badge {
-            display: inline-block;
-            padding: 2px 8px;
-            border-radius: 10px;
+        /* FOTO (ARREGLADA) */
+        .foto-container {
+            width: 100px;
+            height: 120px;
+            border: 1px solid #000;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .foto-container img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .sin-foto {
             font-size: 10px;
-            font-weight: bold;
+            line-height: 120px;
         }
-        .badge-inscripto  { background: #d1fae5; color: #065f46; }
-        .badge-preinscripto { background: #fef3c7; color: #92400e; }
-        .badge-egresado   { background: #dbeafe; color: #1e40af; }
-        .badge-abandono   { background: #fee2e2; color: #991b1b; }
-        .badge-suspendido { background: #f3f4f6; color: #374151; }
-        .badge-sorteado   { background: #ede9fe; color: #5b21b6; }
 
-        .historial-table { width: 100%; border-collapse: collapse; margin-top: 6px; }
-        .historial-table th {
-            background: #184158; color: white;
-            padding: 5px 8px; font-size: 10px; text-align: left;
+        /* TABLA HISTORIAL */
+        th {
+            border: 1px solid #000;
+            padding: 5px;
+            font-size: 10px;
+            background: #eee;
         }
-        .historial-table td { padding: 5px 8px; font-size: 11px; border-bottom: 1px solid #e5e7eb; }
-        .historial-table tr:nth-child(even) td { background: #f9fafb; }
 
         .footer {
             margin-top: 30px;
-            border-top: 1px solid #e5e7eb;
-            padding-top: 8px;
-            font-size: 9px;
-            color: #9ca3af;
             text-align: center;
+            font-size: 9px;
         }
     </style>
 </head>
 <body>
+<div class="container">
 
-    {{-- ENCABEZADO --}}
+    <!-- HEADER -->
     <div class="header">
-        <div class="header-logo">
+        <div class="logo">
             <img src="{{ public_path('logo_olga_aredez.jpeg') }}">
         </div>
-        <div class="header-info">
-            <h1>Escuela Secundaria Bachiller</h1>
-            <p>Ficha del Alumno — Sistema de Gestión Educativa</p>
+
+        <div class="titulo">
+            <h1>ESCUELA SECUNDARIA OLGA ARÉDEZ</h1>
+            <p>LEGAJO DEL ALUMNO</p>
         </div>
-        <div class="header-fecha">
-            Generado el {{ now()->format('d/m/Y H:i') }}
+
+        <div class="fecha">
+            {{ now()->format('d/m/Y') }}
         </div>
     </div>
 
-    {{-- DATOS PERSONALES --}}
-    <div class="titulo-seccion">DATOS PERSONALES</div>
-    <div class="grid">
-        <div class="fila">
-            <div class="celda">
-                <div class="label">Apellido y Nombre</div>
-                <div class="valor">{{ $alumno->apellido }}, {{ $alumno->nombre }}</div>
-            </div>
-            <div class="celda" style="text-align:center; vertical-align:middle;">
-                @if($alumno->foto)
-                    <img src="{{ storage_path('app/public/' . $alumno->foto) }}" style="width:80px;height:80px;border-radius:50%;object-fit:cover;border:2px solid #184158;">
-                @else
-                    <div style="width:80px;height:80px;border-radius:50%;background:#184158;color:white;font-size:28px;line-height:80px;text-align:center;display:inline-block;">
-                        {{ strtoupper(substr($alumno->nombre, 0, 1)) }}
-                    </div>
-                @endif
-            </div>
-        </div>
-        <div class="fila">
-            <div class="celda">
-                <div class="label">Estado</div>
-                <div class="valor">
-                    <span class="badge badge-{{ $alumno->estado->value }}">
-                        {{ $alumno->estado->label() }}
-                    </span>
-                </div>
-            </div>
-            <div class="celda">
-                <div class="label">DNI</div>
-                <div class="valor">{{ $alumno->dni }}</div>
-            </div>
-        </div>
-        <div class="fila">
-            <div class="celda">
-                <div class="label">Fecha de Nacimiento</div>
-                <div class="valor">{{ $alumno->fecha_nacimiento->format('d/m/Y') }}</div>
-            </div>
-            <div class="celda">
-                <div class="label">Género</div>
-                <div class="valor">{{ ucfirst($alumno->genero) }}</div>
-            </div>
-        </div>
-        <div class="fila">
-            <div class="celda">
-                <div class="label">Domicilio</div>
-                <div class="valor">{{ $alumno->domicilio }}</div>
-            </div>
-            <div class="celda">
-                <div class="label">Teléfono</div>
-                <div class="valor">{{ $alumno->telefono ?? '—' }}</div>
-            </div>
-        </div>
-        <div class="fila">
-            <div class="celda">
-                <div class="label">Email</div>
-                <div class="valor">{{ $alumno->email ?? '—' }}</div>
-            </div>
-            <div class="celda">
-                <div class="label">N° Legajo</div>
-                <div class="valor">{{ $alumno->fichaLegajo?->numero_legajo ?? '—' }}</div>
-            </div>
-        </div>
+    <!-- DATOS PERSONALES -->
+    <div class="seccion">
+        <div class="seccion-titulo">DATOS PERSONALES</div>
+
+        <table>
+            <tr>
+                <td>
+                    <strong>Apellido y Nombre</strong><br>
+                    {{ $alumno->apellido }}, {{ $alumno->nombre }}
+                </td>
+
+                <td>
+                    <strong>DNI</strong><br>
+                    {{ $alumno->dni }}
+                </td>
+
+                <td rowspan="4" class="foto-container">
+                    @if($alumno->foto)
+                        <img src="{{ storage_path('app/public/' . $alumno->foto) }}">
+                    @else
+                        <div class="sin-foto">SIN FOTO</div>
+                    @endif
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <strong>Fecha Nacimiento</strong><br>
+                    {{ $alumno->fecha_nacimiento->format('d/m/Y') }}
+                </td>
+
+                <td>
+                    <strong>Género</strong><br>
+                    {{ ucfirst($alumno->genero) }}
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <strong>Domicilio</strong><br>
+                    {{ $alumno->domicilio }}
+                </td>
+
+                <td>
+                    <strong>Teléfono</strong><br>
+                    {{ $alumno->telefono ?? '—' }}
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <strong>Email</strong><br>
+                    {{ $alumno->email ?? '—' }}
+                </td>
+
+                <td>
+                    <strong>Legajo</strong><br>
+                    {{ $alumno->fichaLegajo?->numero_legajo ?? '—' }}
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <strong>Estado</strong><br>
+                    {{ $alumno->estado->label() }}
+                </td>
+
+                <td colspan="2"></td>
+            </tr>
+        </table>
     </div>
 
-    {{-- TUTORES --}}
+    <!-- TUTORES -->
     @if($alumno->tutores->isNotEmpty())
-    <div class="titulo-seccion">TUTORES / RESPONSABLES</div>
-    <div class="grid">
-        @foreach($alumno->tutores as $tutor)
-        <div class="fila">
-            <div class="celda">
-                <div class="label">{{ ucfirst($tutor->parentesco) }}{{ $tutor->pivot->es_responsable_principal ? ' (Responsable principal)' : '' }}</div>
-                <div class="valor">{{ $tutor->apellido }}, {{ $tutor->nombre }}</div>
-            </div>
-            <div class="celda">
-                <div class="label">Contacto</div>
-                <div class="valor">{{ $tutor->telefono ?? $tutor->email ?? '—' }}</div>
-            </div>
-        </div>
-        @endforeach
+    <div class="seccion">
+        <div class="seccion-titulo">TUTORES / RESPONSABLES</div>
+
+        <table>
+            <tr>
+                <th>Parentesco</th>
+                <th>Apellido y Nombre</th>
+                <th>Contacto</th>
+            </tr>
+
+            @foreach($alumno->tutores as $tutor)
+            <tr>
+                <td>{{ ucfirst($tutor->parentesco) }}</td>
+                <td>{{ $tutor->apellido }}, {{ $tutor->nombre }}</td>
+                <td>{{ $tutor->telefono ?? $tutor->email ?? '—' }}</td>
+            </tr>
+            @endforeach
+        </table>
     </div>
     @endif
 
-    {{-- HISTORIAL ACADÉMICO --}}
+    <!-- HISTORIAL ACADÉMICO -->
     @if($alumno->historialAcademico->isNotEmpty())
-    <div class="titulo-seccion">HISTORIAL ACADÉMICO</div>
-    <table class="historial-table">
-        <thead>
+    <div class="seccion">
+        <div class="seccion-titulo">HISTORIAL ACADÉMICO</div>
+
+        <table>
             <tr>
                 <th>Materia</th>
                 <th>Año</th>
@@ -212,8 +242,7 @@
                 <th>Nota Final</th>
                 <th>Estado</th>
             </tr>
-        </thead>
-        <tbody>
+
             @foreach($alumno->historialAcademico->sortBy([['ciclo_lectivo','asc'],['materia.anio_cursado','asc']]) as $h)
             <tr>
                 <td>{{ $h->materia?->nombre ?? '—' }}</td>
@@ -224,13 +253,14 @@
                 <td>{{ $h->estado->label() }}</td>
             </tr>
             @endforeach
-        </tbody>
-    </table>
+        </table>
+    </div>
     @endif
 
     <div class="footer">
-        Documento generado automáticamente por el Sistema de Gestión Educativa &bull; {{ config('app.name') }}
+        Documento oficial generado por el Sistema de Gestión Educativa
     </div>
 
+</div>
 </body>
 </html>
