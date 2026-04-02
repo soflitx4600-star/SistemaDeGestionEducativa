@@ -9,102 +9,59 @@
         $etiquetas = $this::$etiquetasHora;
     @endphp
 
-    <div class="space-y-4">
-
-        {{-- ═══════════════════════════════════════════════════════════════════
-             Encabezado institucional del curso
-        ══════════════════════════════════════════════════════════════════════ --}}
-        <div class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-            <div class="flex flex-wrap items-center justify-between gap-4">
-                {{-- Título del colegio --}}
-                <div>
-                    <p class="text-xs font-semibold uppercase tracking-widest text-primary-600 dark:text-primary-400">
-                        Colegio Secundario Olga Márquez de Aredez N° 59
-                    </p>
-                    <h2 class="mt-1 text-xl font-bold text-gray-900 dark:text-white">
-                        {{ $curso->anio }}° Año &mdash; División {{ $curso->division }}
-                    </h2>
-                </div>
-
-                {{-- Metadatos del curso --}}
-                <div class="flex flex-wrap gap-6 text-sm">
-                    <div class="flex flex-col">
-                        <span class="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Turno</span>
-                        <span class="mt-0.5 inline-flex items-center gap-1 font-medium text-gray-900 dark:text-white">
-                            @if($curso->turno === 'Tarde')
-                                <x-heroicon-o-moon class="h-4 w-4 text-indigo-500"/>
-                            @else
-                                <x-heroicon-o-sun class="h-4 w-4 text-amber-500"/>
-                            @endif
-                            {{ $curso->turno }}
-                        </span>
-                    </div>
-
-                    <div class="flex flex-col">
-                        <span class="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Ciclo Lectivo</span>
-                        <span class="mt-0.5 font-medium text-gray-900 dark:text-white">{{ $curso->ciclo_lectivo }}</span>
-                    </div>
-
+    {{-- ═══ ENCABEZADO ═══ --}}
+    <div class="gh-card gh-card--header">
+        <div class="gh-header-grid">
+            <div class="gh-course-info">
+                <div class="gh-badge">Colegio Secundario Olga Márquez de Aredez N° 59</div>
+                <h2 class="gh-course-title">{{ $curso->anio }}° Año &mdash; División {{ $curso->division }}</h2>
+                <div class="gh-course-meta">
+                    <span>Turno {{ $curso->turno }}</span>
+                    <span>·</span>
+                    <span>Ciclo {{ $curso->ciclo_lectivo }}</span>
                     @if($curso->preceptor)
-                    <div class="flex flex-col">
-                        <span class="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Preceptor/a</span>
-                        <span class="mt-0.5 font-medium text-gray-900 dark:text-white">{{ $curso->preceptor }}</span>
-                    </div>
+                        <span>·</span>
+                        <span>Preceptor/a: {{ $curso->preceptor }}</span>
                     @endif
-
-                    <div class="flex flex-col">
-                        <span class="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Alumnos</span>
-                        <span class="mt-0.5 inline-flex items-center gap-1 font-medium text-gray-900 dark:text-white">
-                            <x-heroicon-o-user-group class="h-4 w-4 text-success-500"/>
-                            {{ $this->getAlumnosCount() }}
-                        </span>
-                    </div>
+                    <span>·</span>
+                    <span>{{ $this->getAlumnosCount() }} Alumnos</span>
                 </div>
             </div>
-        </div>
 
-        {{-- ═══════════════════════════════════════════════════════════════════
-             Leyenda de uso
-        ══════════════════════════════════════════════════════════════════════ --}}
-        <div class="flex items-center gap-2 rounded-lg border border-info-200 bg-info-50 px-4 py-2 text-xs text-info-700 dark:border-info-800 dark:bg-info-950 dark:text-info-300">
-            <x-heroicon-o-information-circle class="h-4 w-4 flex-shrink-0"/>
-            <span>Seleccioná la <strong>materia</strong> y el <strong>docente</strong> en cada celda, luego presioná <strong>Guardar</strong>. Para vaciar una celda, dejá ambos campos en blanco y guardá.</span>
+            <div class="gh-info-area">
+                 <div class="gh-leyend-box">
+                    <x-heroicon-o-information-circle class="gh-leyend-icon" />
+                    <span>Seleccioná la <strong>materia</strong> y el <strong>docente</strong> en cada celda, luego presioná <strong>Guardar</strong>. Para vaciar, dejá ambos en blanco.</span>
+                 </div>
+            </div>
         </div>
+    </div>
 
-        {{-- ═══════════════════════════════════════════════════════════════════
-             Grilla de horarios — 7 horas × 5 días
-        ══════════════════════════════════════════════════════════════════════ --}}
-        <div class="overflow-x-auto rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
-            <table class="w-full text-sm">
+    {{-- ═══ PLANILLA GRILLA ═══ --}}
+    <div class="gh-card gh-card--table">
+        <div class="gh-table-wrapper">
+            <table class="gh-table">
                 <thead>
-                    <tr class="border-b-2 border-primary-200 dark:border-primary-800">
-                        {{-- Columna de hora --}}
-                        <th class="w-28 bg-primary-50 px-3 py-3 text-left font-bold text-primary-700 dark:bg-primary-950 dark:text-primary-300">
-                            Hora
-                        </th>
-                        {{-- Columnas de días --}}
+                    <tr>
+                        <th class="gh-th gh-th--hora">Hora Cátedra</th>
                         @foreach($dias as $dia)
-                            <th class="bg-primary-50 px-3 py-3 text-center font-bold text-primary-700 dark:bg-primary-950 dark:text-primary-300">
-                                {{ $dia }}
-                            </th>
+                            <th class="gh-th gh-th--dia">{{ $dia }}</th>
                         @endforeach
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($horas as $hora)
-                        <tr class="border-b border-gray-100 last:border-0 dark:border-gray-700">
-
-                            {{-- Columna de hora cátedra --}}
-                            <td class="bg-gray-50 px-3 py-2 align-middle dark:bg-gray-900">
-                                <div class="font-bold text-gray-700 dark:text-gray-200">
-                                    {{ $etiquetas[$hora] }}
-                                </div>
-                                <div class="mt-0.5 text-xs text-gray-400">
-                                    {{ $bloques[$hora] }}
+                        <tr class="gh-row">
+                            <td class="gh-td gh-td--hora">
+                                <div class="gh-hora-info">
+                                    <div class="gh-hora-num">{{ $hora }}°</div>
+                                    <div class="gh-hora-texto">
+                                        <div class="gh-hora-nombre">{{ str_replace('° Hora', '', $etiquetas[$hora]) }}</div>
+                                        <div class="gh-hora-bloque">{{ $bloques[$hora] }}</div>
+                                    </div>
                                 </div>
                             </td>
 
-                            {{-- Celdas de cada día --}}
                             @foreach($dias as $dia)
                                 @php
                                     $key   = "{$dia}_{$hora}";
@@ -112,11 +69,8 @@
                                     $tieneHorario = ! is_null($celda['horario_id']);
                                 @endphp
 
-                                <td class="px-2 py-2 align-top transition-colors hover:bg-gray-50 dark:hover:bg-gray-700/50">
-
-                                    {{-- Alpine.js maneja el estado local de cada celda de forma independiente --}}
-                                    <div
-                                        class="space-y-1.5"
+                                <td class="gh-td gh-td--celda">
+                                    <div class="gh-celda-wrapper"
                                         x-data="{
                                             materia_id: {{ $celda['materia_id'] ?? 'null' }},
                                             docente_id: {{ $celda['docente_id'] ?? 'null' }},
@@ -137,70 +91,163 @@
                                         }"
                                         x-on:change.stop="modificado = true"
                                     >
-                                        {{-- Indicador visual: celda con horario asignado --}}
-                                        <div
-                                            x-show="materia_id && docente_id && !modificado"
-                                            class="mb-1 rounded bg-success-50 px-1.5 py-0.5 text-center text-xs font-medium text-success-700 dark:bg-success-950 dark:text-success-300"
-                                        >
-                                            ✓ Asignado
+                                        <div class="gh-celda-status" x-show="materia_id && docente_id && !modificado" x-cloak>
+                                            <div class="gh-status-badge">✓ Asignado</div>
                                         </div>
 
-                                        {{-- Select: Materia --}}
-                                        <select
-                                            x-model="materia_id"
-                                            class="w-full rounded-lg border border-gray-300 bg-white px-2 py-1.5 text-xs text-gray-700 shadow-sm transition focus:border-primary-500 focus:ring-1 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200"
-                                        >
+                                        <select x-model="materia_id" class="gh-select">
                                             <option value="">— Materia —</option>
                                             @foreach($materias as $id => $nombre)
-                                                <option value="{{ $id }}" @selected($celda['materia_id'] == $id)>
-                                                    {{ $nombre }}
-                                                </option>
+                                                <option value="{{ $id }}" @selected($celda['materia_id'] == $id)>{{ $nombre }}</option>
                                             @endforeach
                                         </select>
 
-                                        {{-- Select: Docente --}}
-                                        <select
-                                            x-model="docente_id"
-                                            class="w-full rounded-lg border border-gray-300 bg-white px-2 py-1.5 text-xs text-gray-700 shadow-sm transition focus:border-primary-500 focus:ring-1 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200"
-                                        >
+                                        <select x-model="docente_id" class="gh-select">
                                             <option value="">— Docente —</option>
                                             @foreach($docentes as $id => $nombre)
-                                                <option value="{{ $id }}" @selected($celda['docente_id'] == $id)>
-                                                    {{ $nombre }}
-                                                </option>
+                                                <option value="{{ $id }}" @selected($celda['docente_id'] == $id)>{{ $nombre }}</option>
                                             @endforeach
                                         </select>
 
-                                        {{-- Botón Guardar --}}
-                                        <button
-                                            @click="guardar()"
-                                            :disabled="guardando"
-                                            :class="modificado
-                                                ? 'bg-warning-500 hover:bg-warning-600'
-                                                : 'bg-primary-600 hover:bg-primary-700'"
-                                            class="w-full rounded-lg px-2 py-1 text-xs font-medium text-white transition disabled:opacity-50"
-                                        >
-                                            <span x-show="!guardando" x-cloak>
-                                                <span x-show="modificado">⚡ Guardar cambios</span>
+                                        <button type="button" @click="guardar()" :disabled="guardando"
+                                            :class="modificado ? 'gh-btn-save gh-btn-save--modificado' : 'gh-btn-cancel gh-btn-cancel--normal'"
+                                            class="gh-btn-cell">
+                                            <span x-show="!guardando" x-cloak class="gh-flex-center">
+                                                <span x-show="modificado" class="gh-flex-center"><x-heroicon-o-bolt class="gh-btn-icon-sm" /> Guardar</span>
                                                 <span x-show="!modificado">Guardar</span>
                                             </span>
-                                            <span x-show="guardando" x-cloak>Guardando...</span>
+                                            <span x-show="guardando" x-cloak class="gh-flex-center">
+                                                <svg class="gh-spinner-sm" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+                                                </svg>
+                                                Guardando...
+                                            </span>
                                         </button>
                                     </div>
-
                                 </td>
                             @endforeach
-
                         </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
 
-        {{-- Pie de página --}}
-        <p class="text-right text-xs text-gray-400 dark:text-gray-500">
-            Última actualización: {{ now()->format('d/m/Y H:i') }}
-        </p>
-
+        <div class="gh-footer">
+            <span class="gh-footer-text">
+                <x-heroicon-o-clock class="gh-icon-sm" /> Última actualización: {{ now()->format('d/m/Y H:i') }}
+            </span>
+        </div>
     </div>
+
+    {{-- ═══ ESTILOS ═══ --}}
+    <style>
+        :root {
+            --gh-green:         #16a34a;
+            --gh-green-light:   #dcfce7;
+            --gh-green-border:  #86efac;
+            --gh-amber:         #d97706;
+            --gh-amber-light:   #fef3c7;
+            --gh-amber-border:  #fcd34d;
+            --gh-red:           #dc2626;
+            --gh-red-light:     #fee2e2;
+            --gh-red-border:    #fca5a5;
+            --gh-indigo:        #4f46e5;
+            --gh-info:          #3b82f6;
+            --gh-info-light:    #eff6ff;
+            --gh-radius:        12px;
+            --gh-shadow:        0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+        }
+
+        .gh-card { background:#fff; border:1px solid #e5e7eb; border-radius:var(--gh-radius);
+            box-shadow:var(--gh-shadow); margin-bottom:1.25rem; }
+        .gh-card--header { padding:1.5rem; }
+        .gh-card--table { padding:0; overflow:hidden; }
+        .dark .gh-card { background:#1f2937; border-color:#374151; }
+
+        /* ── Header ── */
+        .gh-header-grid { display:grid; grid-template-columns:1fr auto; gap:1.5rem; align-items:flex-start; }
+        @media(max-width:768px){ .gh-header-grid { grid-template-columns:1fr; } }
+        
+        .gh-badge { display:inline-block; padding:.2rem .65rem; background:#eff6ff; color:#1d4ed8;
+            border-radius:999px; font-size:.72rem; font-weight:600; text-transform:uppercase;
+            letter-spacing:.05em; margin-bottom:.4rem; }
+        .dark .gh-badge { background:#1e3a8a; color:#bfdbfe; }
+        
+        .gh-course-title { font-size:1.35rem; font-weight:700; color:#111827; margin:0 0 .3rem; }
+        .dark .gh-course-title { color:#f9fafb; }
+        
+        .gh-course-meta { font-size:.85rem; color:#6b7280; display:flex; flex-wrap:wrap; gap:0.4rem; align-items:center; }
+        .dark .gh-course-meta { color:#9ca3af; }
+        
+        .gh-info-area { max-width:320px; }
+        .gh-leyend-box { display:flex; align-items:flex-start; gap:.5rem; background:var(--gh-info-light); border:1px solid #bfdbfe; border-radius:8px; padding:.75rem; font-size:.8rem; color:#1e40af; line-height:1.4; }
+        .dark .gh-leyend-box { background:#172554; border-color:#1e3a8a; color:#93c5fd; }
+        .gh-leyend-icon { width:18px; height:18px; flex-shrink:0; margin-top:0.1rem; }
+
+        /* ── Table ── */
+        .gh-table-wrapper { overflow-x:auto; }
+        .gh-table { width:100%; border-collapse:collapse; font-size:.88rem; }
+        
+        .gh-th { padding:.8rem .85rem; text-align:center; font-size:.72rem; font-weight:700;
+            text-transform:uppercase; letter-spacing:.05em; color:#6b7280;
+            border-bottom:2px solid #e5e7eb; white-space:nowrap; background:#f9fafb; }
+        .gh-th--hora { text-align:left; width:140px; position:sticky; left:0; z-index:10; background:#f9fafb; border-right:1px solid #e5e7eb; }
+        .dark .gh-th { border-color:#374151; color:#9ca3af; background:#111827; }
+        .dark .gh-th--hora { background:#111827; border-color:#374151; }
+        
+        .gh-row { border-bottom:1px solid #f3f4f6; transition:background .12s; }
+        .gh-row:hover { background:#fafafa; }
+        .dark .gh-row { border-color:#374151; }
+        .dark .gh-row:hover { background:#1a2432; }
+        
+        .gh-td { padding:.65rem .65rem; vertical-align:top; }
+        .gh-td--hora { position:sticky; left:0; z-index:10; background:inherit; border-right:1px solid #e5e7eb; vertical-align:middle; }
+        .dark .gh-td--hora { border-color:#374151; }
+        .gh-td--celda { min-width:180px; }
+
+        /* ── Celdas e Inputs ── */
+        .gh-celda-wrapper { display:flex; flex-direction:column; gap:.4rem; position:relative; padding:.4rem; border-radius:8px; border:1px solid transparent; transition:all .2s; }
+        .gh-celda-wrapper:hover { border-color:#e5e7eb; background:#f9fafb; }
+        .dark .gh-celda-wrapper:hover { border-color:#4b5563; background:#1f2937; }
+        
+        .gh-celda-status { position:absolute; right:.2rem; top:-.6rem; z-index:5; }
+        .gh-status-badge { background:var(--gh-green-light); color:var(--gh-green); border:1px solid var(--gh-green-border); font-size:.65rem; font-weight:700; text-transform:uppercase; padding:.15rem .4rem; border-radius:99px; letter-spacing:.02em; }
+        .dark .gh-status-badge { background:rgba(22, 163, 74, 0.2); border-color:rgba(22, 163, 74, 0.4); color:#86efac; }
+        
+        .gh-hora-info { display:flex; align-items:center; gap:.6rem; }
+        .gh-hora-num { display:flex; align-items:center; justify-content:center; width:28px; height:28px; background:#eff6ff; color:#2563eb; font-weight:700; border-radius:6px; font-size:.8rem; }
+        .dark .gh-hora-num { background:#1e3a8a; color:#93c5fd; }
+        .gh-hora-nombre { font-weight:600; color:#111827; font-size:.85rem; }
+        .dark .gh-hora-nombre { color:#f9fafb; }
+        .gh-hora-bloque { font-size:.72rem; color:#6b7280; }
+
+        .gh-select { display:block; width:100%; border:1px solid #d1d5db; border-radius:6px;
+            padding:.35rem .5rem; font-size:.8rem; color:#111827; background:#fff; cursor:pointer; }
+        .dark .gh-select { background:#1f2937; border-color:#4b5563; color:#f9fafb; }
+        .gh-select:focus { outline:none; border-color:#f59e0b; box-shadow:0 0 0 3px rgba(245,158,11,.15); }
+
+        .gh-btn-cell { display:flex; align-items:center; justify-content:center; gap:.3rem; width:100%; padding:.4rem; border-radius:6px; font-size:.75rem; font-weight:600; cursor:pointer; transition:all .15s; border:none; }
+        .gh-btn-cell:disabled { opacity:.6; cursor:not-allowed; }
+        .gh-btn-icon-sm { width:12px; height:12px; }
+        .gh-flex-center { display:flex; align-items:center; gap:.3rem; }
+        
+        .gh-btn-save--modificado { background:var(--gh-amber); color:#fff; box-shadow:0 1px 2px rgba(245,158,11,.3); }
+        .gh-btn-save--modificado:hover { background:#d97706; }
+        
+        .gh-btn-cancel--normal { background:#f3f4f6; color:#374151; border:1px solid #e5e7eb; }
+        .gh-btn-cancel--normal:hover { background:#e5e7eb; }
+        .dark .gh-btn-cancel--normal { background:#111827; color:#d1d5db; border-color:#4b5563; }
+        .dark .gh-btn-cancel--normal:hover { background:#374151; }
+
+        /* ── Footer ── */
+        .gh-footer { padding:1rem 1.5rem; border-top:1px solid #e5e7eb; display:flex; justify-content:flex-end; background:#f9fafb; }
+        .dark .gh-footer { border-color:#374151; background:#111827; }
+        .gh-footer-text { display:flex; align-items:center; gap:.3rem; font-size:.75rem; color:#6b7280; font-weight:500; }
+        .gh-icon-sm { width:14px; height:14px; }
+        
+        /* ── Spinner ── */
+        .gh-spinner-sm { width:14px; height:14px; animation:gh-spin 1s linear infinite; }
+        @keyframes gh-spin { to { transform:rotate(360deg); } }
+    </style>
 </x-filament-panels::page>
