@@ -70,18 +70,13 @@ class AlumnoForm
                     ])
                     ->columns(2),
 
-                Section::make('Estado y acceso')
+                Section::make('Estado')
                     ->schema([
                         Select::make('estado')
                             ->options(EstadoAlumno::class)
                             ->default('preinscripto')
                             ->required(),
-                        Select::make('user_id')
-                            ->relationship('user', 'name')
-                            ->searchable()
-                            ->label('Usuario del sistema'),
-                    ])
-                    ->columns(2),
+                    ]),
             ]);
     }
 }

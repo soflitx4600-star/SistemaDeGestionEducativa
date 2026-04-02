@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\Docentes\Schemas;
 
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
@@ -57,13 +56,6 @@ class DocenteForm
                     ])
                     ->columns(2),
 
-                Section::make('Acceso al sistema')
-                    ->schema([
-                        Select::make('user_id')
-                            ->relationship('user', 'name')
-                            ->searchable()
-                            ->label('Usuario del sistema'),
-                    ]),
             ]);
     }
 }
