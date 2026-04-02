@@ -12,6 +12,8 @@ class Curso extends Model
         'plan_de_estudio_id',
         'anio',
         'division',
+        'turno',
+        'preceptor',
         'ciclo_lectivo',
         'cupo_maximo',
     ];
@@ -24,6 +26,8 @@ class Curso extends Model
         ];
     }
 
+    // ─── Relaciones ──────────────────────────────────────────────────────────
+
     public function planDeEstudio(): BelongsTo
     {
         return $this->belongsTo(PlanDeEstudio::class);
@@ -34,13 +38,36 @@ class Curso extends Model
         return $this->hasMany(HistorialAcademico::class);
     }
 
-    public function getAlumnosCountAttribute(): int
+    public function horarios(): HasMany
     {
-        return $this->historialAcademico()->distinct('alumno_id')->count('alumno_id');
+        return $this->hasMany(Horario::class);
     }
 
+    // ─── Accesor: total de alumnos únicos inscriptos en este curso ───────────
+    // Usa HistorialAcademico para contar alumnos distintos por curso_id.
+    // Si en el futuro se agrega curso_id directo en alumnos, cambiar aquí.
+    public function getAlumnosCountAttribute(): int
+    {
+        return $this->historialAcademico()
+            ->distinct('alumno_id')
+            ->count('alumno_id');
+    }
+
+    // ─── Accesor: título legible del curso ───────────────────────────────────
     public function getTituloAttribute(): string
     {
-        return "{$this->anio}° {$this->division} ({$this->ciclo_lectivo})";
+        return "{$this->anio}° {$this->division} — Turno {$this->turno} ({$this->ciclo_lectivo})";
+    }
+
+    // ─── Scope: filtrar por turno ─────────────────────────────────────────────
+    public function scopeTurno($query, string $turno)
+    {
+        return $query->where('turno', $turno);
+    }
+
+    // ─── Scope: filtrar por ciclo lectivo ────────────────────────────────────
+    public function scopeCicloLectivo($query, int $ciclo)
+    {
+        return $query->where('ciclo_lectivo', $ciclo);
     }
 }

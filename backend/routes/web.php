@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AlumnoPdfController;
 use App\Http\Controllers\DocentePdfController;
+use App\Http\Controllers\HorarioPdfController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -13,4 +14,6 @@ Route::middleware(['auth'])->group(function () {
         ->name('alumnos.pdf');
     Route::get('/docentes/{docente}/pdf', [DocentePdfController::class, 'descargar'])
         ->name('docentes.pdf');
+    Route::get('/horarios/{curso}/pdf', [HorarioPdfController::class, 'descargar'])
+        ->name('horarios.pdf');
 });

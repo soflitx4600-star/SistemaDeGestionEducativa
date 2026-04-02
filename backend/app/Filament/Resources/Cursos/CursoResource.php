@@ -4,7 +4,9 @@ namespace App\Filament\Resources\Cursos;
 
 use App\Filament\Resources\Cursos\Pages\CreateCurso;
 use App\Filament\Resources\Cursos\Pages\EditCurso;
+use App\Filament\Resources\Cursos\Pages\GrillaHorario;
 use App\Filament\Resources\Cursos\Pages\ListCursos;
+use App\Filament\Resources\Cursos\Pages\ViewCurso;
 use App\Filament\Resources\Cursos\Schemas\CursoForm;
 use App\Filament\Resources\Cursos\Tables\CursosTable;
 use App\Models\Curso;
@@ -43,9 +45,11 @@ class CursoResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => ListCursos::route('/'),
-            'create' => CreateCurso::route('/create'),
-            'edit' => EditCurso::route('/{record}/edit'),
+            'index'         => ListCursos::route('/'),
+            'create'        => CreateCurso::route('/create'),
+            'view'          => ViewCurso::route('/{record}'),
+            'edit'          => EditCurso::route('/{record}/edit'),
+            'grilla-horario' => GrillaHorario::route('/{record}/horario'),
         ];
     }
 }
