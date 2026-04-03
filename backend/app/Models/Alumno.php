@@ -23,6 +23,7 @@ class Alumno extends Model
         'email',
         'foto',
         'estado',
+        'tiene_cud',
     ];
 
     protected function casts(): array
@@ -30,6 +31,7 @@ class Alumno extends Model
         return [
             'fecha_nacimiento' => 'date',
             'estado'           => EstadoAlumno::class,
+            'tiene_cud'        => 'boolean',
         ];
     }
 
