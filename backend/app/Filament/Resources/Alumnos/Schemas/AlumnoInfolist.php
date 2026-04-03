@@ -18,9 +18,11 @@ class AlumnoInfolist
                         ImageEntry::make('foto')
                             ->label('')
                             ->disk('public')
-                            ->circular()
+                            ->circular(false)
                             ->defaultImageUrl(fn ($record) => 'https://ui-avatars.com/api/?name=' . urlencode($record->nombre_completo) . '&background=184158&color=fff&size=200')
-                            ->size(120)
+                            ->width(150)
+                            ->height(150)
+                            ->extraImgAttributes(['style' => 'object-fit: cover; border-radius: 4px;'])
                             ->columnSpan(1),
 
                         Section::make()

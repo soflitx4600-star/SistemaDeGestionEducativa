@@ -80,23 +80,25 @@
             vertical-align: top;
         }
 
-        /* FOTO (ARREGLADA) */
+        /* FOTO */
         .foto-container {
-            width: 100px;
-            height: 120px;
+            width: 113px;
+            height: 113px;
             border: 1px solid #000;
             text-align: center;
             vertical-align: middle;
+            overflow: hidden;
         }
 
         .foto-container img {
-            max-width: 100%;
-            max-height: 100%;
+            width: 113px;
+            height: 113px;
+            object-fit: cover;
         }
 
         .sin-foto {
             font-size: 10px;
-            line-height: 120px;
+            line-height: 113px;
         }
 
         /* TABLA HISTORIAL */
