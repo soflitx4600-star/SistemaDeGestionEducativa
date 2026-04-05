@@ -6,7 +6,7 @@ use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -16,10 +16,10 @@ class DocentesTable
     {
         return $table
             ->columns([
-                ImageColumn::make('foto')
+                SpatieMediaLibraryImageColumn::make('foto')
                     ->label('')
+                    ->collection('docentes')
                     ->circular()
-                    ->disk('public')
                     ->defaultImageUrl(fn ($record) => 'https://ui-avatars.com/api/?name='.urlencode($record->nombre).'&background=184158&color=fff')
                     ->size(40),
                 TextColumn::make('apellido')->searchable()->sortable(),

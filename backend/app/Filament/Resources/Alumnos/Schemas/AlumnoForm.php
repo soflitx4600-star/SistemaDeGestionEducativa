@@ -4,8 +4,8 @@ namespace App\Filament\Resources\Alumnos\Schemas;
 
 use App\Enums\EstadoAlumno;
 use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
@@ -21,14 +21,13 @@ class AlumnoForm
             ->components([
                 Section::make('Foto del alumno')
                     ->schema([
-                        FileUpload::make('foto')
+                        SpatieMediaLibraryFileUpload::make('foto')
                             ->label('Foto')
+                            ->collection('alumnos')
+                            ->avatar()
                             ->image()
                             ->imageEditor()
                             ->circleCropper()
-                            ->disk('public')
-                            ->directory('fotos/alumnos')
-                            ->visibility('public')
                             ->maxSize(2048)
                             ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                             ->columnSpanFull(),
@@ -83,11 +82,9 @@ class AlumnoForm
                             ->label('¿El alumno tiene CUD?')
                             ->live()
                             ->columnSpanFull(),
-                        FileUpload::make('cud_archivo')
+                        SpatieMediaLibraryFileUpload::make('cud_archivo')
                             ->label('Archivo CUD (PDF o imagen)')
-                            ->disk('public')
-                            ->directory('legajos/cud')
-                            ->visibility('public')
+                            ->collection('cud')
                             ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'application/pdf'])
                             ->maxSize(5120)
                             ->columnSpanFull()
@@ -102,14 +99,13 @@ class AlumnoForm
             Step::make('Foto')
                 ->icon('heroicon-o-camera')
                 ->schema([
-                    FileUpload::make('foto')
+                    SpatieMediaLibraryFileUpload::make('foto')
                         ->label('Foto del alumno')
+                        ->collection('alumnos')
+                        ->avatar()
                         ->image()
                         ->imageEditor()
                         ->circleCropper()
-                        ->disk('public')
-                        ->directory('fotos/alumnos')
-                        ->visibility('public')
                         ->maxSize(2048)
                         ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                         ->columnSpanFull(),
@@ -166,11 +162,9 @@ class AlumnoForm
                         ->label('¿El alumno tiene CUD (Certificado Único de Discapacidad)?')
                         ->live()
                         ->columnSpanFull(),
-                    FileUpload::make('cud_archivo')
+                    SpatieMediaLibraryFileUpload::make('cud_archivo')
                         ->label('Archivo CUD (PDF o imagen)')
-                        ->disk('public')
-                        ->directory('legajos/cud')
-                        ->visibility('public')
+                        ->collection('cud')
                         ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'application/pdf'])
                         ->maxSize(5120)
                         ->columnSpanFull()

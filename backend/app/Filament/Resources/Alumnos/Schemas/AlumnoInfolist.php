@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\Alumnos\Schemas;
 
-use Filament\Infolists\Components\ImageEntry;
+use Filament\Infolists\Components\SpatieMediaLibraryImageEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
@@ -15,9 +15,9 @@ class AlumnoInfolist
             ->components([
                 Section::make()
                     ->schema([
-                        ImageEntry::make('foto')
+                        SpatieMediaLibraryImageEntry::make('foto')
                             ->label('')
-                            ->disk('public')
+                            ->collection('alumnos')
                             ->circular(false)
                             ->defaultImageUrl(fn ($record) => 'https://ui-avatars.com/api/?name=' . urlencode($record->nombre_completo) . '&background=184158&color=fff&size=200')
                             ->width(150)
