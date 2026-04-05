@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Enums\EstadoAlumno;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -13,7 +12,6 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 class Alumno extends Model
 {
     protected $fillable = [
-        'user_id',
         'nombre',
         'apellido',
         'dni',
@@ -25,6 +23,7 @@ class Alumno extends Model
         'email',
         'foto',
         'estado',
+        'tiene_cud',
     ];
 
     protected function casts(): array
@@ -32,12 +31,8 @@ class Alumno extends Model
         return [
             'fecha_nacimiento' => 'date',
             'estado'           => EstadoAlumno::class,
+            'tiene_cud'        => 'boolean',
         ];
-    }
-
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
     }
 
     public function fichaLegajo(): HasOne

@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class DocumentoLegajo extends Model
 {
+    protected $table = 'documentos_legajo';
+
     protected $fillable = [
         'ficha_legajo_id',
         'tipo_documento',

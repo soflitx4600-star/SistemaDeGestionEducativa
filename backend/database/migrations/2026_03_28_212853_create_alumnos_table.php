@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('alumnos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
             $table->string('nombre', 100);
             $table->string('apellido', 100);
             $table->string('dni', 15)->unique();
@@ -23,7 +22,8 @@ return new class extends Migration
             $table->string('domicilio', 255);
             $table->string('telefono', 20)->nullable();
             $table->string('email', 150)->nullable()->unique();
-            $table->enum('estado', ['preinscripto', 'sorteado', 'inscripto', 'egresado', 'abandono', 'suspendido'])->default('preinscripto');
+            $table->string('foto')->nullable();
+            $table->enum('estado', ['egresado', 'abandono', 'suspendido','regular'])->default('regular');
             $table->timestamps();
         });
     }

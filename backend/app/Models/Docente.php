@@ -9,21 +9,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Docente extends Model
 {
     protected $fillable = [
-        'user_id',
         'nombre',
         'apellido',
         'dni',
         'cuil',
         'telefono',
         'email',
-        'especialidad',
+        'titulo',
         'foto',
     ];
-
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
 
     public function materias(): BelongsToMany
     {

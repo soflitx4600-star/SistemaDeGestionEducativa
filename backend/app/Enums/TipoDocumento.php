@@ -10,6 +10,9 @@ enum TipoDocumento: string
     case CuilTutor               = 'cuil_tutor';
     case ConstanciaAlumnoRegular = 'constancia_alumno_regular';
     case Certificado7moGrado     = 'certificado_7mo_grado';
+    case PartidaNacimiento       = 'partida_nacimiento';
+    case TituloPrimaria          = 'titulo_primaria';
+    case Cud                     = 'cud';
 
     public function label(): string
     {
@@ -20,6 +23,9 @@ enum TipoDocumento: string
             self::CuilTutor               => 'Constancia de CUIL del Tutor',
             self::ConstanciaAlumnoRegular => 'Constancia de Alumno Regular',
             self::Certificado7moGrado     => 'Certificado de 7mo Grado',
+            self::PartidaNacimiento       => 'Partida de Nacimiento',
+            self::TituloPrimaria          => 'Título Primaria',
+            self::Cud                     => 'Certificado Único de Discapacidad (CUD)',
         };
     }
 
@@ -28,7 +34,6 @@ enum TipoDocumento: string
         return $this === self::ConstanciaAlumnoRegular;
     }
 
-    /** Retorna todos los tipos requeridos para cerrar el legajo */
     public static function requeridos(): array
     {
         return self::cases();
