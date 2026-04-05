@@ -38,17 +38,18 @@ class CursoResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            // ACÁ LE INYECTAMOS TU RELATION MANAGER
+            RelationManagers\AlumnosRelationManager::class,
         ];
     }
 
     public static function getPages(): array
     {
         return [
-            'index'         => ListCursos::route('/'),
-            'create'        => CreateCurso::route('/create'),
-            'view'          => ViewCurso::route('/{record}'),
-            'edit'          => EditCurso::route('/{record}/edit'),
+            'index'          => ListCursos::route('/'),
+            'create'         => CreateCurso::route('/create'),
+            'view'           => ViewCurso::route('/{record}'),
+            'edit'           => EditCurso::route('/{record}/edit'),
             'grilla-horario' => GrillaHorario::route('/{record}/horario'),
         ];
     }

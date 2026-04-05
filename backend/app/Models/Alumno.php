@@ -61,4 +61,10 @@ class Alumno extends Model
     {
         return "{$this->apellido}, {$this->nombre}";
     }
+
+    // ¡ESTA ES LA RELACIÓN QUE FALTABA!
+    public function cursos(): BelongsToMany
+    {
+        return $this->belongsToMany(Curso::class);
+    }
 }
