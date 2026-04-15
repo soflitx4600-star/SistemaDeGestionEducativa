@@ -18,10 +18,10 @@ class AlumnoForm
     {
         return $schema
             ->components([
-                Section::make('Foto del alumno')
+                Section::make('Datos del Alumno')
                     ->schema([
                         FileUpload::make('foto')
-                            ->label('Foto')
+                            ->label('')
                             ->image()
                             ->imageEditor()
                             ->circleCropper()
@@ -30,47 +30,49 @@ class AlumnoForm
                             ->visibility('public')
                             ->maxSize(2048)
                             ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
-                            ->columnSpanFull(),
-                    ]),
+                            ->columnSpan(1),
 
-                Section::make('Datos personales')
-                    ->schema([
-                        TextInput::make('nombre')
-                            ->required()
-                            ->maxLength(100),
-                        TextInput::make('apellido')
-                            ->required()
-                            ->maxLength(100),
-                        TextInput::make('dni')
-                            ->required()
-                            ->unique(ignoreRecord: true)
-                            ->maxLength(15),
-                        TextInput::make('cuil')
-                            ->unique(ignoreRecord: true)
-                            ->maxLength(20),
-                        DatePicker::make('fecha_nacimiento')
-                            ->required()
-                            ->label('Fecha de nacimiento'),
-                        Select::make('genero')
-                            ->options([
-                                'masculino' => 'Masculino',
-                                'femenino'  => 'Femenino',
-                                'otro'      => 'Otro',
+                        Section::make()
+                            ->schema([
+                                TextInput::make('nombre')
+                                    ->required()
+                                    ->maxLength(100),
+                                TextInput::make('apellido')
+                                    ->required()
+                                    ->maxLength(100),
+                                TextInput::make('dni')
+                                    ->required()
+                                    ->unique(ignoreRecord: true)
+                                    ->maxLength(15),
+                                TextInput::make('cuil')
+                                    ->unique(ignoreRecord: true)
+                                    ->maxLength(20),
+                                DatePicker::make('fecha_nacimiento')
+                                    ->required()
+                                    ->label('Fecha de nacimiento'),
+                                Select::make('genero')
+                                    ->options([
+                                        'masculino' => 'Masculino',
+                                        'femenino'  => 'Femenino',
+                                        'otro'      => 'Otro',
+                                    ])
+                                    ->required(),
+                                TextInput::make('domicilio')
+                                    ->required()
+                                    ->maxLength(255)
+                                    ->columnSpanFull(),
+                                TextInput::make('telefono')
+                                    ->tel()
+                                    ->maxLength(20),
+                                TextInput::make('email')
+                                    ->email()
+                                    ->unique(ignoreRecord: true)
+                                    ->maxLength(150),
                             ])
-                            ->required(),
-                        TextInput::make('domicilio')
-                            ->required()
-                            ->maxLength(255)
-                            ->columnSpanFull(),
-                        TextInput::make('telefono')
-                            ->tel()
-                            ->maxLength(20),
-                        TextInput::make('email')
-                            ->email()
-                            ->unique(ignoreRecord: true)
-                            ->maxLength(150),
+                            ->columns(2)
+                            ->columnSpan(3),
                     ])
-                    ->columns(2),
+                    ->columns(4),
 
                 Section::make('Documentación CUD')
                     ->schema([
@@ -94,11 +96,11 @@ class AlumnoForm
     public static function getSteps(): array
     {
         return [
-            Step::make('Foto')
-                ->icon('heroicon-o-camera')
+            Step::make('Datos del Alumno')
+                ->icon('heroicon-o-user')
                 ->schema([
                     FileUpload::make('foto')
-                        ->label('Foto del alumno')
+                        ->label('Foto')
                         ->image()
                         ->imageEditor()
                         ->circleCropper()
@@ -107,48 +109,49 @@ class AlumnoForm
                         ->visibility('public')
                         ->maxSize(2048)
                         ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
-                        ->columnSpanFull(),
-                ]),
+                        ->columnSpan(1),
 
-            Step::make('Datos Personales')
-                ->icon('heroicon-o-user')
-                ->schema([
-                    TextInput::make('nombre')
-                        ->required()
-                        ->maxLength(100),
-                    TextInput::make('apellido')
-                        ->required()
-                        ->maxLength(100),
-                    TextInput::make('dni')
-                        ->required()
-                        ->unique(ignoreRecord: true)
-                        ->maxLength(15),
-                    TextInput::make('cuil')
-                        ->unique(ignoreRecord: true)
-                        ->maxLength(20),
-                    DatePicker::make('fecha_nacimiento')
-                        ->required()
-                        ->label('Fecha de nacimiento'),
-                    Select::make('genero')
-                        ->options([
-                            'masculino' => 'Masculino',
-                            'femenino'  => 'Femenino',
-                            'otro'      => 'Otro',
+                    Section::make()
+                        ->schema([
+                            TextInput::make('nombre')
+                                ->required()
+                                ->maxLength(100),
+                            TextInput::make('apellido')
+                                ->required()
+                                ->maxLength(100),
+                            TextInput::make('dni')
+                                ->required()
+                                ->unique(ignoreRecord: true)
+                                ->maxLength(15),
+                            TextInput::make('cuil')
+                                ->unique(ignoreRecord: true)
+                                ->maxLength(20),
+                            DatePicker::make('fecha_nacimiento')
+                                ->required()
+                                ->label('Fecha de nacimiento'),
+                            Select::make('genero')
+                                ->options([
+                                    'masculino' => 'Masculino',
+                                    'femenino'  => 'Femenino',
+                                    'otro'      => 'Otro',
+                                ])
+                                ->required(),
+                            TextInput::make('domicilio')
+                                ->required()
+                                ->maxLength(255)
+                                ->columnSpanFull(),
+                            TextInput::make('telefono')
+                                ->tel()
+                                ->maxLength(20),
+                            TextInput::make('email')
+                                ->email()
+                                ->unique(ignoreRecord: true)
+                                ->maxLength(150),
                         ])
-                        ->required(),
-                    TextInput::make('domicilio')
-                        ->required()
-                        ->maxLength(255)
-                        ->columnSpanFull(),
-                    TextInput::make('telefono')
-                        ->tel()
-                        ->maxLength(20),
-                    TextInput::make('email')
-                        ->email()
-                        ->unique(ignoreRecord: true)
-                        ->maxLength(150),
+                        ->columns(2)
+                        ->columnSpan(3),
                 ])
-                ->columns(2),
+                ->columns(4),
 
             Step::make('Documentación')
                 ->icon('heroicon-o-document')
