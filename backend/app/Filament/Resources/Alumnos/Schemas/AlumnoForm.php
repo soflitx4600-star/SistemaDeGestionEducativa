@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\Alumnos\Schemas;
 
-use App\Enums\EstadoAlumno;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
@@ -73,12 +72,8 @@ class AlumnoForm
                     ])
                     ->columns(2),
 
-                Section::make('Estado')
+                Section::make('Documentación CUD')
                     ->schema([
-                        Select::make('estado')
-                            ->options(EstadoAlumno::class)
-                            ->default('preinscripto')
-                            ->required(),
                         Toggle::make('tiene_cud')
                             ->label('¿El alumno tiene CUD?')
                             ->live()
@@ -155,13 +150,9 @@ class AlumnoForm
                 ])
                 ->columns(2),
 
-            Step::make('Estado')
-                ->icon('heroicon-o-check-circle')
+            Step::make('Documentación')
+                ->icon('heroicon-o-document')
                 ->schema([
-                    Select::make('estado')
-                        ->options(EstadoAlumno::class)
-                        ->default('preinscripto')
-                        ->required(),
                     Toggle::make('tiene_cud')
                         ->label('¿El alumno tiene CUD (Certificado Único de Discapacidad)?')
                         ->live()
