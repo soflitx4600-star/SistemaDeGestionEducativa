@@ -61,16 +61,9 @@ class Alumno extends Model implements HasMedia
         return "{$this->apellido}, {$this->nombre}";
     }
 
-    public function registerMediaCollections(): void
+    // ¡ESTA ES LA RELACIÓN QUE FALTABA!
+    public function cursos(): BelongsToMany
     {
-        $this->addMediaCollection('alumnos')->singleFile();
-        $this->addMediaCollection('cud')->singleFile();
-    }
-
-    public function registerMediaConversions(?Media $media = null): void
-    {
-        $this->addMediaConversion('preview')
-            ->fit(Fit::Contain, 300, 300)
-            ->nonQueued();
+        return $this->belongsToMany(Curso::class);
     }
 }

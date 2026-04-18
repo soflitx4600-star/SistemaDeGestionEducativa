@@ -65,14 +65,10 @@ class AdministracionPanelProvider extends PanelProvider
                 AuthDesignerPlugin::make()
                     ->login(
                         fn(AuthPageConfig $config) => $config
-                            ->media(asset('logo_olga_2.jpeg'))
+                            ->media(asset('foto-fondo-olga-aredez.png'))
                             ->mediaPosition(MediaPosition::Left)
                             ->mediaSize('50%')
-
-
                     ),
-
-           
             ]);
 
 

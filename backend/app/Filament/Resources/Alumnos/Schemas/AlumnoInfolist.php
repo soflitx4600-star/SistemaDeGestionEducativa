@@ -29,16 +29,6 @@ class AlumnoInfolist
                             ->schema([
                                 TextEntry::make('nombre_completo')
                                     ->label('Nombre completo'),
-                                TextEntry::make('estado')
-                                    ->badge()
-                                    ->color(fn ($state) => match ($state?->value ?? $state) {
-                                        'regular'      => 'success',
-                                        'preinscripto' => 'warning',
-                                        'egresado'     => 'info',
-                                        'suspendido'   => 'danger',
-                                        'abandono'     => 'gray',
-                                        default        => 'gray',
-                                    }),
                                 TextEntry::make('tiene_cud')
                                     ->label('CUD')
                                     ->formatStateUsing(fn ($state) => $state ? 'Tiene CUD' : 'Sin CUD')

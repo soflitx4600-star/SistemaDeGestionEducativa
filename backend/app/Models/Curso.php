@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Curso extends Model
 {
@@ -41,6 +42,12 @@ class Curso extends Model
     public function horarios(): HasMany
     {
         return $this->hasMany(Horario::class);
+    }
+
+    // ¡ACÁ ESTÁ LA RELACIÓN QUE FALTABA PARA QUE FUNCIONE EL RELATION MANAGER!
+    public function alumnos(): BelongsToMany
+    {
+        return $this->belongsToMany(Alumno::class);
     }
 
     // ─── Accesor: total de alumnos únicos inscriptos en este curso ───────────
