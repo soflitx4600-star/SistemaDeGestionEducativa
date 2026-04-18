@@ -96,9 +96,10 @@ class AlumnoForm
             Step::make('Datos del Alumno')
                 ->icon('heroicon-o-user')
                 ->schema([
-                    FileUpload::make('foto')
+                    SpatieMediaLibraryFileUpload::make('foto')
                         ->label('Foto del alumno')
-                        ->image()
+                        ->collection('alumnos')
+                        ->avatar()
                         ->imageEditor()
                         ->circleCropper()
                         ->maxSize(2048)
