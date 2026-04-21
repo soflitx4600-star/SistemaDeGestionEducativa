@@ -7,6 +7,7 @@ enum EstadoAlumno: string
     case Preinscripto = 'preinscripto';
     case Sorteado     = 'sorteado';
     case Inscripto    = 'inscripto';
+    case Regular      = 'regular';
     case Egresado     = 'egresado';
     case Abandono     = 'abandono';
     case Suspendido   = 'suspendido';
@@ -17,6 +18,7 @@ enum EstadoAlumno: string
             self::Preinscripto => 'Preinscripto',
             self::Sorteado     => 'Sorteado',
             self::Inscripto    => 'Inscripto',
+            self::Regular      => 'Regular',
             self::Egresado     => 'Egresado',
             self::Abandono     => 'Abandono',
             self::Suspendido   => 'Suspendido',
