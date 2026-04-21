@@ -3,16 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Spatie\Image\Enums\Fit;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class Docente extends Model implements HasMedia
+class Docente extends Model
 {
-    use InteractsWithMedia;
     protected $fillable = [
         'nombre',
         'apellido',
@@ -34,17 +28,5 @@ class Docente extends Model implements HasMedia
     public function getNombreCompletoAttribute(): string
     {
         return "{$this->apellido}, {$this->nombre}";
-    }
-
-    public function registerMediaCollections(): void
-    {
-        $this->addMediaCollection('docentes')->singleFile();
-    }
-
-    public function registerMediaConversions(?Media $media = null): void
-    {
-        $this->addMediaConversion('preview')
-            ->fit(Fit::Contain, 300, 300)
-            ->nonQueued();
     }
 }

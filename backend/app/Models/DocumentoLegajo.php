@@ -6,13 +6,9 @@ use App\Enums\EstadoDocumento;
 use App\Enums\TipoDocumento;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class DocumentoLegajo extends Model implements HasMedia
+class DocumentoLegajo extends Model
 {
-    use InteractsWithMedia;
     protected $table = 'documentos_legajo';
 
     protected $fillable = [
@@ -28,10 +24,10 @@ class DocumentoLegajo extends Model implements HasMedia
     protected function casts(): array
     {
         return [
-            'tipo_documento'   => TipoDocumento::class,
-            'estado'           => EstadoDocumento::class,
+            'tipo_documento'    => TipoDocumento::class,
+            'estado'            => EstadoDocumento::class,
             'fecha_vencimiento' => 'date',
-            'validado_at'      => 'datetime',
+            'validado_at'       => 'datetime',
         ];
     }
 
@@ -52,17 +48,5 @@ class DocumentoLegajo extends Model implements HasMedia
         }
 
         return $this->fecha_vencimiento->isPast();
-    }
-
-    public function registerMediaCollections(): void
-    {
-        $this->addMediaCollection('documentos_legajo')->singleFile();
-    }
-
-    public function registerMediaConversions(?Media $media = null): void
-    {
-        $this->addMediaConversion('preview')
-            ->fit(\Spatie\Image\Enums\Fit::Contain, 300, 300)
-            ->nonQueued();
     }
 }

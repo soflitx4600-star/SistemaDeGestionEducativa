@@ -7,15 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
-use Spatie\Image\Enums\Fit;
 
-class Alumno extends Model implements HasMedia
+class Alumno extends Model
 {
-    use InteractsWithMedia;
     protected $fillable = [
         'nombre',
         'apellido',
@@ -26,6 +20,7 @@ class Alumno extends Model implements HasMedia
         'domicilio',
         'telefono',
         'email',
+        'foto',
         'estado',
         'tiene_cud',
     ];
@@ -56,14 +51,13 @@ class Alumno extends Model implements HasMedia
         return $this->hasMany(HistorialAcademico::class);
     }
 
-    public function getNombreCompletoAttribute(): string
-    {
-        return "{$this->apellido}, {$this->nombre}";
-    }
-
-    // ¡ESTA ES LA RELACIÓN QUE FALTABA!
     public function cursos(): BelongsToMany
     {
         return $this->belongsToMany(Curso::class);
+    }
+
+    public function getNombreCompletoAttribute(): string
+    {
+        return "{$this->apellido}, {$this->nombre}";
     }
 }
