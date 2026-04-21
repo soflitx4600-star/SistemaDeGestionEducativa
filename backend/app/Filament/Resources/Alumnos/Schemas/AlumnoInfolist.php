@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\Alumnos\Schemas;
 
-use Filament\Infolists\Components\SpatieMediaLibraryImageEntry;
+use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
@@ -15,9 +15,9 @@ class AlumnoInfolist
             ->components([
                 Section::make()
                     ->schema([
-                        SpatieMediaLibraryImageEntry::make('foto')
+                        ImageEntry::make('foto')
                             ->label('')
-                            ->collection('alumnos')
+                            ->disk('public')
                             ->circular(false)
                             ->defaultImageUrl(fn ($record) => 'https://ui-avatars.com/api/?name=' . urlencode($record->nombre_completo) . '&background=184158&color=fff&size=200')
                             ->width(150)
@@ -29,6 +29,16 @@ class AlumnoInfolist
                             ->schema([
                                 TextEntry::make('nombre_completo')
                                     ->label('Nombre completo'),
+                                TextEntry::make('estado')
+                                    ->badge()
+                                    ->color(fn ($state) => match ($state?->value ?? $state) {
+                                        'regular'      => 'success',
+                                        'preinscripto' => 'warning',
+                                        'egresado'     => 'info',
+                                        'suspendido'   => 'danger',
+                                        'abandono'     => 'gray',
+                                        default        => 'gray',
+                                    }),
                                 TextEntry::make('tiene_cud')
                                     ->label('CUD')
                                     ->formatStateUsing(fn ($state) => $state ? 'Tiene CUD' : 'Sin CUD')

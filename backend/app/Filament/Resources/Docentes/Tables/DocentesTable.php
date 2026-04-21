@@ -6,7 +6,8 @@ use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
+use Filament\Actions\ViewAction;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -16,9 +17,9 @@ class DocentesTable
     {
         return $table
             ->columns([
-                SpatieMediaLibraryImageColumn::make('foto')
+                ImageColumn::make('foto')
                     ->label('')
-                    ->collection('docentes')
+                    ->disk('public')
                     ->circular()
                     ->defaultImageUrl(fn ($record) => 'https://ui-avatars.com/api/?name='.urlencode($record->nombre).'&background=184158&color=fff')
                     ->size(40),
@@ -28,7 +29,7 @@ class DocentesTable
                 TextColumn::make('cuil')->searchable()->toggleable(),
                 TextColumn::make('telefono')->searchable()->toggleable(),
                 TextColumn::make('email')->searchable()->toggleable(),
-                TextColumn::make('especialidad')->searchable()->toggleable(),
+                TextColumn::make('titulo')->label('Título')->searchable()->toggleable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -36,6 +37,7 @@ class DocentesTable
             ])
             ->filters([])
             ->recordActions([
+                ViewAction::make(),
                 EditAction::make(),
                 Action::make('pdf')
                     ->label('PDF')

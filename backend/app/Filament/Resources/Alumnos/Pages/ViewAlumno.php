@@ -12,8 +12,8 @@ use Filament\Actions\Action;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
@@ -60,9 +60,11 @@ class ViewAlumno extends ViewRecord
                         )
                         ->default(EstadoDocumento::Adjunto->value)
                         ->required(),
-                    SpatieMediaLibraryFileUpload::make('archivo_path')
+                    FileUpload::make('archivo_path')
                         ->label('Archivo (PDF o imagen)')
-                        ->collection('documentos_legajo')
+                        ->disk('public')
+                        ->directory('legajos/documentos')
+                        ->visibility('public')
                         ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'application/pdf'])
                         ->maxSize(5120)
                         ->columnSpanFull(),

@@ -6,9 +6,9 @@ use App\Enums\EstadoDocumento;
 use App\Enums\TipoDocumento;
 use App\Models\Alumno;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
@@ -65,9 +65,11 @@ class FichaLegajoForm
                                     )
                                     ->default('pendiente')
                                     ->required(),
-                                SpatieMediaLibraryFileUpload::make('archivo_path')
+                                FileUpload::make('archivo_path')
                                     ->label('Archivo (PDF o imagen)')
-                                    ->collection('documentos_legajo')
+                                    ->disk('public')
+                                    ->directory('legajos/documentos')
+                                    ->visibility('public')
                                     ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'application/pdf'])
                                     ->maxSize(5120)
                                     ->columnSpanFull(),
