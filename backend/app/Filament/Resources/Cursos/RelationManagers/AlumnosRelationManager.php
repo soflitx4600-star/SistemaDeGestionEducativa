@@ -13,7 +13,7 @@ use App\Models\Alumno;
 use Filament\Actions\Action;
 use Filament\Actions\DetachAction;
 use Filament\Actions\DetachBulkAction;
-
+use Filament\Actions\AttachAction;
 class AlumnosRelationManager extends RelationManager
 {
     protected static string $relationship = 'alumnos';
@@ -30,6 +30,10 @@ class AlumnosRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('dni')->searchable(),
             ])
             ->headerActions([
+                 AttachAction::make()
+                    ->label('Agregar alumno')
+                    ->preloadRecordSelect()
+                    ->recordSelectSearchColumns(['dni', 'nombre', 'apellido', 'email']),
                 // Nuestro botón de importación nativo, apuntando a la clase Action correcta
                 Action::make('importar_csv')
                     ->label('Importar CSV')
