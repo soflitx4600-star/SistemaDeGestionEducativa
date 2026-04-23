@@ -54,7 +54,7 @@ class AlumnoForm
                     ->schema([
                         Select::make('estado')
                             ->options(EstadoAlumno::class)
-                            ->default('preinscripto')
+                            ->default('regular')
                             ->required(),
                         Toggle::make('tiene_cud')
                             ->label('¿El alumno tiene CUD?')
@@ -109,7 +109,7 @@ class AlumnoForm
                 ->schema([
                     Select::make('estado')
                         ->options(EstadoAlumno::class)
-                        ->default('preinscripto')
+                        ->default('regular')
                         ->required(),
                     Toggle::make('tiene_cud')
                         ->label('¿El alumno tiene CUD (Certificado Único de Discapacidad)?')
