@@ -76,8 +76,8 @@ class AlumnoForm
     public static function getSteps(): array
     {
         return [
-            Step::make('Foto')
-                ->icon('heroicon-o-camera')
+            Step::make('Datos Personales')
+                ->icon('heroicon-o-user')
                 ->schema([
                     FileUpload::make('foto')
                         ->label('Foto del alumno')
@@ -90,11 +90,6 @@ class AlumnoForm
                         ->maxSize(2048)
                         ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                         ->columnSpanFull(),
-                ]),
-
-            Step::make('Datos Personales')
-                ->icon('heroicon-o-user')
-                ->schema([
                     TextInput::make('nombre')->required()->maxLength(100),
                     TextInput::make('apellido')->required()->maxLength(100),
                     TextInput::make('dni')->required()->unique(ignoreRecord: true)->maxLength(15),
