@@ -24,10 +24,10 @@ class DocumentoLegajo extends Model
     protected function casts(): array
     {
         return [
-            'tipo_documento'   => TipoDocumento::class,
-            'estado'           => EstadoDocumento::class,
+            'tipo_documento'    => TipoDocumento::class,
+            'estado'            => EstadoDocumento::class,
             'fecha_vencimiento' => 'date',
-            'validado_at'      => 'datetime',
+            'validado_at'       => 'datetime',
         ];
     }
 

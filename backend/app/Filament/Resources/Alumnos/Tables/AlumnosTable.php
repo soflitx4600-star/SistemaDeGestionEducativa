@@ -19,8 +19,8 @@ class AlumnosTable
             ->columns([
                 ImageColumn::make('foto')
                     ->label('')
-                    ->circular()
                     ->disk('public')
+                    ->circular()
                     ->defaultImageUrl(fn ($record) => 'https://ui-avatars.com/api/?name='.urlencode($record->nombre).'&background=184158&color=fff')
                     ->size(40),
                 TextColumn::make('apellido')->searchable()->sortable(),

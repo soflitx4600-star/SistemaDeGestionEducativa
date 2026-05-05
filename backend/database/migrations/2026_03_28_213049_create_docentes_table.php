@@ -21,7 +21,6 @@ return new class extends Migration
             $table->string('email', 150)->nullable()->unique();
             $table->string('titulo', 150)->nullable();
             $table->string('localidad', 255)->nullable();
-            $table->string('foto')->nullable();
             $table->timestamps();
         });
     }

@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Docente extends Model
@@ -16,7 +15,7 @@ class Docente extends Model
         'telefono',
         'email',
         'titulo',
-        'foto',
+        'localidad',
     ];
 
     public function materias(): BelongsToMany
