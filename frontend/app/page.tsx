@@ -1,18 +1,74 @@
 "use client";
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { motion } from 'motion/react';
+import NewsModal, { NewsItem } from '../components/NewsModal';
+
+const heroImages = [
+  '/fotos-institucion/institucion-frente.png',
+  '/fotos-institucion/institucion-interior.png',
+  '/fotos-institucion/screen copy.png',
+];
+
+const NEWS: NewsItem[] = [
+  {
+    id: 1,
+    tag: 'Ciencias',
+    date: '15 Oct, 2023',
+    title: 'Feria de Innovación y Tecnología 2023',
+    excerpt: 'Estudiantes de ciclo orientado presentaron proyectos de robótica aplicada a la sustentabilidad urbana.',
+    body: 'Estudiantes de ciclo orientado presentaron proyectos de robótica aplicada a la sustentabilidad urbana. Durante tres días, más de 40 equipos expusieron sus desarrollos ante un jurado compuesto por docentes, ingenieros y representantes de empresas tecnológicas de la región. Los proyectos abarcaron desde sistemas de riego inteligente hasta prototipos de clasificación de residuos con visión artificial. La feria contó con la participación de más de 500 visitantes entre familias, alumnos de otras instituciones y autoridades educativas.',
+    image: '/fotos-actividades/acto_bandera.png',
+    imageAlt: 'Feria de ciencias',
+  },
+  {
+    id: 2,
+    tag: 'Deportes',
+    date: '12 Oct, 2023',
+    title: 'Finales Intercolegiales de Atletismo',
+    excerpt: 'Nuestros atletas destacaron en las competencias regionales obteniendo el primer puesto en relevos.',
+    body: 'Nuestros atletas destacaron en las competencias regionales obteniendo el primer puesto en relevos. El equipo de atletismo de la institución participó en las finales intercolegiales celebradas en el estadio municipal, donde compitieron más de 20 escuelas de la provincia. Además del primer puesto en la prueba de relevos 4×100, se obtuvieron medallas en salto en largo y lanzamiento de bala. El entrenador destacó el esfuerzo y la dedicación del grupo durante todo el año.',
+    image: '/fotos-actividades/campaña.png',
+    imageAlt: 'Deportes',
+  },
+  {
+    id: 3,
+    tag: 'Cultura',
+    date: '08 Oct, 2023',
+    title: 'Nueva Biblioteca Digital Institucional',
+    excerpt: 'Inauguramos el acceso a más de 5.000 títulos académicos para todos nuestros alumnos y familias.',
+    body: 'Inauguramos el acceso a más de 5.000 títulos académicos para todos nuestros alumnos y familias. La nueva plataforma de biblioteca digital permite el acceso remoto a libros de texto, revistas científicas y material audiovisual desde cualquier dispositivo. El proyecto fue desarrollado en colaboración con el Ministerio de Educación y una red de editoriales nacionales. Cada alumno cuenta con credenciales personales y los docentes pueden crear listas de lectura personalizadas por materia y nivel.',
+    image: '/fotos-actividades/eleccion_reina.png',
+    imageAlt: 'Cultura',
+  },
+];
 
 export default function Home() {
+  const [current, setCurrent] = useState(0);
+  const [selected, setSelected] = useState<NewsItem | null>(null);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrent(prev => (prev + 1) % heroImages.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <div className="bg-[#f7fafc] font-['Inter'] text-[#181c1e]">
 
       {/* Hero Section */}
       <section className="relative min-h-[921px] flex items-center pt-20 overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img
-            alt="Campus exterior"
-            className="w-full h-full object-cover"
-            src="/fotos-institucion/institucion-frente.png"
-          />
+          {heroImages.map((src, i) => (
+            <img
+              key={src}
+              alt="Campus"
+              src={src}
+              className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
+              style={{ opacity: i === current ? 1 : 0 }}
+            />
+          ))}
           <div className="absolute inset-0 bg-gradient-to-r from-[#002045]/90 to-[#1a365d]/40"></div>
         </div>
         <div className="container mx-auto px-6 md:px-12 relative z-10">
@@ -27,13 +83,13 @@ export default function Home() {
               Nuestra institución combina tradición pedagógica con innovación tecnológica para preparar a los líderes del mañana en un entorno bilingüe y colaborativo.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <button className="px-8 py-4 bg-[#fed65b] text-[#002045] font-bold rounded-xl shadow-lg hover:bg-[#735c00] hover:text-white transition-all flex items-center justify-center gap-2">
-                Conocer más
+              <Link href="/institucional" className="px-8 py-4 bg-[#fed65b] text-[#002045] font-bold rounded-xl shadow-lg hover:bg-[#735c00] hover:text-white transition-all flex items-center justify-center gap-2">
+                Sobre Nosotros
                 <span className="material-symbols-outlined">arrow_forward</span>
-              </button>
-              <button className="px-8 py-4 bg-white/10 backdrop-blur-md text-white font-bold rounded-xl border border-white/20 hover:bg-white/20 transition-all">
-                Admisiones 2024
-              </button>
+              </Link>
+              <Link href="/inscripcion" className="px-8 py-4 bg-white/10 backdrop-blur-md text-white font-bold rounded-xl border border-white/20 hover:bg-white/20 transition-all flex items-center justify-center">
+                Admisiones 2026
+              </Link>
             </div>
           </div>
         </div>
@@ -53,58 +109,43 @@ export default function Home() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <article className="group bg-white rounded-2xl overflow-hidden shadow-[0_8px_32px_rgba(26,54,93,0.04)] transition-all hover:-translate-y-1">
-            <div className="aspect-[16/10] overflow-hidden">
-              <img alt="Feria de ciencias" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="/fotos-actividades/acto_bandera.png" />
-            </div>
-            <div className="p-6">
-              <div className="flex items-center gap-4 mb-4">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#735c00] px-2 py-1 bg-[#fed65b] rounded">Ciencias</span>
-                <time className="text-xs text-[#43474e]">15 Oct, 2023</time>
+          {NEWS.map((item, idx) => (
+            <motion.article
+              key={item.id}
+              layoutId={`card-${item.id}`}
+              onClick={() => setSelected(item)}
+              className={`group bg-white rounded-2xl overflow-hidden shadow-[0_8px_32px_rgba(26,54,93,0.04)] cursor-pointer hover:-translate-y-1 transition-transform${
+                idx === 2 ? ' border-l-4 border-[#735c00]' : ''
+              }`}
+            >
+              <motion.div layoutId={`image-${item.id}`} className="aspect-[16/10] overflow-hidden">
+                <img
+                  alt={item.imageAlt}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  src={item.image}
+                />
+              </motion.div>
+              <div className="p-6">
+                <div className="flex items-center gap-4 mb-4">
+                  <motion.span layoutId={`tag-${item.id}`} className="text-[10px] font-bold uppercase tracking-wider text-[#735c00] px-2 py-1 bg-[#fed65b] rounded">
+                    {item.tag}
+                  </motion.span>
+                  <motion.time layoutId={`date-${item.id}`} className="text-xs text-[#43474e]">{item.date}</motion.time>
+                </div>
+                <motion.h3 layoutId={`title-${item.id}`} className="font-['Manrope'] text-xl font-bold text-[#002045] mb-3 leading-snug">
+                  {item.title}
+                </motion.h3>
+                <p className="text-sm text-[#43474e] line-clamp-3 mb-6">{item.excerpt}</p>
+                <span className="inline-flex items-center text-[#002045] font-bold text-sm gap-2 hover:text-[#735c00] transition">
+                  Leer nota <span className="material-symbols-outlined text-base">east</span>
+                </span>
               </div>
-              <h3 className="font-['Manrope'] text-xl font-bold text-[#002045] mb-3 leading-snug">Feria de Innovación y Tecnología 2023</h3>
-              <p className="text-sm text-[#43474e] line-clamp-3 mb-6">Estudiantes de ciclo orientado presentaron proyectos de robótica aplicada a la sustentabilidad urbana.</p>
-              <a className="inline-flex items-center text-[#002045] font-bold text-sm gap-2 hover:text-[#735c00] transition" href="#">
-                Leer nota <span className="material-symbols-outlined text-base">east</span>
-              </a>
-            </div>
-          </article>
-
-          <article className="group bg-white rounded-2xl overflow-hidden shadow-[0_8px_32px_rgba(26,54,93,0.04)] transition-all hover:-translate-y-1">
-            <div className="aspect-[16/10] overflow-hidden">
-              <img alt="Deportes" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="/fotos-actividades/campaña.png" />
-            </div>
-            <div className="p-6">
-              <div className="flex items-center gap-4 mb-4">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#735c00] px-2 py-1 bg-[#fed65b] rounded">Deportes</span>
-                <time className="text-xs text-[#43474e]">12 Oct, 2023</time>
-              </div>
-              <h3 className="font-['Manrope'] text-xl font-bold text-[#002045] mb-3 leading-snug">Finales Intercolegiales de Atletismo</h3>
-              <p className="text-sm text-[#43474e] line-clamp-3 mb-6">Nuestros atletas destacaron en las competencias regionales obteniendo el primer puesto en relevos.</p>
-              <a className="inline-flex items-center text-[#002045] font-bold text-sm gap-2 hover:text-[#735c00] transition" href="#">
-                Leer nota <span className="material-symbols-outlined text-base">east</span>
-              </a>
-            </div>
-          </article>
-
-          <article className="group bg-white rounded-2xl overflow-hidden shadow-[0_8px_32px_rgba(26,54,93,0.04)] border-l-4 border-[#735c00] transition-all hover:-translate-y-1">
-            <div className="aspect-[16/10] overflow-hidden">
-              <img alt="Cultura" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="/fotos-actividades/eleccion_reina.png" />
-            </div>
-            <div className="p-6">
-              <div className="flex items-center gap-4 mb-4">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#735c00] px-2 py-1 bg-[#fed65b] rounded">Cultura</span>
-                <time className="text-xs text-[#43474e]">08 Oct, 2023</time>
-              </div>
-              <h3 className="font-['Manrope'] text-xl font-bold text-[#002045] mb-3 leading-snug">Nueva Biblioteca Digital Institucional</h3>
-              <p className="text-sm text-[#43474e] line-clamp-3 mb-6">Inauguramos el acceso a más de 5.000 títulos académicos para todos nuestros alumnos y familias.</p>
-              <a className="inline-flex items-center text-[#002045] font-bold text-sm gap-2 hover:text-[#735c00] transition" href="#">
-                Leer nota <span className="material-symbols-outlined text-base">east</span>
-              </a>
-            </div>
-          </article>
+            </motion.article>
+          ))}
         </div>
       </section>
+
+      <NewsModal item={selected} onClose={() => setSelected(null)} />
 
       {/* Educational Levels & Calendar */}
       <section className="py-24 bg-[#f1f4f6]">
