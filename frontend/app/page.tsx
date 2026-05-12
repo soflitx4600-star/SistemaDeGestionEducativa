@@ -2,45 +2,13 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'motion/react';
-import NewsModal, { NewsItem } from '../components/NewsModal';
+import NewsModal from '../components/NewsModal';
+import { NEWS, NewsItem } from '../lib/news';
 
 const heroImages = [
   '/fotos-institucion/institucion-frente.png',
   '/fotos-institucion/institucion-interior.png',
   '/fotos-institucion/screen copy.png',
-];
-
-const NEWS: NewsItem[] = [
-  {
-    id: 1,
-    tag: 'Ciencias',
-    date: '15 Oct, 2023',
-    title: 'Feria de Innovación y Tecnología 2023',
-    excerpt: 'Estudiantes de ciclo orientado presentaron proyectos de robótica aplicada a la sustentabilidad urbana.',
-    body: 'Estudiantes de ciclo orientado presentaron proyectos de robótica aplicada a la sustentabilidad urbana. Durante tres días, más de 40 equipos expusieron sus desarrollos ante un jurado compuesto por docentes, ingenieros y representantes de empresas tecnológicas de la región. Los proyectos abarcaron desde sistemas de riego inteligente hasta prototipos de clasificación de residuos con visión artificial. La feria contó con la participación de más de 500 visitantes entre familias, alumnos de otras instituciones y autoridades educativas.',
-    image: '/fotos-actividades/acto_bandera.png',
-    imageAlt: 'Feria de ciencias',
-  },
-  {
-    id: 2,
-    tag: 'Deportes',
-    date: '12 Oct, 2023',
-    title: 'Finales Intercolegiales de Atletismo',
-    excerpt: 'Nuestros atletas destacaron en las competencias regionales obteniendo el primer puesto en relevos.',
-    body: 'Nuestros atletas destacaron en las competencias regionales obteniendo el primer puesto en relevos. El equipo de atletismo de la institución participó en las finales intercolegiales celebradas en el estadio municipal, donde compitieron más de 20 escuelas de la provincia. Además del primer puesto en la prueba de relevos 4×100, se obtuvieron medallas en salto en largo y lanzamiento de bala. El entrenador destacó el esfuerzo y la dedicación del grupo durante todo el año.',
-    image: '/fotos-actividades/campaña.png',
-    imageAlt: 'Deportes',
-  },
-  {
-    id: 3,
-    tag: 'Cultura',
-    date: '08 Oct, 2023',
-    title: 'Nueva Biblioteca Digital Institucional',
-    excerpt: 'Inauguramos el acceso a más de 5.000 títulos académicos para todos nuestros alumnos y familias.',
-    body: 'Inauguramos el acceso a más de 5.000 títulos académicos para todos nuestros alumnos y familias. La nueva plataforma de biblioteca digital permite el acceso remoto a libros de texto, revistas científicas y material audiovisual desde cualquier dispositivo. El proyecto fue desarrollado en colaboración con el Ministerio de Educación y una red de editoriales nacionales. Cada alumno cuenta con credenciales personales y los docentes pueden crear listas de lectura personalizadas por materia y nivel.',
-    image: '/fotos-actividades/eleccion_reina.png',
-    imageAlt: 'Cultura',
-  },
 ];
 
 export default function Home() {
@@ -102,14 +70,14 @@ export default function Home() {
             <h2 className="font-['Manrope'] text-3xl md:text-4xl font-bold text-[#002045] mb-2">Novedades y Actividades</h2>
             <p className="text-[#43474e] max-w-md">Manténgase al tanto del día a día en nuestra comunidad educativa.</p>
           </div>
-          <a className="text-[#002045] font-semibold flex items-center gap-1 hover:text-[#735c00] transition-colors" href="#">
+          <Link className="text-[#002045] font-semibold flex items-center gap-1 hover:text-[#735c00] transition-colors" href="/noticias">
             Ver todas las noticias
             <span className="material-symbols-outlined text-sm">open_in_new</span>
-          </a>
+          </Link>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {NEWS.map((item, idx) => (
+          {NEWS.slice(0, 3).map((item, idx) => (
             <motion.article
               key={item.id}
               layoutId={`card-${item.id}`}
@@ -245,38 +213,6 @@ export default function Home() {
               </div>
             </div>
 
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-24 px-6 md:px-12">
-        <div className="max-w-7xl mx-auto rounded-[2rem] bg-[#002045] relative overflow-hidden p-12 md:p-20">
-          <div className="absolute top-0 right-0 w-1/3 h-full bg-[#1a365d] skew-x-12 translate-x-20 opacity-50"></div>
-          <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 items-center gap-12">
-            <div>
-              <h2 className="font-['Manrope'] text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
-                Empiece el camino hacia el éxito académico hoy.
-              </h2>
-              <p className="text-[#adc7f7] text-lg mb-8 max-w-md">
-                Las inscripciones para el ciclo lectivo 2024 ya están abiertas. Solicite una entrevista informativa.
-              </p>
-              <div className="flex flex-wrap gap-4">
-                <button className="bg-[#fed65b] text-[#002045] px-8 py-4 rounded-xl font-bold hover:scale-105 transition-transform">
-                  Solicitar Entrevista
-                </button>
-                <button className="bg-white/10 text-white border border-white/20 px-8 py-4 rounded-xl font-bold backdrop-blur-sm">
-                  Descargar Brochure
-                </button>
-              </div>
-            </div>
-            <div className="hidden md:block">
-              <img
-                alt="Estudiantes sonriendo"
-                className="rounded-2xl shadow-2xl rotate-3 scale-110"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdDGYzNtwN5cWFa5X3KTQKuLfhIvqMbHgUbXtqycNobxYs-7OPJ55plVGNtlxmICAR2dPDw6S3kBB5MRF4ayG_-u_xO3mytuEJwBkS3kg4jIECJJoOjrGHCY8mU11Rhxn0ycGLpwolzLwg5IFm-cRx9SBUC1wiQrGeJPM8UlsC4DSdSd08Dq0uUh_a5piiOL5Z0vQzuwBp-bP6f8TKtzL-ZJDm60pb9_5RmqY0q7cs1_cGKZBccUX6EKe1sJKHnWRzkpuKTBkz8wIB"
-              />
-            </div>
           </div>
         </div>
       </section>

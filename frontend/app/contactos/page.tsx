@@ -1,4 +1,92 @@
-import React from 'react';
+'use client';
+import React, { useState } from 'react';
+
+function ContactForm() {
+  const [form, setForm] = useState({ nombre: '', email: '', asunto: 'Inscripciones', mensaje: '' });
+  const [status, setStatus] = useState<'idle' | 'loading' | 'ok' | 'error'>('idle');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus('loading');
+    const res = await fetch('/api/contacto', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(form),
+    });
+    setStatus(res.ok ? 'ok' : 'error');
+  };
+
+  return (
+    <div className="lg:col-span-7 bg-white p-8 md:p-12 rounded-xl shadow-[0_8px_32px_rgba(26,54,93,0.06)]">
+      <div className="mb-8">
+        <h2 className="text-3xl font-['Manrope'] font-bold text-[#002045] mb-2">Envíanos un mensaje</h2>
+        <p className="text-[#43474e]">Completa el formulario y nos pondremos en contacto a la brevedad.</p>
+      </div>
+
+      {status === 'ok' ? (
+        <div className="flex flex-col items-center justify-center py-16 gap-4 text-center">
+          <div className="w-16 h-16 rounded-full bg-[#003f25] flex items-center justify-center">
+            <span className="material-symbols-outlined text-[#9ff5c1] text-3xl" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+          </div>
+          <h3 className="font-['Manrope'] font-bold text-[#002045] text-xl">Mensaje enviado</h3>
+          <p className="text-[#43474e] text-sm">Nos pondremos en contacto a la brevedad.</p>
+          <button onClick={() => { setStatus('idle'); setForm({ nombre: '', email: '', asunto: 'Inscripciones', mensaje: '' }); }} className="mt-2 text-[#1a365d] font-bold text-sm hover:underline">Enviar otro mensaje</button>
+        </div>
+      ) : (
+        <form className="space-y-6" onSubmit={handleSubmit}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label className="text-xs font-bold text-[#002045] tracking-wider uppercase" htmlFor="name">Nombre Completo</label>
+              <input
+                className="w-full px-5 py-4 bg-[#f1f4f6] border-none rounded-lg focus:ring-2 focus:ring-[#1a365d]/40 transition-all text-[#181c1e] outline-none"
+                id="name" placeholder="Tu nombre" type="text" required
+                value={form.nombre} onChange={e => setForm(f => ({ ...f, nombre: e.target.value }))}
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-xs font-bold text-[#002045] tracking-wider uppercase" htmlFor="email">Correo Electrónico</label>
+              <input
+                className="w-full px-5 py-4 bg-[#f1f4f6] border-none rounded-lg focus:ring-2 focus:ring-[#1a365d]/40 transition-all text-[#181c1e] outline-none"
+                id="email" placeholder="email@ejemplo.com" type="email" required
+                value={form.email} onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
+              />
+            </div>
+          </div>
+          <div className="space-y-2">
+            <label className="text-xs font-bold text-[#002045] tracking-wider uppercase" htmlFor="subject">Asunto</label>
+            <select
+              className="w-full px-5 py-4 bg-[#f1f4f6] border-none rounded-lg focus:ring-2 focus:ring-[#1a365d]/40 transition-all text-[#181c1e] outline-none"
+              id="subject" value={form.asunto} onChange={e => setForm(f => ({ ...f, asunto: e.target.value }))}
+            >
+              <option>Inscripciones</option>
+              <option>Consultas Generales</option>
+              <option>Secretaría Académica</option>
+              <option>Soporte Técnico</option>
+            </select>
+          </div>
+          <div className="space-y-2">
+            <label className="text-xs font-bold text-[#002045] tracking-wider uppercase" htmlFor="message">Mensaje</label>
+            <textarea
+              className="w-full px-5 py-4 bg-[#f1f4f6] border-none rounded-lg focus:ring-2 focus:ring-[#1a365d]/40 transition-all text-[#181c1e] outline-none resize-none"
+              id="message" placeholder="Escribe tu mensaje aquí..." rows={5} required
+              value={form.mensaje} onChange={e => setForm(f => ({ ...f, mensaje: e.target.value }))}
+            />
+          </div>
+          {status === 'error' && (
+            <p className="text-red-600 text-sm">Ocurrió un error al enviar. Intentá de nuevo.</p>
+          )}
+          <button
+            className="w-full md:w-auto px-10 py-4 bg-[#1a365d] text-white font-['Manrope'] font-bold rounded-lg shadow-lg hover:bg-[#002045] transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 disabled:opacity-60"
+            type="submit" disabled={status === 'loading'}
+          >
+            <span>{status === 'loading' ? 'Enviando...' : 'Enviar Mensaje'}</span>
+            <span className="material-symbols-outlined text-sm">{status === 'loading' ? 'hourglass_empty' : 'send'}</span>
+          </button>
+        </form>
+      )}
+    </div>
+  );
+}
 
 export default function Contactos() {
   return (
@@ -29,70 +117,7 @@ export default function Contactos() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
 
           {/* Contact Form */}
-          <div className="lg:col-span-7 bg-white p-8 md:p-12 rounded-xl shadow-[0_8px_32px_rgba(26,54,93,0.06)]">
-            <div className="mb-8">
-              <h2 className="text-3xl font-['Manrope'] font-bold text-[#002045] mb-2">Envíanos un mensaje</h2>
-              <p className="text-[#43474e]">Completa el formulario y nos pondremos en contacto a la brevedad.</p>
-            </div>
-            <form className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label className="text-xs font-bold text-[#002045] tracking-wider uppercase" htmlFor="name">
-                    Nombre Completo
-                  </label>
-                  <input
-                    className="w-full px-5 py-4 bg-[#f1f4f6] border-none rounded-lg focus:ring-2 focus:ring-[#1a365d]/40 transition-all text-[#181c1e] outline-none"
-                    id="name"
-                    placeholder="Tu nombre"
-                    type="text"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-xs font-bold text-[#002045] tracking-wider uppercase" htmlFor="email">
-                    Correo Electrónico
-                  </label>
-                  <input
-                    className="w-full px-5 py-4 bg-[#f1f4f6] border-none rounded-lg focus:ring-2 focus:ring-[#1a365d]/40 transition-all text-[#181c1e] outline-none"
-                    id="email"
-                    placeholder="email@ejemplo.com"
-                    type="email"
-                  />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <label className="text-xs font-bold text-[#002045] tracking-wider uppercase" htmlFor="subject">
-                  Asunto
-                </label>
-                <select
-                  className="w-full px-5 py-4 bg-[#f1f4f6] border-none rounded-lg focus:ring-2 focus:ring-[#1a365d]/40 transition-all text-[#181c1e] outline-none"
-                  id="subject"
-                >
-                  <option>Inscripciones</option>
-                  <option>Consultas Generales</option>
-                  <option>Secretaría Académica</option>
-                  <option>Soporte Técnico</option>
-                </select>
-              </div>
-              <div className="space-y-2">
-                <label className="text-xs font-bold text-[#002045] tracking-wider uppercase" htmlFor="message">
-                  Mensaje
-                </label>
-                <textarea
-                  className="w-full px-5 py-4 bg-[#f1f4f6] border-none rounded-lg focus:ring-2 focus:ring-[#1a365d]/40 transition-all text-[#181c1e] outline-none resize-none"
-                  id="message"
-                  placeholder="Escribe tu mensaje aquí..."
-                  rows={5}
-                ></textarea>
-              </div>
-              <button
-                className="w-full md:w-auto px-10 py-4 bg-[#1a365d] text-white font-['Manrope'] font-bold rounded-lg shadow-lg hover:bg-[#002045] transition-all duration-300 active:scale-95 flex items-center justify-center gap-2"
-                type="submit"
-              >
-                <span>Enviar Mensaje</span>
-                <span className="material-symbols-outlined text-sm">send</span>
-              </button>
-            </form>
-          </div>
+          <ContactForm />
 
           {/* Contact Details */}
           <div className="lg:col-span-5 space-y-8">
@@ -163,26 +188,35 @@ export default function Contactos() {
       </main>
 
       {/* Map Section */}
-      <section className="w-full h-[500px] relative overflow-hidden bg-[#e5e9eb]">
-        <div className="absolute inset-0 flex items-center justify-center">
-          <img
-            className="w-full h-full object-cover grayscale opacity-50 contrast-125"
-            src="/fotos-institucion/institucion-frente.png"
-            alt="Ubicación del colegio"
-          />
-          <div className="absolute inset-0 bg-[#002045]/20"></div>
-          {/* Map Marker Info */}
-          <div className="relative z-10 bg-white p-6 rounded-xl shadow-2xl flex items-center gap-4 max-w-sm mx-4">
-            <div className="w-12 h-12 rounded-full bg-[#1a365d] flex items-center justify-center text-white shrink-0">
-              <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>school</span>
-            </div>
-            <div>
-              <h5 className="font-['Manrope'] font-bold text-[#002045]">Colegio Secundario N°59</h5>
-              <p className="text-xs text-[#43474e] font-medium">Alvear 1145, Jujuy</p>
-              <a className="text-[#735c00] text-[10px] font-bold uppercase tracking-widest mt-2 block hover:underline" href="#">
-                Cómo llegar
+      <section className="w-full relative">
+        <div className="max-w-7xl mx-auto px-8 pb-24">
+          <div className="rounded-2xl overflow-hidden shadow-[0_8px_32px_rgba(26,54,93,0.10)] border border-[#e5e9eb]">
+            <div className="bg-[#002045] px-8 py-5 flex items-center gap-3">
+              <span className="material-symbols-outlined text-[#fed65b]" style={{ fontVariationSettings: "'FILL' 1" }}>location_on</span>
+              <div>
+                <p className="text-white font-['Manrope'] font-bold text-sm">Colegio Secundario N°59 "Olga Márquez de Aredez"</p>
+                <p className="text-[#86a0cd] text-xs">Gral. Alvear 1145, Y4600 San Salvador de Jujuy, Jujuy</p>
+              </div>
+              <a
+                href="https://maps.google.com/?q=Colegio+Secundario+N59+Olga+Marquez+de+Aredez+Gral+Alvear+1145+San+Salvador+de+Jujuy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="ml-auto text-[#fed65b] text-xs font-bold flex items-center gap-1 hover:underline"
+              >
+                Abrir en Google Maps
+                <span className="material-symbols-outlined text-sm">open_in_new</span>
               </a>
             </div>
+            <iframe
+              title="Ubicación Colegio Secundario N°59 Olga Aredez"
+              src="https://maps.google.com/maps?q=Colegio+Secundario+N%C2%BA59+Olga+Marquez+de+Aredez+Gral.+Alvear+1145+San+Salvador+de+Jujuy&output=embed&z=17"
+              width="100%"
+              height="480"
+              style={{ border: 0, display: 'block' }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
           </div>
         </div>
       </section>
