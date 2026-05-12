@@ -38,9 +38,7 @@ export default function Institucional() {
               <Link href="#nuestros-origenes" className="px-8 py-4 bg-[#fed65b] text-[#002045] font-bold rounded-xl shadow-lg hover:bg-[#735c00] hover:text-white transition-all flex items-center justify-center">
                 Ver Institución
               </Link>
-              <Link href="/contacto" className="px-8 py-4 bg-white/10 backdrop-blur-md text-white font-bold rounded-xl border border-white/20 hover:bg-white/20 transition-all flex items-center justify-center">
-                Solicitar Info
-              </Link>
+             
             </div>
           </div>
         </div>
