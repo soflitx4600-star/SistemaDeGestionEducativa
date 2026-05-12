@@ -249,37 +249,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-24 px-6 md:px-12">
-        <div className="max-w-7xl mx-auto rounded-[2rem] bg-[#002045] relative overflow-hidden p-12 md:p-20">
-          <div className="absolute top-0 right-0 w-1/3 h-full bg-[#1a365d] skew-x-12 translate-x-20 opacity-50"></div>
-          <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 items-center gap-12">
-            <div>
-              <h2 className="font-['Manrope'] text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
-                Empiece el camino hacia el éxito académico hoy.
-              </h2>
-              <p className="text-[#adc7f7] text-lg mb-8 max-w-md">
-                Las inscripciones para el ciclo lectivo 2024 ya están abiertas. Solicite una entrevista informativa.
-              </p>
-              <div className="flex flex-wrap gap-4">
-                <button className="bg-[#fed65b] text-[#002045] px-8 py-4 rounded-xl font-bold hover:scale-105 transition-transform">
-                  Solicitar Entrevista
-                </button>
-                <button className="bg-white/10 text-white border border-white/20 px-8 py-4 rounded-xl font-bold backdrop-blur-sm">
-                  Descargar Brochure
-                </button>
-              </div>
-            </div>
-            <div className="hidden md:block">
-              <img
-                alt="Estudiantes sonriendo"
-                className="rounded-2xl shadow-2xl rotate-3 scale-110"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdDGYzNtwN5cWFa5X3KTQKuLfhIvqMbHgUbXtqycNobxYs-7OPJ55plVGNtlxmICAR2dPDw6S3kBB5MRF4ayG_-u_xO3mytuEJwBkS3kg4jIECJJoOjrGHCY8mU11Rhxn0ycGLpwolzLwg5IFm-cRx9SBUC1wiQrGeJPM8UlsC4DSdSd08Dq0uUh_a5piiOL5Z0vQzuwBp-bP6f8TKtzL-ZJDm60pb9_5RmqY0q7cs1_cGKZBccUX6EKe1sJKHnWRzkpuKTBkz8wIB"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
+      
 
     </div>
   );
