@@ -1,152 +1,182 @@
 import React from 'react';
+import Link from 'next/link';
 
 export default function Institucional() {
-  const departments = [
-    { icon: 'history_edu', title: 'Ciencias Sociales', desc: 'Equipo de Historia, Geografía y Formación Ética.' },
-    { icon: 'calculate', title: 'Exactas y Naturales', desc: 'Equipo de Matemática, Física, Química y Biología.' },
-    { icon: 'translate', title: 'Lenguas y Comunicación', desc: 'Equipo de Literatura, Inglés y Comunicación Social.' },
-    { icon: 'palette', title: 'Expresión y Tecnología', desc: 'Equipo de Artes, Tecnología y Educación Física.' },
+  const valores = [
+    { icon: 'school', title: 'Excelencia Académica', desc: 'Búsqueda constante del máximo potencial intelectual y rigor en el aprendizaje.' },
+    { icon: 'groups', title: 'Compromiso Social', desc: 'Conciencia de la realidad del entorno y participación activa en la comunidad.' },
+    { icon: 'lightbulb', title: 'Creatividad', desc: 'Fomento del pensamiento original y resolución de problemas complejos.' },
+    { icon: 'emoji_events', title: 'Liderazgo Ético', desc: 'Capacidad de guiar procesos y personas con ética y visión compartida.' },
   ];
 
-  const studentCards = [
-    { icon: 'star', title: 'Excelencia Académica', desc: 'Fomentamos el rigor intelectual y la curiosidad constante por el saber.' },
-    { icon: 'volunteer_activism', title: 'Compromiso Social', desc: 'Impulsamos proyectos que impactan positivamente en nuestra comunidad.' },
-    { icon: 'lightbulb', title: 'Creatividad e Innovación', desc: 'Buscamos soluciones originales y exploramos nuevas formas de aprender.' },
-    { icon: 'campaign', title: 'Liderazgo', desc: 'Formamos jóvenes capaces de guiar con empatía y determinación.' },
-  ];
-
-  const authorities = [
-    { name: 'Nombre de la Rectora', role: 'Rectora', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDr7HCZDr6XcGRKad1vpM45lgvy7-7_HEpiyrBuL1SgQj6rK4gZmA1pmyIBwvzzowNbSSQWcjMZMjzX8ARgdG7N1lr5_WJRbeV-iFca9b9YmBI6OFPGyeK7fyo8bdhU5tymf34wO7Sylkzt5l8_oaIT2Eyy6a1nI1GmLNyGlGT_OlosWpF7sMBK-0zy_GYHcCI4DYyblKNW_zv7hUAbnhxAF8lAwE2lFZTFWZrkFH-fyXjFTCQbspCjGoWBQuTOzk0iM2Nid91AaYQ', offset: false },
-    { name: 'Nombre del Vice-rector', role: 'Vice-rector', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDPvKFd4p-Oi-JW9z2AEhPU5uar0zhj2kK1sYCgu6582BgTPnqJjHZ23_6rgCUSXOg5uIDtf2dApGrAt-DQ_gs_IciS-GFmLOGEOGhXHlWW4BxR8_kNCFujSXw-ijuYD23_vEvIOt1jagl2n3fzm--YbTxB9r1SVGYKAiSe3UREzw_Pxy11_Ory1CepuEJjODgaI1NOKHsRtf0ovj_ozTBfpN_Q5rbMxsIOMOZL2vVuygwouoeBn8afZdotr70xTsQCigik84mvlsw', offset: true },
-    { name: 'Nombre de la Secretaria', role: 'Secretaria', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuClTu1UYAt_74dDCGfjTSHknFo14B-dW8TNywW3KsWGcD5nyv6PJfbMHaEtPuIq3gTpJcHSIBSetIlSxmuP8Iqm3irsKo8EQ5wlssCTkVcO8WgwKucwn6quuP6wGGpPYm95RRY6GWH1d46CkWNk7WXNaL7CTz1B00fch7ryFZmqZ-Y0t4OoHwZRT_8VxOSZCamP35JpTGYaB4-UdMg_LgBd8V04Jna06KBgNRmhUykb0G61a9ZGGUXPqgqhymJOteRZrr5ST6E9hvU', offset: false },
+  const autoridades = [
+    { name: 'Prof. Elena Rodríguez', role: 'Rectora', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBJInpwpojj2thFUwi9SoQHS7rvll0zzAxYB-yZ6gdTpEFJIOuP8Z0omNL6S2SUSwO38dsRm8Qj1J9BhpTzXqxkfpC1tfc4WFxTBBDwdUd8CniIYorNN3pdYeDmd-qyUhB8lj9qNAfuXRtC49qoJa2HsTnynyWn2BUscXjERkJaHLU4zQOWRTRVkOHcTcszCpkhIn3eZjWpULlZ80SYikl7hCAvFT6FO2X4-qxqTsl-izEkj3KuSWb-YJPJVjCbotb0eKQ0xzq2940' },
+    { name: 'Prof. Marcos Sánchez', role: 'Vice-rector', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBUcykUpjRWnA5m8vNiKMtQNixqXXdF1vBkKAdL0ZluaFA7IbKwgiULtPQb9SCJZY7i6hvau0w0FGVymA5lcZUptcIbxSrwoAeOYd5oL64lYT4fPXWpjaHSfBuUeFZyXc4N4cYa_dkeatCMh-X0RghvczHykYmcDyQHyR5lrTOa230Q5lefFdR-REl_Zo0Fss_gcrJIQZjMpzS5SYJlRX8nuf8WYfvO1nQC2btua1TCnKjo70OlhILPOrDdQqz5njzzKGEuH_P8b2U' },
+    { name: 'Lic. Claudia Pardo', role: 'Secretaria', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC_au9ZpOegAQCbmHVM2q1bL6jv8tQjYZoQUoCWdj4o2WNZGNSg64ESOPCsNTOebz4TpHXsqGrko47jci48IcahAcylhA78h7k74TaqVSwnExNuDabQEl2R2qFBwvOUKkr3th4YlIJts4aZJhxCvMXVKBlqdsXZuQ0uvAOtkVya6kpC2FHd7oiaZEE0vdkWL0z4M56OZkODIxh0haeqPprz7yDSBJvkQp91oqRl2MOuaCl5QshItJ6ZLPWSgtwyiuqt17-zmoRJVT4' },
   ];
 
   return (
-    <div className="bg-[#f7fafc] font-['Inter'] text-[#181c1e]">
-
-      {/* Hero */}
-      <header className="relative min-h-[500px] flex items-center justify-center overflow-hidden bg-[#1a365d] pt-20">
+    <div className="bg-[#f7fafc] font-['Inter'] text-[#181c1e] overflow-x-hidden">
+      {/* Hero Section */}
+      <section className="relative min-h-[80vh] flex items-center pt-24 overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-[#002045]/80 via-[#002045]/60 to-[#002045]/80 z-10"></div>
-          <img
-            alt="Institucional Background"
-            className="w-full h-full object-cover"
-            src="/fotos-institucion/institucion-interior.png"
-          />
+          <img className="w-full h-full object-cover" src="/fotos-institucion/institucion-interior.png" alt="Institución" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#002045]/90 to-[#1a365d]/50"></div>
         </div>
-        <div className="relative z-20 max-w-7xl mx-auto px-8 text-center">
-          <h1 className="text-5xl md:text-7xl font-['Manrope'] font-extrabold text-white tracking-tight drop-shadow-lg">
-            INSTITUCIONAL
-          </h1>
-        </div>
-      </header>
-
-      {/* ¿Quiénes somos? */}
-      <section className="px-8 bg-[#f1f4f6] py-12" id="quienes-somos">
-        <div className="max-w-7xl mx-auto space-y-8">
-          <div className="space-y-4">
-            <h2 className="text-4xl font-['Manrope'] font-extrabold text-[#002045] tracking-tight">¿Quiénes somos?</h2>
-            <div className="h-1 w-20 bg-[#735c00] rounded-full"></div>
-          </div>
-          <div className="text-[#43474e] space-y-4 leading-relaxed max-w-4xl">
-            <p>
-              Próximamente información sobre nuestra historia y misión... Estamos trabajando para brindarte una reseña detallada sobre los orígenes del Colegio Secundario Olga M. de Aredez N° 59 y nuestro compromiso inquebrantable con la educación de calidad.
+        <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 w-full text-center">
+          <div className="max-w-4xl mx-auto text-white">
+            <span className="inline-block px-4 py-1 rounded-full bg-[#fed65b] text-[#735c00] font-semibold text-xs tracking-widest uppercase mb-6">
+              Tradición y Excelencia
+            </span>
+            <h1 className="text-5xl md:text-7xl font-['Manrope'] font-extrabold text-white leading-tight mb-8 tracking-tight">
+              Formando líderes con <span className="text-[#fed65b]">valores</span>
+            </h1>
+            <p className="text-lg md:text-xl text-white/90 mb-10 max-w-2xl mx-auto leading-relaxed">
+              El Colegio Secundario N°59 "Olga M. de Aredez" es un espacio de aprendizaje dinámico que integra la tradición académica con la innovación pedagógica.
             </p>
-            <p>
-              Nuestra institución se erige como un faro de conocimiento y valores, buscando no solo la excelencia académica sino también el desarrollo integral de cada joven que atraviesa nuestras aulas.
-            </p>
-          </div>
-          <div className="flex gap-4 pt-4">
-            <div className="p-4 bg-white rounded-xl flex-1 shadow-[0_8px_32px_rgba(26,54,93,0.06)]">
-              <span className="block font-['Manrope'] font-bold text-[#002045]">Misión</span>
-              <p className="text-sm text-[#43474e] mt-1">Formar ciudadanos críticos y comprometidos.</p>
-            </div>
-            <div className="p-4 bg-white rounded-xl flex-1 shadow-[0_8px_32px_rgba(26,54,93,0.06)]">
-              <span className="block font-['Manrope'] font-bold text-[#002045]">Visión</span>
-              <p className="text-sm text-[#43474e] mt-1">Ser referentes en innovación pedagógica.</p>
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <Link href="#nuestros-origenes" className="px-8 py-4 bg-[#fed65b] text-[#002045] font-bold rounded-xl shadow-lg hover:bg-[#735c00] hover:text-white transition-all flex items-center justify-center">
+                Ver Institución
+              </Link>
+              <Link href="/contacto" className="px-8 py-4 bg-white/10 backdrop-blur-md text-white font-bold rounded-xl border border-white/20 hover:bg-white/20 transition-all flex items-center justify-center">
+                Solicitar Info
+              </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Nuestros Estudiantes */}
-      <section className="py-24 px-8 bg-[#f7fafc]" id="nuestros-estudiantes">
-        <div className="max-w-7xl mx-auto text-center space-y-16">
-          <div className="space-y-4">
-            <h2 className="text-4xl font-['Manrope'] font-extrabold text-[#002045] tracking-tight">Nuestros estudiantes</h2>
-            <p className="text-[#43474e] max-w-2xl mx-auto">Cultivamos las habilidades y valores necesarios para el siglo XXI.</p>
-          </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {studentCards.map((card) => (
-              <div key={card.title} className="bg-white p-8 rounded-2xl shadow-[0_8px_32px_rgba(26,54,93,0.06)] group hover:-translate-y-2 transition-transform duration-300 relative overflow-hidden text-left">
-                <div className="absolute top-0 left-0 w-1 h-full bg-[#735c00]"></div>
-                <div className="w-14 h-14 rounded-xl bg-[#1a365d] flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform">
-                  <span className="material-symbols-outlined text-3xl">{card.icon}</span>
-                </div>
-                <h3 className="text-xl font-['Manrope'] font-bold text-[#002045] mb-3">{card.title}</h3>
-                <p className="text-sm text-[#43474e] leading-relaxed">{card.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Autoridades */}
-      <section className="py-24 px-8 bg-[#f1f4f6]" id="autoridades">
-        <div className="max-w-7xl mx-auto space-y-16">
-          <div className="space-y-4">
-            <h2 className="text-4xl font-['Manrope'] font-extrabold text-[#002045] tracking-tight">Autoridades</h2>
-            <p className="text-[#43474e]">El equipo que lidera nuestra visión institucional.</p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-12">
-            {authorities.map((person) => (
-              <div key={person.name} className={`space-y-4 text-center ${person.offset ? 'md:translate-y-12' : ''}`}>
-                <div className="aspect-[3/4] rounded-2xl overflow-hidden bg-[#e0e3e5] shadow-[0_8px_32px_rgba(26,54,93,0.06)] group">
-                  <img
-                    alt={person.role}
-                    className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500"
-                    src={person.img}
-                  />
-                </div>
-                <div>
-                  <h4 className="text-xl font-['Manrope'] font-bold text-[#002045]">{person.name}</h4>
-                  <p className="text-[#735c00] text-xs font-bold tracking-widest uppercase">{person.role}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Nuestros Docentes */}
-      <section className="py-24 px-8 bg-[#f7fafc]" id="nuestros-docentes">
-        <div className="max-w-4xl mx-auto space-y-16">
-          <div className="text-center space-y-4">
-            <h2 className="text-4xl font-['Manrope'] font-extrabold text-[#002045] tracking-tight">Nuestros docentes</h2>
-            <div className="h-1 w-20 bg-[#735c00] mx-auto rounded-full"></div>
-          </div>
-          <div className="space-y-2">
-            {departments.map((dept) => (
-              <div key={dept.title} className="group p-6 bg-[#f1f4f6] rounded-2xl flex items-center justify-between hover:bg-[#002045] transition-all duration-300 shadow-[0_8px_32px_rgba(26,54,93,0.06)] cursor-pointer">
-                <div className="flex items-center gap-6">
-                  <div className="text-[#002045] group-hover:text-white">
-                    <span className="material-symbols-outlined text-3xl">{dept.icon}</span>
+      {/* Historia Section with Timeline Layout */}
+      <section id="nuestros-origenes" className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-6 md:px-12">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+            <div className="lg:col-span-5">
+              <div className="sticky top-32">
+                <h2 className="text-4xl font-['Manrope'] font-extrabold text-[#002045] mb-6 tracking-tight">Nuestros Orígenes y Evolución</h2>
+                <p className="text-lg text-[#43474e] mb-8 italic opacity-80">
+                  "Un faro de conocimiento que ha iluminado generaciones en San Salvador de Jujuy."
+                </p>
+                <div className="flex items-center gap-12 border-t border-[#002045]/10 pt-8">
+                  <div className="flex flex-col">
+                    <span className="text-5xl font-['Manrope'] font-extrabold text-[#002045]">25</span>
+                    <span className="text-xs text-[#735c00] uppercase font-bold tracking-widest mt-1">Años</span>
                   </div>
-                  <div>
-                    <h4 className="font-['Manrope'] font-bold text-lg group-hover:text-white">{dept.title}</h4>
-                    <p className="text-sm text-[#43474e] group-hover:text-white/70">{dept.desc}</p>
+                  <div className="w-px h-12 bg-[#002045]/10"></div>
+                  <div className="flex flex-col">
+                    <span className="text-5xl font-['Manrope'] font-extrabold text-[#002045]">1.2k</span>
+                    <span className="text-xs text-[#735c00] uppercase font-bold tracking-widest mt-1">Egresados</span>
                   </div>
                 </div>
-                <span className="material-symbols-outlined text-[#43474e] group-hover:text-white">chevron_right</span>
               </div>
-            ))}
+            </div>
+            <div className="lg:col-span-7 space-y-16">
+              {/* Timeline Item 1 */}
+              <div className="relative pl-12 border-l-2 border-[#fed65b]">
+                <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-[#fed65b] border-4 border-white shadow-sm"></div>
+                <h3 className="text-2xl font-['Manrope'] font-bold text-[#002045] mb-4">Los Cimientos</h3>
+                <div className="relative mb-6 rounded-2xl overflow-hidden shadow-sm">
+                  <img className="w-full h-64 object-cover grayscale hover:grayscale-0 transition-all duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjcezFkuE9qvFGGaVt608AdCc6VkduPGkG1QgCzcQSbrkK8Z7_UY3ETMKD2O1F3vjt0PINaacW5bckj6FPUVOeJcZejEO3Xi4VpMmJMmfn4_p4xgeGniWD6iMWRsNCxzWoVxT7jbECrWA2BdUvgMjFBJXPtXRBktLRagUxaSTcuF4c0Qtk4lMGjES4BCrvn39SxRFQ_mHgi2HBbVyKCjnO0rNaB6M9XKdAyYIYBeSIAdy_oq3CCPhitv0vvrggBgf9j2iaEXnWrhE" alt="Historia cimientos" />
+                </div>
+                <p className="text-[#43474e] leading-relaxed">
+                  Fundado con el firme propósito de democratizar el acceso a una educación secundaria de calidad, el Colegio Olga M. de Aredez comenzó su labor pedagógica en instalaciones que, aunque humildes, estaban llenas de visión y compromiso.
+                </p>
+              </div>
+              {/* Timeline Item 2 */}
+              <div className="relative pl-12 border-l-2 border-[#fed65b]">
+                <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-[#fed65b] border-4 border-white shadow-sm"></div>
+                <h3 className="text-2xl font-['Manrope'] font-bold text-[#002045] mb-4">La Consolidación</h3>
+                <p className="text-[#43474e] leading-relaxed mb-6">
+                  Desde sus inicios hasta su actual estructura moderna, la institución ha evolucionado para responder a los desafíos globales. El compromiso social sigue siendo el eje central de nuestra identidad, manteniendo vivos los valores que inspiraron nuestra creación.
+                </p>
+                <div className="bg-[#f7fafc] p-6 rounded-2xl border-l-4 border-[#fed65b]">
+                  <p className="text-[#002045] font-semibold italic">
+                    "La educación es el arma más poderosa para cambiar el mundo."
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
-          <p className="text-center text-[#43474e] text-sm uppercase tracking-widest pt-8">
-            Cuerpo docente compuesto por más de 40 profesionales especializados.
-          </p>
         </div>
       </section>
 
+      {/* Misión y Visión - Soft Cards Layout */}
+      <section className="py-24 bg-[#f1f4f6]">
+        <div className="max-w-7xl mx-auto px-6 md:px-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="p-10 md:p-14 bg-white rounded-[2rem] shadow-[0_8px_32px_rgba(26,54,93,0.04)] group hover:-translate-y-1 transition-transform">
+              <div className="w-16 h-16 rounded-2xl bg-[#fed65b]/20 text-[#735c00] flex items-center justify-center mb-8">
+                <span className="material-symbols-outlined text-4xl" style={{ fontVariationSettings: "'FILL' 1" }}>history_edu</span>
+              </div>
+              <h3 className="text-3xl font-['Manrope'] font-extrabold text-[#002045] mb-6">Nuestra Misión</h3>
+              <p className="text-[#43474e] leading-relaxed text-lg">
+                Brindar una formación integral que potencie las capacidades críticas, creativas y éticas de nuestros estudiantes, preparándolos para su inserción ciudadana y su continuidad en estudios superiores con un alto sentido de responsabilidad social.
+              </p>
+            </div>
+            <div className="p-10 md:p-14 bg-[#002045] rounded-[2rem] shadow-lg group hover:-translate-y-1 transition-transform">
+              <div className="w-16 h-16 rounded-2xl bg-white/10 text-[#fed65b] flex items-center justify-center mb-8">
+                <span className="material-symbols-outlined text-4xl" style={{ fontVariationSettings: "'FILL' 1" }}>auto_stories</span>
+              </div>
+              <h3 className="text-3xl font-['Manrope'] font-extrabold text-white mb-6">Nuestra Visión</h3>
+              <p className="text-white/90 leading-relaxed text-lg">
+                Ser reconocidos como una institución educativa de vanguardia en la región, referente por su calidad académica, su clima de convivencia inclusiva y su capacidad de innovar en procesos de enseñanza que respondan a los cambios sociales y tecnológicos.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Valores */}
+      <section className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 text-center mb-16">
+          <span className="inline-block px-4 py-1 rounded-full bg-[#f1f4f6] text-[#43474e] font-semibold text-xs tracking-widest uppercase mb-4">
+            Fundamentos Éticos
+          </span>
+          <h2 className="text-4xl font-['Manrope'] font-extrabold text-[#002045] tracking-tight">Pilares de Nuestra Educación</h2>
+        </div>
+        <div className="max-w-7xl mx-auto px-6 md:px-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {valores.map((valor) => (
+              <div key={valor.title} className="p-8 bg-[#f7fafc] rounded-2xl border border-[#c4c6cf]/20 hover:bg-white hover:shadow-[0_8px_32px_rgba(26,54,93,0.04)] hover:-translate-y-1 transition-all group">
+                <div className="w-14 h-14 rounded-xl bg-white shadow-sm flex items-center justify-center text-[#1a365d] mb-6 group-hover:text-[#735c00] transition-colors">
+                  <span className="material-symbols-outlined text-3xl" style={{ fontVariationSettings: "'FILL' 1" }}>{valor.icon}</span>
+                </div>
+                <h4 className="text-xl font-['Manrope'] font-bold text-[#002045] mb-3">{valor.title}</h4>
+                <p className="text-[#43474e] text-sm leading-relaxed">{valor.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Autoridades - Portrait Cards */}
+      <section className="py-24 bg-[#f1f4f6]">
+        <div className="max-w-7xl mx-auto px-6 md:px-12">
+          <div className="flex flex-col md:flex-row items-end justify-between mb-16 gap-6">
+            <div>
+              <h2 className="text-4xl font-['Manrope'] font-extrabold text-[#002045] tracking-tight mb-2">Autoridades Institucionales</h2>
+              <p className="text-[#43474e] text-lg">El equipo que lidera nuestra visión educativa diaria.</p>
+            </div>
+            <Link href="/contacto" className="text-[#002045] font-bold flex items-center gap-1 hover:text-[#735c00] transition-colors">
+              Contactar Dirección
+              <span className="material-symbols-outlined text-sm">chevron_right</span>
+            </Link>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {autoridades.map((autoridad) => (
+              <div key={autoridad.name} className="group bg-white rounded-[2rem] p-4 shadow-[0_8px_32px_rgba(26,54,93,0.04)] hover:-translate-y-2 transition-transform duration-300">
+                <div className="relative overflow-hidden aspect-[4/5] rounded-3xl mb-6 bg-[#f7fafc]">
+                  <img className="w-full h-full object-cover filter sepia-[0.2] group-hover:sepia-0 group-hover:scale-105 transition-all duration-700" src={autoridad.img} alt={autoridad.name} />
+                </div>
+                <div className="text-center pb-4">
+                  <h4 className="text-xl font-['Manrope'] font-bold text-[#002045] mb-1">{autoridad.name}</h4>
+                  <p className="text-[11px] text-[#735c00] uppercase tracking-widest font-bold bg-[#fed65b]/20 inline-block px-3 py-1 rounded-full">{autoridad.role}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
