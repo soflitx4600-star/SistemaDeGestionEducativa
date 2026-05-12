@@ -1,17 +1,9 @@
 "use client";
 import { motion, AnimatePresence } from "motion/react";
 import { useEffect } from "react";
+import { NewsItem } from "../lib/news";
 
-export interface NewsItem {
-  id: number;
-  tag: string;
-  date: string;
-  title: string;
-  excerpt: string;
-  body: string;
-  image: string;
-  imageAlt: string;
-}
+export type { NewsItem };
 
 interface Props {
   item: NewsItem | null;
