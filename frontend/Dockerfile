@@ -39,8 +39,8 @@ ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
 # Crear usuario y grupo para seguridad
-RUN groupadd --system --gid 1001 asoc_amigos_26 && \
-    useradd --system --uid 1001 --gid asoc_amigos_26 asoc_amigos_26
+RUN groupadd --system --gid 1001 olga_aredez && \
+    useradd --system --uid 1001 --gid olga_aredez olga_aredez
 
 # --- PERMISOS ---
 COPY --from=builder --chown=olga_aredez:olga_aredez /app/public ./public
