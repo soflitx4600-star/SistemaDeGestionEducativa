@@ -82,13 +82,15 @@ export default function Footer() {
 
         {/* Fast Links */}
         <div className="space-y-6">
-          <h4 className="text-white font-['Manrope'] font-bold uppercase tracking-widest text-sm">Institucional</h4>
+          <h4 className="text-white font-['Manrope'] font-bold uppercase tracking-widest text-sm">Páginas</h4>
           <nav className="flex flex-col gap-4">
-            <Link href="/contactos" className="text-slate-300 hover:text-white transition-colors text-sm">Secretaría Virtual</Link>
-            <Link href="#" className="text-slate-300 hover:text-white transition-colors text-sm">Portal de Padres</Link>
-            <Link href="#" className="text-slate-300 hover:text-white transition-colors text-sm">Campus de Alumnos</Link>
-            <Link href="/propuesta-academica" className="text-slate-300 hover:text-white transition-colors text-sm">Recursos para Docentes</Link>
-            <Link href="#" className="text-slate-300 hover:text-white transition-colors text-sm">Políticas de Privacidad</Link>
+            <Link href="/" className="text-slate-300 hover:text-white transition-colors text-sm">Inicio</Link>
+            <Link href="/institucional" className="text-slate-300 hover:text-white transition-colors text-sm">Institucional</Link>
+            <Link href="/sobre-nosotros" className="text-slate-300 hover:text-white transition-colors text-sm">Sobre Nosotros</Link>
+            <Link href="/propuesta-academica" className="text-slate-300 hover:text-white transition-colors text-sm">Propuesta Académica</Link>
+            <Link href="/inscripcion" className="text-slate-300 hover:text-white transition-colors text-sm">Inscripción</Link>
+            <Link href="/noticias" className="text-slate-300 hover:text-white transition-colors text-sm">Noticias</Link>
+            <Link href="/contactos" className="text-slate-300 hover:text-white transition-colors text-sm">Contactos</Link>
           </nav>
           <div className="pt-6 border-t border-white/10">
             <p className="text-xs text-slate-400">© 2024 Colegio. Todos los derechos reservados.</p>

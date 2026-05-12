@@ -26,7 +26,7 @@ export default function Home() {
     <div className="bg-[#f7fafc] font-['Inter'] text-[#181c1e]">
 
       {/* Hero Section */}
-      <section className="relative min-h-[921px] flex items-center pt-20 overflow-hidden">
+      <section className="relative min-h-[580px] flex items-center pt-20 overflow-hidden">
         <div className="absolute inset-0 z-0">
           {heroImages.map((src, i) => (
             <img
@@ -39,7 +39,7 @@ export default function Home() {
           ))}
           <div className="absolute inset-0 bg-gradient-to-r from-[#002045]/90 to-[#1a365d]/40"></div>
         </div>
-        <div className="container mx-auto px-6 md:px-12 relative z-10">
+        <div className="container mx-auto px-6 md:px-12 relative z-10 flex flex-col items-center text-center">
           <div className="max-w-3xl">
             <span className="inline-block px-4 py-1 rounded-full bg-[#fed65b] text-[#735c00] font-semibold text-xs tracking-widest uppercase mb-6">
               Excelencia Académica
@@ -47,19 +47,39 @@ export default function Home() {
             <h1 className="font-['Manrope'] text-5xl md:text-7xl font-extrabold text-white leading-tight mb-8 tracking-tight">
               Formando el futuro con <span className="text-[#fed65b]">excelencia</span>
             </h1>
-            <p className="text-lg md:text-xl text-white/90 mb-10 max-w-xl leading-relaxed">
-              Nuestra institución combina tradición pedagógica con innovación tecnológica para preparar a los líderes del mañana en un entorno bilingüe y colaborativo.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex justify-center">
               <Link href="/institucional" className="px-8 py-4 bg-[#fed65b] text-[#002045] font-bold rounded-xl shadow-lg hover:bg-[#735c00] hover:text-white transition-all flex items-center justify-center gap-2">
                 Sobre Nosotros
                 <span className="material-symbols-outlined">arrow_forward</span>
               </Link>
-              <Link href="/inscripcion" className="px-8 py-4 bg-white/10 backdrop-blur-md text-white font-bold rounded-xl border border-white/20 hover:bg-white/20 transition-all flex items-center justify-center">
-                Admisiones 2026
-              </Link>
             </div>
           </div>
+        </div>
+        {/* Controles carrusel */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex items-center gap-4">
+          <button
+            onClick={() => setCurrent(prev => (prev - 1 + heroImages.length) % heroImages.length)}
+            className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md text-white flex items-center justify-center hover:bg-white/40 transition"
+          >
+            <span className="material-symbols-outlined">chevron_left</span>
+          </button>
+          <div className="flex gap-2">
+            {heroImages.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrent(i)}
+                className={`w-2.5 h-2.5 rounded-full transition-all ${
+                  i === current ? 'bg-[#fed65b] w-6' : 'bg-white/50'
+                }`}
+              />
+            ))}
+          </div>
+          <button
+            onClick={() => setCurrent(prev => (prev + 1) % heroImages.length)}
+            className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md text-white flex items-center justify-center hover:bg-white/40 transition"
+          >
+            <span className="material-symbols-outlined">chevron_right</span>
+          </button>
         </div>
       </section>
 
