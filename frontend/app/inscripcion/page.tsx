@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 export default function Inscripcion() {
   return (
@@ -85,12 +86,11 @@ export default function Inscripcion() {
                    Nuestro equipo de secretaría académica está disponible para resolver sus dudas sobre el proceso de ingreso y becas institucionales.
                  </p>
                  <div className="flex flex-wrap gap-3">
-                   <button className="px-5 py-2.5 bg-[#fed65b] text-[#002045] font-bold text-sm rounded-lg hover:scale-105 transition-transform">
-                     Agendar Cita
-                   </button>
-                   <button className="px-5 py-2.5 bg-white/10 text-white border border-white/20 font-bold text-sm rounded-lg hover:bg-white/20 transition-all">
-                     Consultar FAQ
-                   </button>
+
+                   <Link href="/contactos" className="px-5 py-2.5 bg-[#fed65b] text-[#002045] font-bold text-sm rounded-lg hover:scale-105 transition-transform">
+                     Envianos un mensaje
+                   </Link>
+                   
                  </div>
                </div>
              </div>
