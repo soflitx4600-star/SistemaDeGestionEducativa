@@ -39,7 +39,7 @@ export default function Home() {
           ))}
           <div className="absolute inset-0 bg-gradient-to-r from-[#002045]/90 to-[#1a365d]/40"></div>
         </div>
-        <div className="container mx-auto px-6 md:px-12 relative z-10 flex flex-col items-center text-center">
+        <div className="container mx-auto px-6 md:px-12 relative z-10">
           <div className="max-w-3xl">
             <span className="inline-block px-4 py-1 rounded-full bg-[#fed65b] text-[#735c00] font-semibold text-xs tracking-widest uppercase mb-6">
               Excelencia Académica
@@ -47,7 +47,10 @@ export default function Home() {
             <h1 className="font-['Manrope'] text-5xl md:text-7xl font-extrabold text-white leading-tight mb-8 tracking-tight">
               Formando el futuro con <span className="text-[#fed65b]">excelencia</span>
             </h1>
-            <div className="flex justify-center">
+            <p className="text-lg md:text-xl text-white/90 mb-10 max-w-xl leading-relaxed">
+              Nuestra institución combina tradición pedagógica con innovación tecnológica para preparar a los líderes del mañana en un entorno bilingüe y colaborativo.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4">
               <Link href="/institucional" className="px-8 py-4 bg-[#fed65b] text-[#002045] font-bold rounded-xl shadow-lg hover:bg-[#735c00] hover:text-white transition-all flex items-center justify-center gap-2">
                 Sobre Nosotros
                 <span className="material-symbols-outlined">arrow_forward</span>
