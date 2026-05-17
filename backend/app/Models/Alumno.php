@@ -39,17 +39,7 @@ class Alumno extends Model
         return $this->hasOne(FichaLegajo::class);
     }
 
-    public function tutores(): BelongsToMany
-    {
-        return $this->belongsToMany(Tutor::class, 'alumno_tutor')
-            ->withPivot('es_responsable_principal')
-            ->withTimestamps();
-    }
 
-    public function historialAcademico(): HasMany
-    {
-        return $this->hasMany(HistorialAcademico::class);
-    }
 
     public function cursos(): BelongsToMany
     {

@@ -30,10 +30,7 @@ class Materia extends Model
         return $this->belongsTo(PlanDeEstudio::class);
     }
 
-    public function historialAcademico(): HasMany
-    {
-        return $this->hasMany(HistorialAcademico::class);
-    }
+
 
     public function docentes(): BelongsToMany
     {

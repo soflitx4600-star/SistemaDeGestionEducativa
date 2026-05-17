@@ -21,6 +21,7 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Caresome\FilamentAuthDesigner\AuthDesignerPlugin;
 use Caresome\FilamentAuthDesigner\Data\AuthPageConfig;
 use Caresome\FilamentAuthDesigner\Enums\MediaPosition;
+
 class AdministracionPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
@@ -33,7 +34,7 @@ class AdministracionPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::hex('#184158'),
             ])
-            ->brandLogo(asset('logo_olga_aredez.jpeg'))   // ← logo del menú lateral
+            ->brandLogo(asset('logo_olga_aredez.jpeg')) // ← logo del menú lateral
             ->brandLogoHeight('5rem')
             ->favicon(asset('logo_olga_aredez.jpeg'))       // ← ícono del navegador
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
@@ -70,22 +71,5 @@ class AdministracionPanelProvider extends PanelProvider
                             ->mediaSize('50%')
                     ),
             ]);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }
