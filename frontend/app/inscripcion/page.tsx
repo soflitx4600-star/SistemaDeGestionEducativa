@@ -13,7 +13,7 @@ export default function Inscripcion() {
         </div>
         <div className="relative z-10 max-w-[1200px] mx-auto w-full px-6 flex flex-col justify-end h-full pb-16">
           <span className="text-[#fddd7c] font-bold tracking-[0.2em] uppercase text-sm mb-4">
-             Admisiones 2026
+             Admisiones 2027
           </span>
           <h1 className="font-['Manrope'] text-5xl md:text-7xl font-extrabold text-white tracking-tight">
             Inscripción
