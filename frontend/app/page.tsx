@@ -230,9 +230,9 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-                <button className="w-full mt-10 py-3 rounded-xl border border-[#002045]/10 text-[#002045] font-bold text-sm hover:bg-[#002045] hover:text-white transition-all">
+                <Link href="/calendario" className="w-full mt-10 py-3 rounded-xl border border-[#002045]/10 text-[#002045] font-bold text-sm hover:bg-[#002045] hover:text-white transition-all flex items-center justify-center">
                   Ver Calendario Completo
-                </button>
+                </Link>
               </div>
             </div>
 
