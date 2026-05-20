@@ -1,14 +1,130 @@
-export interface NewsItem {
+﻿export interface NewsItem {
   id: number;
   tag: string;
   date: string;
   title: string;
   excerpt: string;
-  body: string;
+  body?: string;
   image: string;
   imageAlt: string;
 }
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
+
+export async function fetchNews(): Promise<NewsItem[]> {
+  try {
+    const response = await fetch(`${API_URL}/noticias`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error fetching news: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    // Mapear la respuesta del backend al formato esperado del frontend
+    return data.data ? data.data.map((item: any) => ({
+      id: item.id,
+      tag: item.tag || 'General',
+      date: item.date || new Date(item.created_at).toLocaleDateString('es-AR', { 
+        year: 'numeric', 
+        month: 'short', 
+        day: 'numeric' 
+      }),
+      title: item.title || item.titulo,
+      excerpt: item.excerpt || item.descripcion,
+      body: item.body || item.contenido || '',
+      image: item.imagen || '',
+      imageAlt: item.imageAlt || item.titulo,
+    })) : [];
+  } catch (error) {
+    console.error('Error fetching news:', error);
+    return [];
+  }
+}
+
+export async function createNews(newsData: Omit<NewsItem, 'id' | 'date'>): Promise<NewsItem | null> {
+  try {
+    const formData = new FormData();
+    formData.append('titulo', newsData.title);
+    formData.append('descripcion', newsData.excerpt);
+    formData.append('contenido', newsData.body || '');
+    formData.append('categoria_id', '1'); // Default category
+    // Agregar imagen si existe
+
+    const response = await fetch(`${API_URL}/noticias`, {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error creating news: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data as NewsItem;
+  } catch (error) {
+    console.error('Error creating news:', error);
+    return null;
+  }
+}
+
+export async function updateNews(id: number, newsData: Partial<NewsItem>): Promise<NewsItem | null> {
+  try {
+    const formData = new FormData();
+    if (newsData.title) formData.append('titulo', newsData.title);
+    if (newsData.excerpt) formData.append('descripcion', newsData.excerpt);
+    if (newsData.body) formData.append('contenido', newsData.body);
+
+    const response = await fetch(`${API_URL}/noticias/${id}`, {
+      method: 'PUT',
+      body: formData,
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error updating news: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data as NewsItem;
+  } catch (error) {
+    console.error('Error updating news:', error);
+    return null;
+  }
+}
+
+export async function deleteNews(id: number): Promise<boolean> {
+  try {
+    const response = await fetch(`${API_URL}/noticias/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error deleting news: ${response.statusText}`);
+    }
+
+    return true;
+  } catch (error) {
+    console.error('Error deleting news:', error);
+    return false;
+  }
+}
+
+// Mantener compatibilidad con datos locales para desarrollo
 export const NEWS: NewsItem[] = [
   {
     id: 1,
@@ -29,66 +145,6 @@ export const NEWS: NewsItem[] = [
     body: 'Nuestros atletas destacaron en las competencias regionales obteniendo el primer puesto en relevos. El equipo de atletismo de la institución participó en las finales intercolegiales celebradas en el estadio municipal, donde compitieron más de 20 escuelas de la provincia. Además del primer puesto en la prueba de relevos 4×100, se obtuvieron medallas en salto en largo y lanzamiento de bala. El entrenador destacó el esfuerzo y la dedicación del grupo durante todo el año.',
     image: '/fotos-actividades/finales.jpeg',
     imageAlt: 'Deportes',
-  },
-  {
-    id: 3,
-    tag: 'Cultura',
-    date: '08 Oct, 2023',
-    title: 'Nueva Biblioteca Digital Institucional',
-    excerpt: 'Inauguramos el acceso a más de 5.000 títulos académicos para todos nuestros alumnos y familias.',
-    body: 'Inauguramos el acceso a más de 5.000 títulos académicos para todos nuestros alumnos y familias. La nueva plataforma de biblioteca digital permite el acceso remoto a libros de texto, revistas científicas y material audiovisual desde cualquier dispositivo. El proyecto fue desarrollado en colaboración con el Ministerio de Educación y una red de editoriales nacionales. Cada alumno cuenta con credenciales personales y los docentes pueden crear listas de lectura personalizadas por materia y nivel.',
-    image: '/fotos-actividades/eleccion_reina.png',
-    imageAlt: 'Cultura',
-  },
-  {
-    id: 4,
-    tag: 'Comunidad',
-    date: '02 Oct, 2023',
-    title: 'Campaña Solidaria de Útiles Escolares',
-    excerpt: 'Alumnos y familias se unieron para recolectar materiales escolares destinados a comunidades rurales.',
-    body: 'Alumnos y familias se unieron para recolectar materiales escolares destinados a comunidades rurales de la provincia. Durante dos semanas, los estudiantes organizaron puntos de recolección en el colegio y en comercios del barrio. Se reunieron más de 800 kits de útiles que fueron distribuidos en escuelas primarias de la Puna jujeña. La iniciativa fue reconocida por el Ministerio de Educación provincial como ejemplo de responsabilidad social estudiantil.',
-    image: '/fotos-actividades/campaña.png',
-    imageAlt: 'Campaña solidaria',
-  },
-  {
-    id: 5,
-    tag: 'Institucional',
-    date: '25 Sep, 2023',
-    title: 'Acto por el Día del Maestro',
-    excerpt: 'La institución homenajeó a sus docentes con un emotivo acto en el salón principal.',
-    body: 'La institución homenajeó a sus docentes con un emotivo acto en el salón principal. Alumnos de distintos años prepararon presentaciones artísticas, lecturas y videos en reconocimiento a la labor docente. Las autoridades del colegio entregaron distinciones a los maestros con mayor trayectoria en la institución. El acto contó con la presencia de familias y ex alumnos que se sumaron al homenaje.',
-    image: '/fotos-actividades/maestro.jpeg',
-    imageAlt: 'Acto institucional',
-  },
-  {
-    id: 6,
-    tag: 'Deportes',
-    date: '18 Sep, 2023',
-    title: 'Torneo Interno de Fútbol Sala',
-    excerpt: 'Se disputó el torneo anual de fútbol sala entre los cursos del ciclo orientado.',
-    body: 'Se disputó el torneo anual de fútbol sala entre los cursos del ciclo orientado. Participaron 12 equipos en una jornada de competencia que combinó deporte y compañerismo. El equipo de 5to año B se consagró campeón tras una final disputada contra 6to año A. El evento fue organizado por el departamento de Educación Física con el apoyo del centro de estudiantes.',
-    image: '/fotos-actividades/futbol.jpeg',
-    imageAlt: 'Torneo de fútbol sala',
-  },
-  {
-    id: 7,
-    tag: 'Institucional',
-    date: '10 Sep, 2023',
-    title: 'Acto del 1° de Mayo',
-    excerpt: 'La institución conmemoró el Día del Trabajador con un acto cívico en el patio central.',
-    body: 'La institución conmemoró el Día del Trabajador con un acto cívico en el patio central. Alumnos de distintos años participaron con lecturas, canciones y reflexiones sobre la historia del movimiento obrero en Argentina. El acto contó con la presencia de autoridades educativas y representantes gremiales que compartieron sus experiencias con los estudiantes.',
-    image: '/fotos-actividades/unodemayo.jpeg',
-    imageAlt: 'Acto 1 de mayo',
-  },
-  {
-    id: 8,
-    tag: 'Cultura',
-    date: '01 Sep, 2023',
-    title: 'Muestra de Arte "Identidad Jujeña"',
-    excerpt: 'El taller de artes visuales expuso trabajos inspirados en la cultura y paisajes de Jujuy.',
-    body: 'El taller de artes visuales expuso trabajos inspirados en la cultura y paisajes de Jujuy. La muestra reunió más de 60 obras entre pinturas, esculturas y fotografías realizadas por alumnos de todos los años. La exposición estuvo abierta al público durante una semana y recibió más de 300 visitantes. Varios trabajos fueron seleccionados para participar en el concurso provincial de arte estudiantil.',
-    image: '/fotos-actividades/ocho.jpeg',
-    imageAlt: 'Muestra de arte',
   },
 ];
 

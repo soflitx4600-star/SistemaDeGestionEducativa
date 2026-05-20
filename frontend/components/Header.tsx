@@ -18,7 +18,7 @@ export default function Header() {
     <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md shadow-[0_8px_32px_rgba(26,54,93,0.06)]">
       <div className="flex justify-between items-center px-6 md:px-12 py-4 w-full max-w-full">
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center overflow-hidden border border-[#c4c6cf]/20 shadow-sm">
+          <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center overflow-hidden border border-[#c4c6cf]/20 shadow-sm">
             <img src="/logo.png" alt="Logo Olga M. de Aredez" className="w-full h-full object-contain p-1" />
           </div>
           <span className="font-bold text-[#1A365D] font-['Manrope'] tracking-tight">

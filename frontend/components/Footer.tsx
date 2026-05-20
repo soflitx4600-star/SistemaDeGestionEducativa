@@ -9,7 +9,7 @@ export default function Footer() {
         {/* Brand & Info */}
         <div className="space-y-6">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-white rounded flex items-center justify-center overflow-hidden">
+            <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center overflow-hidden">
               <img src="/logo.png" alt="Logo Olga M. de Aredez" className="w-full h-full object-contain p-1" />
             </div>
             <span className="text-xl font-black text-[#FED65B] font-['Manrope'] tracking-tighter">
