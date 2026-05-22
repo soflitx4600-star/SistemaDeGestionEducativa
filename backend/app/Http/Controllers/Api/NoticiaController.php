@@ -22,7 +22,7 @@ class NoticiaController extends Controller
             ->paginate(12);
 
         $noticias->getCollection()->transform(function (Noticia $noticia) {
-            return $this->formatNoticia($noticia);
+            return $this->formatNoticia($noticia, withContent: true);
         });
 
         return response()->json($noticias);

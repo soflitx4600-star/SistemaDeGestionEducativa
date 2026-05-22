@@ -1,24 +1,40 @@
 ﻿'use client';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'motion/react';
-import { EVENTOS, getEventoById, Evento } from '../../lib/events';
-
-const MESES_DISPONIBLES = [...new Set(EVENTOS.map(e => e.mes))];
-const ANIOS_DISPONIBLES = [...new Set(EVENTOS.map(e => e.anio))];
+import { Evento } from '../../lib/events';
+import { fetchEventos, mapApiEventoToEvento, EventoApiItem } from '../../lib/events-api';
 
 function fmtFecha(dia: number, mesNum: number) {
   return `${String(dia).padStart(2, '0')}.${String(mesNum).padStart(2, '0')}`;
 }
 
-export default function Calendario() {
+function CalendarioContent() {
   const [busqueda, setBusqueda] = useState('');
   const [mesFiltro, setMesFiltro] = useState('');
   const [anioFiltro, setAnioFiltro] = useState('');
   const [selected, setSelected] = useState<Evento | null>(null);
+  const [eventos, setEventos] = useState<Evento[]>([]);
+  const [loading, setLoading] = useState(true);
   const searchParams = useSearchParams();
   const eventIdParam = searchParams.get('eventId');
   const eventId = eventIdParam ? Number(eventIdParam) : null;
+
+  useEffect(() => {
+    async function loadEventos() {
+      try {
+        setLoading(true);
+        const data: EventoApiItem[] = await fetchEventos();
+        const mapped = data.map(mapApiEventoToEvento);
+        setEventos(mapped);
+      } catch (err) {
+        console.error('Error loading eventos:', err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadEventos();
+  }, []);
 
   useEffect(() => {
     if (eventId === null) {
@@ -26,11 +42,14 @@ export default function Calendario() {
       return;
     }
 
-    const event = getEventoById(eventId);
+    const event = eventos.find(e => e.id === eventId);
     setSelected(event ?? null);
-  }, [eventId]);
+  }, [eventId, eventos]);
 
-  const filtrados = EVENTOS.filter(e => {
+  const MESES_DISPONIBLES = [...new Set(eventos.map(e => e.mes))];
+  const ANIOS_DISPONIBLES = [...new Set(eventos.map(e => e.anio))];
+
+  const filtrados = eventos.filter(e => {
     const matchBusqueda = e.titulo.toLowerCase().includes(busqueda.toLowerCase());
     const matchMes = mesFiltro ? e.mes === mesFiltro : true;
     const matchAnio = anioFiltro ? e.anio === Number(anioFiltro) : true;
@@ -83,14 +102,14 @@ export default function Calendario() {
 
       {/* Contenido por mes */}
       <main className="max-w-7xl mx-auto px-6 md:px-12 py-12 space-y-16">
-        {Object.entries(porMes).map(([mesAnio, eventos]) => (
+        {Object.entries(porMes).map(([mesAnio, evs]) => (
           <div key={mesAnio}>
             <h2 className="font-['Manrope'] text-3xl font-extrabold mb-6">
               <span className="text-[#002045]">{mesAnio.split(' ')[0].toUpperCase()}</span>
               <span className="text-[#43474e] ml-2">{mesAnio.split(' ')[1]}</span>
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-4 auto-rows-[220px] gap-1">
-              {eventos.map((ev) => (
+              {evs.map((ev) => (
                 <motion.div
                   key={ev.id}
                   layoutId={`ev-${ev.id}`}
@@ -189,5 +208,27 @@ export default function Calendario() {
         )}
       </AnimatePresence>
     </div>
+  );
+}
+
+export default function Calendario() {
+  return (
+    <Suspense fallback={
+      <div className="bg-[#f7fafc] font-['Inter'] min-h-screen">
+        <header className="bg-[#002045] pt-24 pb-10 px-6 md:px-12">
+          <div className="max-w-7xl mx-auto">
+            <h1 className="font-['Manrope'] text-4xl md:text-5xl font-extrabold text-white tracking-tight">
+              Calendario de <span className="text-[#fed65b]">Eventos</span>
+            </h1>
+          </div>
+        </header>
+        <main className="max-w-7xl mx-auto px-6 md:px-12 py-24 text-center text-[#43474e]">
+          <span className="material-symbols-outlined text-5xl mb-4 block text-[#c4c6cf] animate-pulse">event</span>
+          Cargando eventos...
+        </main>
+      </div>
+    }>
+      <CalendarioContent />
+    </Suspense>
   );
 }

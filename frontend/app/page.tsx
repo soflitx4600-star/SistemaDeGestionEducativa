@@ -3,8 +3,9 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'motion/react';
 import NewsModal from '../components/NewsModal';
-import { NEWS, NewsItem } from '../lib/news';
-import { getMonthlyHighlights } from '../lib/events';
+import { NewsItem, fetchNews } from '../lib/news';
+import { fetchEventos, mapApiEventoToEvento } from '../lib/events-api';
+import { Evento } from '../lib/events';
 
 const heroImages = [
   '/fotos-institucion/institucion-frente.png',
@@ -37,8 +38,53 @@ export default function Home() {
     return () => clearInterval(timer);
   }, []);
 
-  const [featured, ...rest] = NEWS.slice(0, 5);
-  const eventosPorMes = getMonthlyHighlights();
+  const [newsItems, setNewsItems] = useState<NewsItem[]>([]);
+  const [eventosFromApi, setEventosFromApi] = useState<Evento[]>([]);
+
+  useEffect(() => {
+    async function loadNews() {
+      try {
+        const data = await fetchNews();
+        setNewsItems(data.slice(0, 5));
+      } catch (err) {
+        console.error('Error loading news:', err);
+      }
+    }
+    loadNews();
+  }, []);
+
+  useEffect(() => {
+    async function loadEventos() {
+      try {
+        const data = await fetchEventos();
+        const mapped = data.map(mapApiEventoToEvento);
+        setEventosFromApi(mapped);
+      } catch (err) {
+        console.error('Error loading eventos:', err);
+      }
+    }
+    loadEventos();
+  }, []);
+
+  const hasNews = newsItems.length > 0;
+  const [featured, ...rest] = hasNews ? newsItems : [{} as NewsItem];
+  
+  // Generar eventos por mes desde la API
+  const eventosPorMes = (() => {
+    const ordenados = [...eventosFromApi].sort((a, b) => {
+      if (a.anio !== b.anio) return a.anio - b.anio;
+      if (a.mesNum !== b.mesNum) return a.mesNum - b.mesNum;
+      return a.dia - b.dia;
+    });
+    const destacados = new Map<string, Evento>();
+    ordenados.forEach((evento) => {
+      const clave = `${evento.anio}-${String(evento.mesNum).padStart(2, '0')}`;
+      if (!destacados.has(clave)) {
+        destacados.set(clave, evento);
+      }
+    });
+    return Array.from(destacados.values());
+  })();
 
   // Function to open lightbox
   const openLightbox = (index: number) => {
@@ -118,56 +164,62 @@ export default function Home() {
           </Link>
         </div>
 
-        {/* Magazine grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-1">
-          {/* Noticia destacada grande */}
-          <motion.article
-            layoutId={`card-${featured.id}`}
-            onClick={() => setSelected(featured)}
-            className="relative overflow-hidden cursor-pointer group h-[420px]"
-          >
-            <motion.img layoutId={`image-${featured.id}`} src={featured.image} alt={featured.imageAlt}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
-            <div className="absolute bottom-0 left-0 p-6">
-              <motion.span layoutId={`tag-${featured.id}`} className="inline-block text-[10px] font-bold uppercase tracking-wider text-[#735c00] px-2 py-1 bg-[#fed65b] rounded mb-3">
-                {featured.tag}
-              </motion.span>
-              <motion.h3 layoutId={`title-${featured.id}`} className="font-['Manrope'] text-2xl font-bold text-white leading-snug mb-2">
-                {featured.title}
-              </motion.h3>
-              <div className="flex items-center gap-4">
-                <div className="w-8 h-px bg-white/60" />
-                <motion.time layoutId={`date-${featured.id}`} className="text-xs text-white/70">{featured.date}</motion.time>
-              </div>
-            </div>
-          </motion.article>
-
-          {/* 4 noticias pequeñas */}
-          <div className="grid grid-cols-2 gap-1">
-            {rest.map((item) => (
-              <motion.article
-                key={item.id}
-                layoutId={`card-${item.id}`}
-                onClick={() => setSelected(item)}
-                className="relative overflow-hidden cursor-pointer group h-[208px]"
-              >
-                <motion.img layoutId={`image-${item.id}`} src={item.image} alt={item.imageAlt}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                <div className="absolute bottom-0 left-0 p-4">
-                  <motion.span layoutId={`tag-${item.id}`} className="inline-block text-[9px] font-bold uppercase tracking-wider text-[#735c00] px-2 py-0.5 bg-[#fed65b] rounded mb-2">
-                    {item.tag}
-                  </motion.span>
-                  <motion.h3 layoutId={`title-${item.id}`} className="font-['Manrope'] text-sm font-bold text-white leading-snug line-clamp-2">
-                    {item.title}
-                  </motion.h3>
-                  <motion.time layoutId={`date-${item.id}`} className="text-[10px] text-white/60 mt-1 block">{item.date}</motion.time>
+        {hasNews ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-1">
+            {/* Noticia destacada grande */}
+            <motion.article
+              layoutId={`card-${featured.id}`}
+              onClick={() => setSelected(featured)}
+              className="relative overflow-hidden cursor-pointer group h-[420px]"
+            >
+              <motion.img layoutId={`image-${featured.id}`} src={featured.image} alt={featured.imageAlt}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+              <div className="absolute bottom-0 left-0 p-6">
+                <motion.span layoutId={`tag-${featured.id}`} className="inline-block text-[10px] font-bold uppercase tracking-wider text-[#735c00] px-2 py-1 bg-[#fed65b] rounded mb-3">
+                  {featured.tag}
+                </motion.span>
+                <motion.h3 layoutId={`title-${featured.id}`} className="font-['Manrope'] text-2xl font-bold text-white leading-snug mb-2">
+                  {featured.title}
+                </motion.h3>
+                <div className="flex items-center gap-4">
+                  <div className="w-8 h-px bg-white/60" />
+                  <motion.time layoutId={`date-${featured.id}`} className="text-xs text-white/70">{featured.date}</motion.time>
                 </div>
-              </motion.article>
-            ))}
+              </div>
+            </motion.article>
+
+            {/* 4 noticias pequeñas */}
+            <div className="grid grid-cols-2 gap-1">
+              {rest.map((item) => (
+                <motion.article
+                  key={item.id}
+                  layoutId={`card-${item.id}`}
+                  onClick={() => setSelected(item)}
+                  className="relative overflow-hidden cursor-pointer group h-[208px]"
+                >
+                  <motion.img layoutId={`image-${item.id}`} src={item.image} alt={item.imageAlt}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                  <div className="absolute bottom-0 left-0 p-4">
+                    <motion.span layoutId={`tag-${item.id}`} className="inline-block text-[9px] font-bold uppercase tracking-wider text-[#735c00] px-2 py-0.5 bg-[#fed65b] rounded mb-2">
+                      {item.tag}
+                    </motion.span>
+                    <motion.h3 layoutId={`title-${item.id}`} className="font-['Manrope'] text-sm font-bold text-white leading-snug line-clamp-2">
+                      {item.title}
+                    </motion.h3>
+                    <motion.time layoutId={`date-${item.id}`} className="text-[10px] text-white/60 mt-1 block">{item.date}</motion.time>
+                  </div>
+                </motion.article>
+              ))}
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="text-center py-16 text-[#43474e]">
+            <span className="material-symbols-outlined text-5xl mb-4 block text-[#c4c6cf]">newspaper</span>
+            <p className="text-sm">Cargando noticias...</p>
+          </div>
+        )}
       </section>
 
       <NewsModal item={selected} onClose={() => setSelected(null)} />
@@ -188,7 +240,7 @@ export default function Home() {
                   <Link key={ev.id} href={`/calendario?eventId=${ev.id}`} className="group block">
                     <div className="flex gap-2 p-2 rounded-lg hover:bg-[#ebeef0] transition-colors">
                       <div className={`flex-shrink-0 w-10 h-12 rounded-md flex flex-col items-center justify-center border text-[10px] ${ev.destacado ? 'bg-[#fed65b]/30 text-[#735c00] border-[#fed65b]/50' : 'bg-[#f1f4f6] text-[#002045] border-[#c4c6cf]/10'}`}>
-                        <span className="font-bold uppercase tracking-tighter opacity-70">{ev.mes.slice(0, 3)}</span>
+                        <span className="font-bold uppercase tracking-tighter opacity-70">{(ev.mes || '').slice(0, 3)}</span>
                         <span className="font-black text-sm">{String(ev.dia).padStart(2, '0')}</span>
                       </div>
                       <div className="flex-1 min-w-0">
@@ -381,7 +433,7 @@ export default function Home() {
                 </ul>
               </div>
 
-              <Link href="/institucional" className="text-[#002045] font-bold text-xs flex items-center gap-1 group/link hover:text-[#735c00] transition-colors mt-auto">
+              <Link href="/propuesta-academica" className="text-[#002045] font-bold text-xs flex items-center gap-1 group/link hover:text-[#735c00] transition-colors mt-auto">
                 Conocer más
                 <span className="material-symbols-outlined text-sm group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
               </Link>

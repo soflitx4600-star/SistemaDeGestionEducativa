@@ -21,3 +21,14 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::post('/consultas', [ConsultaController::class, 'store']);
+
+// Eventos - GET (público)
+Route::get('/eventos', [App\Http\Controllers\Api\EventoController::class, 'index']);
+Route::get('/eventos/{evento}', [App\Http\Controllers\Api\EventoController::class, 'show']);
+
+// Eventos - CRUD completo (privado - requiere autenticación)
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/eventos', [App\Http\Controllers\Api\EventoController::class, 'store']);
+    Route::put('/eventos/{evento}', [App\Http\Controllers\Api\EventoController::class, 'update']);
+    Route::delete('/eventos/{evento}', [App\Http\Controllers\Api\EventoController::class, 'destroy']);
+});
