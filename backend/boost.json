@@ -5,7 +5,10 @@
         "copilot"
     ],
     "cloud": false,
-    "mcp": true,
-    "nightwatch": false,
-    "sail": false
+    "guidelines": true,
+    "skills": [
+        "laravel-best-practices",
+        "tailwindcss-development",
+        "laravel-filament"
+    ]
 }
