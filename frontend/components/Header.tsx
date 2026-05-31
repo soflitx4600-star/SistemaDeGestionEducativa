@@ -1,10 +1,11 @@
 "use client";
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 export default function Header() {
   const pathname = usePathname();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const navLinks = [
     { label: 'Inicio', href: '/' },
@@ -15,40 +16,79 @@ export default function Header() {
   ];
 
   return (
-    <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md shadow-[0_8px_32px_rgba(26,54,93,0.06)]">
-      <div className="flex justify-between items-center px-6 md:px-12 py-4 w-full max-w-full">
-        <div className="flex items-center gap-3">
-          <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center overflow-hidden border border-[#c4c6cf]/20 shadow-sm">
-            <img src="/logo.png" alt="Logo Olga M. de Aredez" className="w-full h-full object-contain p-1" />
+    <>
+      {/* Navbar principal */}
+      <nav className="fixed top-0 w-full z-50 bg-[#002045]/40 backdrop-blur-md">
+        <div className="flex items-stretch w-full min-h-[72px]">
+
+          {/* Bloque blanco del logo — sobresale hacia abajo, separado del borde izquierdo */}
+          <Link
+            href="/"
+            className="relative z-10 bg-white flex items-center gap-4 shadow-xl"
+            style={{ minWidth: '300px', marginBottom: '-24px', marginLeft: '64px', paddingBottom: '32px', paddingTop: '16px', paddingLeft: '28px', paddingRight: '32px' }}
+          >
+            <img src="/logo.png" alt="Logo" className="w-14 h-14 object-contain flex-shrink-0" />
+            <span className="font-bold text-[#002045] font-['Manrope'] text-sm leading-tight tracking-tight">
+              Colegio Secundario<br />
+              <span className="text-[#735c00]">Olga M. de Aredez</span> N° 59
+            </span>
+          </Link>
+
+          {/* Links de navegación — desktop */}
+          <div className="hidden lg:flex items-center justify-end gap-6 px-10 flex-1">
+            {navLinks.map((link) => {
+              const isActive = pathname === link.href || (link.href !== '/' && pathname?.startsWith(link.href));
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`font-['Manrope'] text-[11px] tracking-widest uppercase font-semibold transition-colors whitespace-nowrap ${
+                    isActive
+                      ? 'text-[#fed65b] border-b-2 border-[#fed65b] pb-0.5'
+                      : 'text-white/90 hover:text-[#fed65b]'
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
           </div>
-          <span className="font-bold text-[#1A365D] font-['Manrope'] tracking-tight">
-            Colegio secundario Olga M. de Aredez N° 59
-          </span>
-        </div>
 
-        <div className="hidden lg:flex items-center gap-8">
-          {navLinks.map((link) => {
-            const isActive = pathname === link.href || (link.href !== '/' && pathname?.startsWith(link.href));
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`font-['Manrope'] text-sm tracking-wide uppercase font-semibold transition-colors ${
-                  isActive
-                    ? 'text-[#735C00] border-b-2 border-[#735C00] pb-1'
-                    : 'text-[#1A365D] hover:text-[#735C00]'
-                }`}
-              >
-                {link.label}
-              </Link>
-            );
-          })}
+          {/* Hamburguesa móvil */}
+          <div className="flex lg:hidden items-center px-6">
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="text-white/80 hover:text-[#fed65b] transition-colors"
+              aria-label="Menú"
+            >
+              <span className="material-symbols-outlined text-[26px]">menu</span>
+            </button>
+          </div>
         </div>
+      </nav>
 
-        <div className="lg:hidden">
-          <span className="material-symbols-outlined text-[#002045]">menu</span>
+      {/* Menú móvil desplegable */}
+      {menuOpen && (
+        <div className="fixed top-[72px] left-0 w-full z-40 bg-[#002045]/95 backdrop-blur-md shadow-xl lg:hidden">
+          <div className="flex flex-col py-4">
+            {navLinks.map((link) => {
+              const isActive = pathname === link.href || (link.href !== '/' && pathname?.startsWith(link.href));
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMenuOpen(false)}
+                  className={`px-8 py-3 font-['Manrope'] text-xs tracking-widest uppercase font-semibold transition-colors ${
+                    isActive ? 'text-[#fed65b]' : 'text-white/80 hover:text-[#fed65b]'
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
+          </div>
         </div>
-      </div>
-    </nav>
+      )}
+    </>
   );
 }

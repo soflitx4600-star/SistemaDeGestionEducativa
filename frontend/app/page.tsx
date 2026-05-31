@@ -7,6 +7,201 @@ import { NewsItem, fetchNews } from '../lib/news';
 import { fetchEventos, mapApiEventoToEvento } from '../lib/events-api';
 import { Evento } from '../lib/events';
 
+const ofertaCards = [
+  {
+    img: '/fotos-diseño/Basico.jpg',
+    tag: 'Nivel Secundario',
+    titulo: 'Ciclo Básico',
+    desc: '1° a 3° año con énfasis en pensamiento crítico, lenguaje y ciencias.',
+    href: '/propuesta-academica',
+  },
+  {
+    img: '/fotos-diseño/orientado.jpg',
+    tag: 'Nivel Secundario',
+    titulo: 'Ciclo Orientado',
+    desc: 'Especializaciones en Sociales, Naturales y Economía con proyección universitaria.',
+    href: '/propuesta-academica',
+  },
+  {
+    img: '/fotos-diseño/arte.jpg',
+    tag: 'Actividades',
+    titulo: 'Talleres y Arte',
+    desc: 'Música, teatro, informática y expresión artística para el desarrollo creativo.',
+    href: '/propuesta-academica',
+  },
+  {
+    img: '/fotos-diseño/extracurriculares.png',
+    tag: 'Vida Escolar',
+    titulo: 'Extracurriculares',
+    desc: 'Deportes, voluntariado y clubes estudiantiles para el desarrollo integral.',
+    href: '/propuesta-academica',
+  },
+  {
+    img: '/fotos-actividades/acto_bandera.png',
+    tag: 'Institucional',
+    titulo: 'Vida Institucional',
+    desc: 'Actos, ceremonias y tradiciones que forman la identidad de nuestra comunidad.',
+    href: '/institucional',
+  },
+];
+
+function OfertaCarousel() {
+  const [active, setActive] = useState(0);
+  const [prev, setPrev] = useState<number | null>(null);
+
+  const handleTab = (i: number) => {
+    if (i === active) return;
+    setPrev(active);
+    setActive(i);
+  };
+
+  return (
+    <section className="w-full bg-[#f7fafc] py-24">
+      <div className="max-w-6xl mx-auto px-6 md:px-12">
+
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="mb-14"
+        >
+          <span className="inline-block px-4 py-1.5 rounded-full bg-[#fed65b]/20 text-[#735c00] font-bold tracking-[0.2em] uppercase text-xs mb-4">
+            Formación académica
+          </span>
+          <h2 className="font-['Manrope'] text-4xl font-extrabold text-[#002045]">Oferta Educativa</h2>
+        </motion.div>
+
+        {/* Tabs */}
+        <div className="flex gap-0 mb-0 border-b border-[#e4e7ec] relative">
+          {ofertaCards.map((card, i) => (
+            <button
+              key={card.titulo}
+              onClick={() => handleTab(i)}
+              className={`relative px-6 py-4 text-xs font-bold uppercase tracking-widest font-['Manrope'] transition-colors duration-200 ${
+                i === active ? 'text-[#002045]' : 'text-[#43474e]/60 hover:text-[#002045]'
+              }`}
+            >
+              {card.titulo}
+              {i === active && (
+                <motion.div
+                  layoutId="tab-underline"
+                  className="absolute bottom-0 left-0 right-0 h-[3px] bg-[#fed65b]"
+                  transition={{ type: 'spring', stiffness: 400, damping: 35 }}
+                />
+              )}
+            </button>
+          ))}
+        </div>
+
+        {/* Content panel */}
+        <div className="relative overflow-hidden">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={active}
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -16 }}
+              transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
+              className="grid grid-cols-1 md:grid-cols-2 gap-0 min-h-[440px]"
+            >
+              {/* Imagen */}
+              <div className="relative overflow-hidden group order-2 md:order-1">
+                <img
+                  src={ofertaCards[active].img}
+                  alt={ofertaCards[active].titulo}
+                  className="w-full h-full object-cover min-h-[320px] transition-transform duration-700 group-hover:scale-[1.05]"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-[#002045]/20 to-transparent" />
+              </div>
+
+              {/* Texto */}
+              <div className="bg-[#002045] flex flex-col justify-center px-10 py-12 order-1 md:order-2">
+                <motion.span
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.1 }}
+                  className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#fed65b] mb-4"
+                >
+                  {ofertaCards[active].tag}
+                </motion.span>
+
+                <motion.h3
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.15 }}
+                  className="font-['Manrope'] text-3xl md:text-4xl font-extrabold text-white mb-5 leading-tight"
+                >
+                  {ofertaCards[active].titulo}
+                </motion.h3>
+
+                <motion.p
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.2 }}
+                  className="text-white/60 text-sm leading-relaxed mb-8"
+                >
+                  {ofertaCards[active].desc}
+                </motion.p>
+
+                {/* Step number */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.25 }}
+                  className="flex items-center gap-4 mb-8"
+                >
+                  <span className="text-[80px] font-extrabold text-white/5 leading-none select-none font-['Manrope']">
+                    {String(active + 1).padStart(2, '0')}
+                  </span>
+                  <div className="flex flex-col gap-1">
+                    {ofertaCards.map((_, i) => (
+                      <button
+                        key={i}
+                        onClick={() => handleTab(i)}
+                        className={`h-[3px] rounded-full transition-all duration-300 ${
+                          i === active ? 'w-8 bg-[#fed65b]' : 'w-4 bg-white/20 hover:bg-white/40'
+                        }`}
+                      />
+                    ))}
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                >
+                  <Link
+                    href={ofertaCards[active].href}
+                    className="inline-flex items-center gap-2 bg-[#fed65b] text-[#002045] px-6 py-3 text-xs font-bold uppercase tracking-widest hover:bg-white transition-colors duration-300"
+                  >
+                    Conocer más
+                    <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                  </Link>
+                </motion.div>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* Progress bar */}
+        <div className="flex gap-1 mt-1">
+          {ofertaCards.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => handleTab(i)}
+              className="flex-1 h-1 rounded-none transition-colors duration-300"
+              style={{ background: i === active ? '#fed65b' : '#e4e7ec' }}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 const heroImages = [
   '/fotos-institucion/institucion-frente.png',
   '/fotos-institucion/institucion-interior.png',
@@ -28,8 +223,8 @@ export default function Home() {
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState<NewsItem | null>(null);
   const [galleryIndex, setGalleryIndex] = useState(0);
-  const [lightboxOpen, setLightboxOpen] = useState(false); // New state for lightbox
-  const [lightboxImageIndex, setLightboxImageIndex] = useState(0); // New state for lightbox image index
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxImageIndex, setLightboxImageIndex] = useState(0);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -86,13 +281,13 @@ export default function Home() {
     return Array.from(destacados.values());
   })();
 
-  // Function to open lightbox
+  const [slideDir, setSlideDir] = useState<1 | -1>(1);
+
   const openLightbox = (index: number) => {
     setLightboxImageIndex(index);
     setLightboxOpen(true);
   };
 
-  // Functions for lightbox navigation
   const nextLightboxImage = () => {
     setLightboxImageIndex((prev) => (prev + 1) % galeriaFotos.length);
   };
@@ -104,7 +299,7 @@ export default function Home() {
     <div className="bg-[#f7fafc] font-['Inter'] text-[#181c1e]">
 
       {/* Hero Section */}
-      <section className="relative min-h-[580px] flex items-center pt-20 overflow-hidden">
+      <section className="relative min-h-[580px] flex items-center pt-24 overflow-hidden">
         <div className="absolute inset-0 z-0">
           {heroImages.map((src, i) => (
             <img key={src} alt="Campus" src={src}
@@ -297,8 +492,8 @@ export default function Home() {
                   {galeriaFotos.map((foto, i) => (
                     <motion.button
                       key={foto.alt}
-                      type="button" // Changed to button type
-                      onClick={() => { setGalleryIndex(i); openLightbox(i); }} // Set gallery index and open lightbox
+                      type="button"
+                      onClick={() => { setGalleryIndex(i); openLightbox(i); }}
                       initial={false}
                       animate={{ scale: i === galleryIndex ? 1.05 : 1, borderColor: i === galleryIndex ? '#fed65b' : '#e4e7ec' }}
                       className="flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-all"
@@ -322,12 +517,12 @@ export default function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={() => setLightboxOpen(false)} // Close on backdrop click
+            onClick={() => setLightboxOpen(false)}
           >
             <motion.div
               key="lightbox-content"
               className="relative w-full max-w-4xl max-h-[90vh] flex items-center justify-center"
-              onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside content
+              onClick={(e) => e.stopPropagation()}
             >
               <button
                 onClick={() => setLightboxOpen(false)}
@@ -335,28 +530,24 @@ export default function Home() {
               >
                 <span className="material-symbols-outlined text-xl">close</span>
               </button>
-
               <button
                 onClick={prevLightboxImage}
                 className="absolute left-4 z-10 w-12 h-12 rounded-full bg-white/20 backdrop-blur-md text-white flex items-center justify-center hover:bg-white/40 transition"
               >
                 <span className="material-symbols-outlined text-2xl">chevron_left</span>
               </button>
-
               <motion.img
-                layoutId={galeriaFotos[lightboxImageIndex].src} // Shared layoutId
+                layoutId={galeriaFotos[lightboxImageIndex].src}
                 src={galeriaFotos[lightboxImageIndex].src}
                 alt={galeriaFotos[lightboxImageIndex].alt}
                 className="max-w-full max-h-[80vh] object-contain rounded-lg shadow-lg"
               />
-
               <button
                 onClick={nextLightboxImage}
                 className="absolute right-4 z-10 w-12 h-12 rounded-full bg-white/20 backdrop-blur-md text-white flex items-center justify-center hover:bg-white/40 transition"
               >
                 <span className="material-symbols-outlined text-2xl">chevron_right</span>
               </button>
-
               <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white text-sm bg-black/50 px-3 py-1 rounded-full">
                 {lightboxImageIndex + 1} / {galeriaFotos.length} - {galeriaFotos[lightboxImageIndex].alt}
               </div>
@@ -364,83 +555,8 @@ export default function Home() {
           </motion.div>
         )}
       </AnimatePresence>
-      <section className="py-20 px-6 md:px-12 max-w-7xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-14"
-        >
-          <span className="inline-block px-4 py-1.5 rounded-full bg-[#fed65b]/20 text-[#735c00] font-bold tracking-[0.2em] uppercase text-xs mb-4">
-            Formación académica
-          </span>
-          <h2 className="font-['Manrope'] text-4xl font-extrabold text-[#002045] mb-3">Oferta Educativa</h2>
-          <p className="text-[#43474e] max-w-lg mx-auto text-sm leading-relaxed">
-            Programas diseñados para potenciar el desarrollo integral de cada estudiante en todas las etapas.
-          </p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {[
-            {
-              icon: 'school',
-              titulo: 'Ciclo Básico',
-              desc: '1° a 3° año con énfasis en pensamiento crítico, lenguaje y ciencias.',
-              items: ['Matemática y Ciencias', 'Lengua y Literatura', 'Educación Física y Arte'],
-            },
-            {
-              icon: 'account_balance',
-              titulo: 'Ciclo Orientado',
-              desc: 'Especializaciones en Sociales, Naturales y Economía con proyección.',
-              items: ['Ciencias Sociales', 'Ciencias Naturales', 'Economía'],
-            },
-            {
-              icon: 'palette',
-              titulo: 'Talleres',
-              desc: 'Actividades prácticas para el desarrollo creativo y socioemocional.',
-              items: ['Arte y Música', 'Informática y Robótica', 'Teatro y Expresión'],
-            },
-            {
-              icon: 'sports_soccer',
-              titulo: 'Extracurriculares',
-              desc: 'Propuestas deportivas, culturales y sociales para la comunidad.',
-              items: ['Deportes', 'Voluntariado', 'Clubes Estudiantiles'],
-            },
-          ].map((card, idx) => (
-            <motion.div
-              key={card.titulo}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.4, delay: idx * 0.1 }}
-              className="group p-8 bg-white rounded-[2.5rem] border border-[#e4e7ec] hover:border-[#fed65b] hover:shadow-[0_32px_64px_-16px_rgba(0,0,0,0.08)] transition-all duration-500 flex flex-col"
-            >
-              <div className="flex flex-col flex-1">
-                <span className="material-symbols-outlined text-4xl text-[#002045] mb-6 group-hover:scale-110 transition-transform duration-500" style={{ fontVariationSettings: "'FILL' 0" }}>
-                  {card.icon}
-                </span>
-                <h4 className="font-['Manrope'] text-lg font-bold text-[#002045] mb-2">{card.titulo}</h4>
-                <p className="text-[#43474e] text-sm leading-relaxed mb-5">{card.desc}</p>
-
-                <ul className="space-y-2 mb-8">
-                  {card.items.map((item) => (
-                    <li key={item} className="flex items-center gap-2 text-xs text-[#43474e]">
-                      <span className="w-1 h-1 rounded-full bg-[#fed65b]" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <Link href="/propuesta-academica" className="text-[#002045] font-bold text-xs flex items-center gap-1 group/link hover:text-[#735c00] transition-colors mt-auto">
-                Conocer más
-                <span className="material-symbols-outlined text-sm group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
-              </Link>
-            </motion.div>
-          ))}
-        </div>
-      </section>
+      {/* Oferta Educativa — Animated Carousel */}
+      <OfertaCarousel />
 
     </div>
   );
