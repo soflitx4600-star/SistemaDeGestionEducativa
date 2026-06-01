@@ -12,23 +12,23 @@ export default function PropuestaAcademica() {
     <div className="w-full flex-col flex gap-24 pb-24 bg-[#faf9fd]">
       
       {/* Hero Section */}
-      <section className="h-[400px] flex items-center overflow-hidden bg-gradient-to-r from-[#001733] to-[#1a3c66] relative">
+      <section className="h-[280px] md:h-[400px] flex items-center overflow-hidden bg-gradient-to-r from-[#001733] to-[#1a3c66] relative pt-16 md:pt-0">
         <div className="absolute top-0 right-0 w-1/2 h-full bg-white/5 opacity-50 skew-x-12 transform origin-bottom-right"></div>
-        <div className="max-w-[1200px] mx-auto w-full px-6 relative z-10">
-          <h1 className="text-5xl md:text-6xl font-extrabold text-white font-['Manrope'] tracking-tight">
+        <div className="max-w-[1200px] mx-auto w-full px-4 md:px-6 relative z-10">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold text-white font-['Manrope'] tracking-tight">
             Propuesta Académica
           </h1>
         </div>
       </section>
 
       {/* Turno Mañana y Tarde */}
-      <section className="max-w-[1200px] mx-auto px-6 w-full">
-         <div className="flex flex-col md:flex-row justify-between md:items-end gap-6 mb-12">
+      <section className="max-w-[1200px] mx-auto px-4 md:px-6 w-full">
+         <div className="flex flex-col md:flex-row justify-between md:items-end gap-6 mb-8 md:mb-12">
             <div>
               <p className="text-[11px] font-bold text-[#886e00] tracking-widest uppercase mb-2 flex items-center gap-2">
                  <span className="w-6 h-[2px] bg-[#886e00]"></span> HORARIO DIURNO (MAÑANA Y TARDE)
               </p>
-              <h2 className="text-4xl font-extrabold text-[#002045] font-['Manrope'] tracking-tight">Turno Mañana y Tarde</h2>
+              <h2 className="text-2xl md:text-4xl font-extrabold text-[#002045] font-['Manrope'] tracking-tight">Turno Mañana y Tarde</h2>
             </div>
             <div className="border-l-4 border-[#fddd7c] pl-4 max-w-sm">
                <p className="text-sm text-[#43474e] font-['Inter'] italic leading-relaxed">
@@ -105,13 +105,13 @@ export default function PropuestaAcademica() {
       </section>
 
       {/* Turno Noche */}
-      <section className="max-w-[1200px] mx-auto px-6 w-full">
-         <div className="flex flex-col md:flex-row justify-between md:items-end gap-6 mb-12">
+      <section className="max-w-[1200px] mx-auto px-4 md:px-6 w-full">
+         <div className="flex flex-col md:flex-row justify-between md:items-end gap-6 mb-8 md:mb-12">
             <div>
               <p className="text-[11px] font-bold text-[#002045] tracking-widest uppercase mb-2 flex items-center gap-2">
                  <span className="w-6 h-[2px] bg-[#002045]"></span> HORARIO NOCTURNO
               </p>
-              <h2 className="text-4xl font-extrabold text-[#002045] font-['Manrope'] tracking-tight">Turno Noche</h2>
+              <h2 className="text-2xl md:text-4xl font-extrabold text-[#002045] font-['Manrope'] tracking-tight">Turno Noche</h2>
             </div>
             <div className="border-l-4 border-[#002045] pl-4 max-w-sm">
                <p className="text-sm text-[#43474e] font-['Inter'] italic leading-relaxed">

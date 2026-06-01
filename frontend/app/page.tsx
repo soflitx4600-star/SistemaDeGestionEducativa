@@ -41,7 +41,7 @@ const ofertaCards = [
     tag: 'Institucional',
     titulo: 'Vida Institucional',
     desc: 'Actos, ceremonias y tradiciones que forman la identidad de nuestra comunidad.',
-    href: '/institucional',
+    href: '/propuesta-academica',
   },
 ];
 
@@ -74,7 +74,7 @@ function OfertaCarousel() {
         </motion.div>
 
         {/* Tabs */}
-        <div className="flex gap-0 mb-0 border-b border-[#e4e7ec] relative">
+        <div className="flex gap-0 mb-0 border-b border-[#e4e7ec] relative overflow-x-auto">
           {ofertaCards.map((card, i) => (
             <button
               key={card.titulo}
@@ -104,7 +104,7 @@ function OfertaCarousel() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -16 }}
               transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
-              className="grid grid-cols-1 md:grid-cols-2 gap-0 min-h-[440px]"
+              className="grid grid-cols-1 md:grid-cols-2 gap-0 min-h-[360px] md:min-h-[440px]"
             >
               {/* Imagen */}
               <div className="relative overflow-hidden group order-2 md:order-1">
@@ -117,7 +117,7 @@ function OfertaCarousel() {
               </div>
 
               {/* Texto */}
-              <div className="bg-[#002045] flex flex-col justify-center px-10 py-12 order-1 md:order-2">
+              <div className="bg-[#002045] flex flex-col justify-center px-6 md:px-10 py-8 md:py-12 order-1 md:order-2">
                 <motion.span
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -299,7 +299,7 @@ export default function Home() {
     <div className="bg-[#f7fafc] font-['Inter'] text-[#181c1e]">
 
       {/* Hero Section */}
-      <section className="relative min-h-[580px] flex items-center pt-24 overflow-hidden">
+      <section className="relative min-h-[580px] flex items-center pt-16 md:pt-24 overflow-hidden">
         <div className="absolute inset-0 z-0">
           {heroImages.map((src, i) => (
             <img key={src} alt="Campus" src={src}

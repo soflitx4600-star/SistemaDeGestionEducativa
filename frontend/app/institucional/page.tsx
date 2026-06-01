@@ -10,28 +10,30 @@ export default function Institucional() {
   ];
 
   const autoridades = [
-    { name: 'Prof. Elena Rodríguez', role: 'Rectora', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBJInpwpojj2thFUwi9SoQHS7rvll0zzAxYB-yZ6gdTpEFJIOuP8Z0omNL6S2SUSwO38dsRm8Qj1J9BhpTzXqxkfpC1tfc4WFxTBBDwdUd8CniIYorNN3pdYeDmd-qyUhB8lj9qNAfuXRtC49qoJa2HsTnynyWn2BUscXjERkJaHLU4zQOWRTRVkOHcTcszCpkhIn3eZjWpULlZ80SYikl7hCAvFT6FO2X4-qxqTsl-izEkj3KuSWb-YJPJVjCbotb0eKQ0xzq2940' },
-    { name: 'Prof. Marcos Sánchez', role: 'Vice-rector', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBUcykUpjRWnA5m8vNiKMtQNixqXXdF1vBkKAdL0ZluaFA7IbKwgiULtPQb9SCJZY7i6hvau0w0FGVymA5lcZUptcIbxSrwoAeOYd5oL64lYT4fPXWpjaHSfBuUeFZyXc4N4cYa_dkeatCMh-X0RghvczHykYmcDyQHyR5lrTOa230Q5lefFdR-REl_Zo0Fss_gcrJIQZjMpzS5SYJlRX8nuf8WYfvO1nQC2btua1TCnKjo70OlhILPOrDdQqz5njzzKGEuH_P8b2U' },
-    { name: 'Lic. Claudia Pardo', role: 'Secretaria', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC_au9ZpOegAQCbmHVM2q1bL6jv8tQjYZoQUoCWdj4o2WNZGNSg64ESOPCsNTOebz4TpHXsqGrko47jci48IcahAcylhA78h7k74TaqVSwnExNuDabQEl2R2qFBwvOUKkr3th4YlIJts4aZJhxCvMXVKBlqdsXZuQ0uvAOtkVya6kpC2FHd7oiaZEE0vdkWL0z4M56OZkODIxh0haeqPprz7yDSBJvkQp91oqRl2MOuaCl5QshItJ6ZLPWSgtwyiuqt17-zmoRJVT4' },
+    { name: 'Prof. Murquite Jorge Antonio', role: 'Director', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBJInpwpojj2thFUwi9SoQHS7rvll0zzAxYB-yZ6gdTpEFJIOuP8Z0omNL6S2SUSwO38dsRm8Qj1J9BhpTzXqxkfpC1tfc4WFxTBBDwdUd8CniIYorNN3pdYeDmd-qyUhB8lj9qNAfuXRtC49qoJa2HsTnynyWn2BUscXjERkJaHLU4zQOWRTRVkOHcTcszCpkhIn3eZjWpULlZ80SYikl7hCAvFT6FO2X4-qxqTsl-izEkj3KuSWb-YJPJVjCbotb0eKQ0xzq2940' },
+    { name: 'Prof. Cuellar Silvana Mercedes', role: 'Vice-directora', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBUcykUpjRWnA5m8vNiKMtQNixqXXdF1vBkKAdL0ZluaFA7IbKwgiULtPQb9SCJZY7i6hvau0w0FGVymA5lcZUptcIbxSrwoAeOYd5oL64lYT4fPXWpjaHSfBuUeFZyXc4N4cYa_dkeatCMh-X0RghvczHykYmcDyQHyR5lrTOa230Q5lefFdR-REl_Zo0Fss_gcrJIQZjMpzS5SYJlRX8nuf8WYfvO1nQC2btua1TCnKjo70OlhILPOrDdQqz5njzzKGEuH_P8b2U' },
+    { name: 'Lic. Carlos Irma Monica', role: 'Secretaria', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC_au9ZpOegAQCbmHVM2q1bL6jv8tQjYZoQUoCWdj4o2WNZGNSg64ESOPCsNTOebz4TpHXsqGrko47jci48IcahAcylhA78h7k74TaqVSwnExNuDabQEl2R2qFBwvOUKkr3th4YlIJts4aZJhxCvMXVKBlqdsXZuQ0uvAOtkVya6kpC2FHd7oiaZEE0vdkWL0z4M56OZkODIxh0haeqPprz7yDSBJvkQp91oqRl2MOuaCl5QshItJ6ZLPWSgtwyiuqt17-zmoRJVT4' },
+    { name: 'Prof. Moya Sebastian Gustavo', role: 'Prosecretario', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC_au9ZpOegAQCbmHVM2q1bL6jv8tQjYZoQUoCWdj4o2WNZGNSg64ESOPCsNTOebz4TpHXsqGrko47jci48IcahAcylhA78h7k74TaqVSwnExNuDabQEl2R2qFBwvOUKkr3th4YlIJts4aZJhxCvMXVKBlqdsXZuQ0uvAOtkVya6kpC2FHd7oiaZEE0vdkWL0z4M56OZkODIxh0haeqPprz7yDSBJvkQp91oqRl2MOuaCl5QshItJ6ZLPWSgtwyiuqt17-zmoRJVT4' },
+    { name: 'Prof. Lezcano Patricia Victoria', role: 'Jefe de Preceptores', img: '' },
   ];
 
   return (
     <div className="bg-[#f7fafc] font-['Inter'] text-[#181c1e] overflow-x-hidden">
       {/* Hero Section */}
-      <section className="relative min-h-[80vh] flex items-center pt-24 overflow-hidden">
+      <section className="relative min-h-[60vh] md:min-h-[80vh] flex items-center pt-20 md:pt-24 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img className="w-full h-full object-cover" src="/fotos-institucion/institucion-interior.png" alt="Institución" />
           <div className="absolute inset-0 bg-gradient-to-r from-[#002045]/90 to-[#1a365d]/50"></div>
         </div>
-        <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 w-full text-center">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-12 w-full text-center">
           <div className="max-w-4xl mx-auto text-white">
-            <span className="inline-block px-4 py-1 rounded-full bg-[#fed65b] text-[#735c00] font-semibold text-xs tracking-widest uppercase mb-6">
+            <span className="inline-block px-4 py-1 rounded-full bg-[#fed65b] text-[#735c00] font-semibold text-xs tracking-widest uppercase mb-4 md:mb-6">
               Tradición y Excelencia
             </span>
-            <h1 className="text-5xl md:text-7xl font-['Manrope'] font-extrabold text-white leading-tight mb-8 tracking-tight">
+            <h1 className="text-3xl sm:text-5xl md:text-7xl font-['Manrope'] font-extrabold text-white leading-tight mb-4 md:mb-8 tracking-tight">
               Formando líderes con <span className="text-[#fed65b]">valores</span>
             </h1>
-            <p className="text-lg md:text-xl text-white/90 mb-10 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-base md:text-xl text-white/90 mb-6 md:mb-10 max-w-2xl mx-auto leading-relaxed">
               El Colegio Secundario N°59 "Olga M. de Aredez" es un espacio de aprendizaje dinámico que integra la tradición académica con la innovación pedagógica.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
@@ -160,14 +162,18 @@ export default function Institucional() {
             </Link>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-8">
             {autoridades.map((autoridad) => (
               <div key={autoridad.name} className="group bg-white rounded-[2rem] p-4 shadow-[0_8px_32px_rgba(26,54,93,0.04)] hover:-translate-y-2 transition-transform duration-300">
-                <div className="relative overflow-hidden aspect-[4/5] rounded-3xl mb-6 bg-[#f7fafc]">
-                  <img className="w-full h-full object-cover filter sepia-[0.2] group-hover:sepia-0 group-hover:scale-105 transition-all duration-700" src={autoridad.img} alt={autoridad.name} />
+                <div className="relative overflow-hidden aspect-[4/5] rounded-3xl mb-6 bg-[#f7fafc] flex items-center justify-center">
+                  {autoridad.img ? (
+                    <img className="w-full h-full object-cover filter sepia-[0.2] group-hover:sepia-0 group-hover:scale-105 transition-all duration-700" src={autoridad.img} alt={autoridad.name} />
+                  ) : (
+                    <span className="material-symbols-outlined text-6xl text-[#c4c6cf]">person</span>
+                  )}
                 </div>
                 <div className="text-center pb-4">
-                  <h4 className="text-xl font-['Manrope'] font-bold text-[#002045] mb-1">{autoridad.name}</h4>
+                  <h4 className="text-sm font-['Manrope'] font-bold text-[#002045] mb-1">{autoridad.name}</h4>
                   <p className="text-[11px] text-[#735c00] uppercase tracking-widest font-bold bg-[#fed65b]/20 inline-block px-3 py-1 rounded-full">{autoridad.role}</p>
                 </div>
               </div>

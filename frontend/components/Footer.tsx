@@ -10,10 +10,10 @@ export default function Footer() {
         <div className="space-y-6">
           <div className="flex items-center gap-3">
             <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center overflow-hidden">
-              <img src="/logo.png" alt="Logo Olga M. de Aredez" className="w-full h-full object-contain p-1" />
+              <img src="/logo.png" alt="Logo Olga Marquez de Aredez" className="w-full h-full object-contain p-1" />
             </div>
             <span className="text-xl font-black text-[#FED65B] font-['Manrope'] tracking-tighter">
-              Colegio secundario Olga M. de Aredez N° 59
+              Colegio Secundario Olga Marquez de Aredez N° 59
             </span>
           </div>
           <p className="text-sm leading-relaxed text-slate-300">

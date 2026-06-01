@@ -2,9 +2,8 @@
 
 namespace App\Filament\Resources\Consultas;
 
-use App\Filament\Resources\Consultas\Pages\CreateConsulta;
-use App\Filament\Resources\Consultas\Pages\EditConsulta;
 use App\Filament\Resources\Consultas\Pages\ListConsultas;
+use App\Filament\Resources\Consultas\Pages\ViewConsulta;
 use App\Filament\Resources\Consultas\Schemas\ConsultaForm;
 use App\Filament\Resources\Consultas\Tables\ConsultasTable;
 use App\Models\Consulta;
@@ -45,8 +44,7 @@ class ConsultaResource extends Resource
     {
         return [
             'index' => ListConsultas::route('/'),
-            'create' => CreateConsulta::route('/create'),
-            'edit' => EditConsulta::route('/{record}/edit'),
+            'view'  => ViewConsulta::route('/{record}'),
         ];
     }
 }

@@ -6,24 +6,24 @@ export default function Inscripcion() {
     <div className="w-full flex-col flex gap-24 pb-24 bg-[#faf9fd]">
       
       {/* Hero Section */}
-      <section className="relative h-[400px] flex items-center justify-center overflow-hidden">
+      <section className="relative h-[280px] md:h-[400px] flex items-center justify-center overflow-hidden pt-16 md:pt-0">
         <div className="absolute inset-0 z-0">
           <img alt="Fachada de la escuela" className="w-full h-full object-cover" src="/fotos-institucion/institucion-frente.png"/>
           <div className="absolute inset-0 bg-[#002045]/60 backdrop-brightness-75"></div>
         </div>
-        <div className="relative z-10 max-w-[1200px] mx-auto w-full px-6 flex flex-col justify-end h-full pb-16">
-          <span className="text-[#fddd7c] font-bold tracking-[0.2em] uppercase text-sm mb-4">
+        <div className="relative z-10 max-w-[1200px] mx-auto w-full px-4 md:px-6 flex flex-col justify-end h-full pb-8 md:pb-16">
+          <span className="text-[#fddd7c] font-bold tracking-[0.2em] uppercase text-xs md:text-sm mb-2 md:mb-4">
              Admisiones 2027
           </span>
-          <h1 className="font-['Manrope'] text-5xl md:text-7xl font-extrabold text-white tracking-tight">
+          <h1 className="font-['Manrope'] text-3xl sm:text-5xl md:text-7xl font-extrabold text-white tracking-tight">
             Inscripción
           </h1>
         </div>
       </section>
 
       {/* Content */}
-      <main className="max-w-[1200px] mx-auto px-6 w-full -mt-16 relative z-20">
-        <div className="bg-white p-10 md:p-16 rounded-3xl shadow-[0_8px_32px_rgba(26,54,93,0.04)] border border-gray-100 flex flex-col gap-12">
+      <main className="max-w-[1200px] mx-auto px-4 md:px-6 w-full -mt-6 md:-mt-16 relative z-20">
+        <div className="bg-white p-6 md:p-16 rounded-3xl shadow-[0_8px_32px_rgba(26,54,93,0.04)] border border-gray-100 flex flex-col gap-8 md:gap-12">
            
            <div>
              <h2 className="font-['Manrope'] text-3xl md:text-4xl font-extrabold text-[#002045] tracking-tight">Proceso de Inscripción</h2>

@@ -2,18 +2,22 @@
 import React, { useState } from 'react';
 
 function ContactForm() {
-  const [form, setForm] = useState({ nombre: '', email: '', asunto: 'Inscripciones', mensaje: '' });
+  const [form, setForm] = useState({ nombre_completo: '', correo_electronico: '', telefono: '', asunto: 'Inscripciones', mensaje: '' });
   const [status, setStatus] = useState<'idle' | 'loading' | 'ok' | 'error'>('idle');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('loading');
-    const res = await fetch('/api/contacto', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(form),
-    });
-    setStatus(res.ok ? 'ok' : 'error');
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/consultas`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(form),
+      });
+      setStatus(res.ok ? 'ok' : 'error');
+    } catch {
+      setStatus('error');
+    }
   };
 
   return (
@@ -30,47 +34,57 @@ function ContactForm() {
           </div>
           <h3 className="font-['Manrope'] font-bold text-[#002045] text-xl">Mensaje enviado</h3>
           <p className="text-[#43474e] text-sm">Nos pondremos en contacto a la brevedad.</p>
-          <button onClick={() => { setStatus('idle'); setForm({ nombre: '', email: '', asunto: 'Inscripciones', mensaje: '' }); }} className="mt-2 text-[#1a365d] font-bold text-sm hover:underline">Enviar otro mensaje</button>
+          <button onClick={() => { setStatus('idle'); setForm({ nombre_completo: '', correo_electronico: '', telefono: '', asunto: 'Inscripciones', mensaje: '' }); }} className="mt-2 text-[#1a365d] font-bold text-sm hover:underline">Enviar otro mensaje</button>
         </div>
       ) : (
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <label className="text-xs font-bold text-[#002045] tracking-wider uppercase" htmlFor="name">Nombre Completo</label>
+              <label className="text-xs font-bold text-[#002045] tracking-wider uppercase" htmlFor="nombre_completo">Nombre Completo</label>
               <input
                 className="w-full px-5 py-4 bg-[#f1f4f6] border-none rounded-lg focus:ring-2 focus:ring-[#1a365d]/40 transition-all text-[#181c1e] outline-none"
-                id="name" placeholder="Tu nombre" type="text" required
-                value={form.nombre} onChange={e => setForm(f => ({ ...f, nombre: e.target.value }))}
+                id="nombre_completo" placeholder="Tu nombre" type="text" required
+                value={form.nombre_completo} onChange={e => setForm(f => ({ ...f, nombre_completo: e.target.value }))}
               />
             </div>
             <div className="space-y-2">
-              <label className="text-xs font-bold text-[#002045] tracking-wider uppercase" htmlFor="email">Correo Electrónico</label>
+              <label className="text-xs font-bold text-[#002045] tracking-wider uppercase" htmlFor="correo_electronico">Correo Electrónico</label>
               <input
                 className="w-full px-5 py-4 bg-[#f1f4f6] border-none rounded-lg focus:ring-2 focus:ring-[#1a365d]/40 transition-all text-[#181c1e] outline-none"
-                id="email" placeholder="email@ejemplo.com" type="email" required
-                value={form.email} onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
+                id="correo_electronico" placeholder="email@ejemplo.com" type="email" required
+                value={form.correo_electronico} onChange={e => setForm(f => ({ ...f, correo_electronico: e.target.value }))}
               />
             </div>
           </div>
-          <div className="space-y-2">
-            <label className="text-xs font-bold text-[#002045] tracking-wider uppercase" htmlFor="subject">Asunto</label>
-            <select
-              className="w-full px-5 py-4 bg-[#f1f4f6] border-none rounded-lg focus:ring-2 focus:ring-[#1a365d]/40 transition-all text-[#181c1e] outline-none"
-              id="subject" value={form.asunto} onChange={e => setForm(f => ({ ...f, asunto: e.target.value }))}
-            >
-              <option>Inscripciones</option>
-              <option>Consultas Generales</option>
-              <option>Secretaría Académica</option>
-              <option>Soporte Técnico</option>
-            </select>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label className="text-xs font-bold text-[#002045] tracking-wider uppercase" htmlFor="telefono">Teléfono</label>
+              <input
+                className="w-full px-5 py-4 bg-[#f1f4f6] border-none rounded-lg focus:ring-2 focus:ring-[#1a365d]/40 transition-all text-[#181c1e] outline-none"
+                id="telefono" placeholder="+54 388 000-0000" type="tel" required
+                value={form.telefono} onChange={e => setForm(f => ({ ...f, telefono: e.target.value }))}
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-xs font-bold text-[#002045] tracking-wider uppercase" htmlFor="asunto">Asunto</label>
+              <select
+                className="w-full px-5 py-4 bg-[#f1f4f6] border-none rounded-lg focus:ring-2 focus:ring-[#1a365d]/40 transition-all text-[#181c1e] outline-none"
+                id="asunto" value={form.asunto} onChange={e => setForm(f => ({ ...f, asunto: e.target.value }))}
+              >
+                <option>Inscripciones</option>
+                <option>Consultas Generales</option>
+                <option>Secretaría Académica</option>
+                <option>Soporte Técnico</option>
+              </select>
+            </div>
           </div>
           <div className="space-y-2">
             <label className="text-xs font-bold text-[#002045] tracking-wider uppercase" htmlFor="message">Mensaje</label>
             <textarea
-              className="w-full px-5 py-4 bg-[#f1f4f6] border-none rounded-lg focus:ring-2 focus:ring-[#1a365d]/40 transition-all text-[#181c1e] outline-none resize-none"
-              id="message" placeholder="Escribe tu mensaje aquí..." rows={5} required
-              value={form.mensaje} onChange={e => setForm(f => ({ ...f, mensaje: e.target.value }))}
-            />
+                className="w-full px-5 py-4 bg-[#f1f4f6] border-none rounded-lg focus:ring-2 focus:ring-[#1a365d]/40 transition-all text-[#181c1e] outline-none resize-none"
+                id="message" placeholder="Escribe tu mensaje aquí..." rows={5} required
+                value={form.mensaje} onChange={e => setForm(f => ({ ...f, mensaje: e.target.value }))}
+              />
           </div>
           {status === 'error' && (
             <p className="text-red-600 text-sm">Ocurrió un error al enviar. Intentá de nuevo.</p>
@@ -93,7 +107,7 @@ export default function Contactos() {
     <div className="bg-[#f7fafc] font-['Inter'] text-[#181c1e]">
 
       {/* Hero Header */}
-      <header className="relative h-[614px] min-h-[400px] flex items-center justify-center overflow-hidden pt-20">
+      <header className="relative h-[280px] md:h-[614px] min-h-[280px] flex items-center justify-center overflow-hidden pt-16 md:pt-20">
         <div className="absolute inset-0 z-0">
           <img
             className="w-full h-full object-cover"
@@ -103,17 +117,17 @@ export default function Contactos() {
           <div className="absolute inset-0 bg-gradient-to-tr from-[#002045]/90 to-[#1a365d]/40"></div>
         </div>
         <div className="relative z-10 text-center px-4">
-          <span className="text-[#fed65b] font-['Manrope'] font-bold tracking-[0.2em] uppercase text-sm mb-4 block">
+          <span className="text-[#fed65b] font-['Manrope'] font-bold tracking-[0.2em] uppercase text-xs md:text-sm mb-2 md:mb-4 block">
             Comunicate con nosotros
           </span>
-          <h1 className="text-white font-['Manrope'] font-extrabold text-5xl md:text-7xl tracking-tight">
+          <h1 className="text-white font-['Manrope'] font-extrabold text-3xl sm:text-5xl md:text-7xl tracking-tight">
             Contactos
           </h1>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-8 py-24">
+      <main className="max-w-7xl mx-auto px-4 md:px-8 py-12 md:py-24">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
 
           {/* Contact Form */}
